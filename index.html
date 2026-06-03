@@ -698,57 +698,140 @@ function getRepeatLateDrivers(){
   return Object.entries(counts).filter(([,c])=>c>=3).map(([name,count])=>({name,count}));
 }
 
+function buildPDFHTML(title, bodyHTML){
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <style>
+    body{font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;color:#1a1a1a;padding:32px;max-width:900px;margin:0 auto}
+    h1{font-size:20px;font-weight:800;margin-bottom:4px;color:#1a1a1a}
+    .sub{font-size:12px;color:#888;margin-bottom:24px}
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .kpi{background:#f5f4f0;border-radius:8px;padding:12px 14px}
+    .kpi-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:4px}
+    .kpi-val{font-size:22px;font-weight:800}
+    .section{margin-bottom:20px}
+    .section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e0ddd6}
+    table{width:100%;border-collapse:collapse;font-size:11px}
+    th{background:#f5f4f0;padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888;border-bottom:2px solid #e0ddd6}
+    td{padding:7px 10px;border-bottom:1px solid #e0ddd6;vertical-align:top}
+    tr:last-child td{border-bottom:none}
+    .late{color:#c8392b;font-weight:700}
+    .ok{color:#1a7f4b;font-weight:700}
+    .note{font-size:10px;color:#d97706;font-style:italic}
+    .footer{margin-top:32px;padding-top:12px;border-top:1px solid #e0ddd6;font-size:10px;color:#888;display:flex;justify-content:space-between}
+    @media print{body{padding:20px}.no-print{display:none}}
+  </style></head><body>
+  <div class="no-print" style="margin-bottom:20px">
+    <button onclick="window.print()" style="padding:10px 24px;background:#c8392b;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">🖨 Print / Save as PDF</button>
+    <span style="margin-left:12px;font-size:12px;color:#888">Use your browser's print dialog → Save as PDF</span>
+  </div>
+  <h1>🍛 Chowpatty Restaurant</h1>
+  <div style="font-size:18px;font-weight:800;margin-bottom:2px">${title}</div>
+  <div class="sub">Generated: ${new Date().toLocaleString('en-GB')}</div>
+  ${bodyHTML}
+  <div class="footer"><span>Chowpatty Restaurant — Delivery Log</span><span>Confidential</span></div>
+  </body></html>`;
+}
+
 function exportDayPDF(){
   const dayTrips = trips.filter(t=>t.date===dashDate&&t.returned);
   const totalCash = dayTrips.reduce((s,t)=>s+t.totalCash,0);
-  let rows = dayTrips.map(t=>
-    t.orders.map(o=>`${t.driver} | #${o.num} | ${o.zone} | ${o.phone||'—'} | ${o.cash.toLocaleString()} TZS | ${t.left}→${t.returnTime} | ${t.duration}min | ${t.late?'LATE':'OK'}${t.notes?' | '+t.notes:''}`).join('\n')
-  ).join('\n');
-  const txt = `CHOWPATTY DELIVERY LOG — ${fmtDateLabel(dashDate)}\n${'='.repeat(60)}\n${rows}\n${'='.repeat(60)}\nTOTAL CASH: ${totalCash.toLocaleString()} TZS | TRIPS: ${dayTrips.length}`;
-  downloadTxt(txt, `chowpatty-${dashDate}.txt`);
+  const late = dayTrips.filter(t=>t.late).length;
+  const avgDur = dayTrips.length?Math.round(dayTrips.reduce((s,t)=>s+t.duration,0)/dayTrips.length):0;
+
+  let body = `
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-label">Trips</div><div class="kpi-val">${dayTrips.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val">${totalCash.toLocaleString()}<span style="font-size:13px;font-weight:400"> TZS</span></div></div>
+    <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
+    <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur}m</div></div>
+  </div>
+  <div class="section"><div class="section-title">All Trips</div>
+  <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
+
+  dayTrips.forEach(t=>{
+    t.orders.forEach((o,i)=>{
+      body += `<tr>
+        <td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td>
+        <td>#${o.num}</td><td>${o.zone}</td>
+        <td>📞 ${o.phone||'—'}</td>
+        <td>${o.cash.toLocaleString()}</td>
+        ${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}
+      </tr>`;
+    });
+    if(t.notes) body += `<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
+  });
+
+  // Driver summary
+  body += `</tbody></table></div><div class="section"><div class="section-title">Driver Summary</div><table>
+  <thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{
+    const dt = dayTrips.filter(t=>t.driver===d.name);
+    const cash = dt.reduce((s,t)=>s+t.totalCash,0);
+    const avg = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+    const lc = dt.filter(t=>t.late).length;
+    body += `<tr><td><strong>${d.name}</strong></td><td>${dt.length}</td><td>${cash.toLocaleString()}</td><td>${avg||'—'}${avg?'min':''}</td><td class="${lc?'late':''}">${lc||'—'}</td></tr>`;
+  });
+  body += `</tbody></table></div>`;
+
+  const w = window.open('','_blank');
+  w.document.write(buildPDFHTML(`Daily Report — ${fmtDateLabel(dashDate)}`, body));
+  w.document.close();
 }
 
 function exportWeek(){
   const { weekTrips, weekDates } = getWeekTrips();
   const totalCash = weekTrips.reduce((s,t)=>s+t.totalCash,0);
   const late = weekTrips.filter(t=>t.late).length;
-  let out = `CHOWPATTY WEEKLY DELIVERY REPORT\nWeek of ${fmtDateLabel(weekDates[0])} — ${fmtDateLabel(weekDates[6])}\n${'='.repeat(60)}\n\n`;
+  const avgDur = weekTrips.length?Math.round(weekTrips.reduce((s,t)=>s+t.duration,0)/weekTrips.length):0;
 
-  // Per day
+  let body = `
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-label">Total Trips</div><div class="kpi-val">${weekTrips.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val">${totalCash.toLocaleString()}<span style="font-size:13px;font-weight:400"> TZS</span></div></div>
+    <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
+    <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur}m</div></div>
+  </div>`;
+
+  // Driver summary
+  body += `<div class="section"><div class="section-title">Driver Summary</div><table>
+  <thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{
+    const dt = weekTrips.filter(t=>t.driver===d.name);
+    const cash = dt.reduce((s,t)=>s+t.totalCash,0);
+    const avg = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+    const lc = dt.filter(t=>t.late).length;
+    body += `<tr><td><strong>${d.name}</strong></td><td>${dt.length}</td><td>${cash.toLocaleString()}</td><td>${avg||'—'}${avg?'min':''}</td><td class="${lc?'late':''}">${lc||'—'}</td></tr>`;
+  });
+  body += `</tbody></table></div>`;
+
+  // Day by day
+  body += `<div class="section"><div class="section-title">Day by Day</div>`;
   weekDates.forEach(d=>{
     const dt = trips.filter(t=>t.date===d&&t.returned);
     if(!dt.length) return;
     const dc = dt.reduce((s,t)=>s+t.totalCash,0);
-    out += `${fmtDateLabel(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS\n`;
+    const dlate = dt.filter(t=>t.late).length;
+    body += `<div style="margin-bottom:16px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:6px">${fmtDateLabel(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dlate?` · <span style="color:#c8392b">${dlate} late</span>`:''}</div>
+      <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
     dt.forEach(t=>{
-      t.orders.forEach(o=>{
-        out += `  ${t.driver} | #${o.num} | ${o.zone} | ${o.phone||'—'} | ${o.cash.toLocaleString()} TZS | ${t.left}→${t.returnTime} | ${t.duration}min | ${t.late?'LATE':'OK'}${t.notes?' | '+t.notes:''}\n`;
+      t.orders.forEach((o,i)=>{
+        body += `<tr>
+          <td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td>
+          <td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>
+          ${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}
+        </tr>`;
       });
+      if(t.notes) body += `<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
     });
-    out += '\n';
+    body += `</tbody></table></div>`;
   });
+  body += `</div>`;
 
-  // Driver summary
-  out += `${'='.repeat(60)}\nDRIVER SUMMARY\n${'='.repeat(60)}\n`;
-  DRIVER_CONFIG.forEach(d=>{
-    const dt = weekTrips.filter(t=>t.driver===d.name);
-    const cash = dt.reduce((s,t)=>s+t.totalCash,0);
-    const lc = dt.filter(t=>t.late).length;
-    const avg = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-    out += `${d.name}: ${dt.length} trips · ${cash.toLocaleString()} TZS · avg ${avg}min · ${lc} late\n`;
-  });
-  out += `\n${'='.repeat(60)}\nTOTAL: ${weekTrips.length} trips · ${totalCash.toLocaleString()} TZS · ${late} late\n`;
-
-  const weekLabel = weekDates[0].slice(0,7);
-  downloadTxt(out, `chowpatty-week-${weekLabel}.txt`);
-}
-
-function downloadTxt(txt, filename){
-  const blob = new Blob([txt], {type:'text/plain'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  a.click();
+  const weekLabel = `${fmtDateLabel(weekDates[0])} — ${fmtDateLabel(weekDates[6])}`;
+  const w = window.open('','_blank');
+  w.document.write(buildPDFHTML(`Weekly Report — ${weekLabel}`, body));
+  w.document.close();
 }
 
 function toggleDayDetail(uid){
