@@ -799,9 +799,6 @@ function submitDepart(){
   trips.push(trip);
   saveTrips();
 
-  // Sync to Sheets
-  orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:leftTime,returned:'',duration:'',late:'',status:'DEPARTED',timestamp:new Date().toLocaleTimeString('en-GB')}));
-
   // Success screen
   document.getElementById('suc-icon').textContent='🛵';
   document.getElementById('suc-title').textContent=`Safari njema, ${activeDriver.name}!`;
@@ -860,23 +857,41 @@ function submitReturn(){
 }
 
 function showCashierPinScreen(){
+  // Reset all cashier PIN state completely
   cashierPinMode = 'confirm-return';
   cashierPinEntry = '';
+  cashierSetupFirst = '';
   activeCashier = null;
-  updateCashierPinDots();
-  document.getElementById('cp-title').textContent = 'Cashier Confirmation';
-  document.getElementById('cp-sub').textContent = 'Select your name and enter PIN to confirm cash received';
-  document.getElementById('cp-err').textContent = '';
-  document.getElementById('cashier-pin-pad').style.display = 'none';
 
-  // Build cashier name buttons dynamically
-  const grid = document.getElementById('cashier-name-grid');
-  grid.innerHTML = CASHIER_CONFIG.map(c=>
-    `<div onclick="cashierSelected('${c.name}')" style="background:${c.bg};border:2px solid ${c.color}40;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent">
-      <div style="width:36px;height:36px;border-radius:50%;background:${c.color}20;color:${c.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin:0 auto 6px">${c.name.slice(0,2).toUpperCase()}</div>
-      <div style="font-size:13px;font-weight:700;color:${c.color}">${c.name}</div>
-    </div>`
-  ).join('');
+  // Reset dots safely
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('cpd'+i);
+    if(d) d.className='pin-dot';
+  }
+
+  // Reset text
+  const title = document.getElementById('cp-title');
+  const sub   = document.getElementById('cp-sub');
+  const err   = document.getElementById('cp-err');
+  const pad   = document.getElementById('cashier-pin-pad');
+  const grid  = document.getElementById('cashier-name-grid');
+
+  if(title) title.textContent = 'Cashier Confirmation';
+  if(sub)   sub.textContent   = 'Select your name to confirm cash received';
+  if(err)   err.textContent   = '';
+  if(pad)   pad.style.display = 'none';
+
+  // Rebuild cashier buttons
+  if(grid){
+    CASHIER_CONFIG = getCashierConfig();
+    grid.style.display = 'grid';
+    grid.innerHTML = CASHIER_CONFIG.map(c=>
+      `<div onclick="cashierSelected('${c.name}')" style="background:${c.bg};border:2px solid ${c.color}40;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none">
+        <div style="width:36px;height:36px;border-radius:50%;background:${c.color}20;color:${c.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin:0 auto 6px">${c.name.slice(0,2).toUpperCase()}</div>
+        <div style="font-size:13px;font-weight:700;color:${c.color}">${c.name}</div>
+      </div>`
+    ).join('');
+  }
 
   show('cashier-pin');
 }
@@ -903,19 +918,28 @@ function cashierSelected(name){
 }
 
 function resetCashierPinScreen(){
-  document.getElementById('cashier-pin-pad').style.display = 'none';
-  document.getElementById('cashier-name-grid').style.display = 'grid';
   cashierPinEntry = '';
+  cashierSetupFirst = '';
   activeCashier = null;
   cashierPinMode = 'confirm-return';
-  updateCashierPinDots();
-  document.getElementById('cp-title').textContent = 'Cashier Confirmation';
-  document.getElementById('cp-sub').textContent = 'Select your name and enter PIN to confirm cash received';
-  document.getElementById('cp-err').textContent = '';
+  for(let i=0;i<4;i++){ const d=document.getElementById('cpd'+i); if(d) d.className='pin-dot'; }
+  const pad  = document.getElementById('cashier-pin-pad');
+  const grid = document.getElementById('cashier-name-grid');
+  const err  = document.getElementById('cp-err');
+  const title= document.getElementById('cp-title');
+  const sub  = document.getElementById('cp-sub');
+  if(pad)  pad.style.display  = 'none';
+  if(grid) grid.style.display = 'grid';
+  if(err)  err.textContent    = '';
+  if(title)title.textContent  = 'Cashier Confirmation';
+  if(sub)  sub.textContent    = 'Select your name to confirm cash received';
 }
 
 function updateCashierPinDots(){
-  for(let i=0;i<4;i++) document.getElementById('cpd'+i).className='pin-dot'+(i<cashierPinEntry.length?' filled':'');
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('cpd'+i);
+    if(d) d.className='pin-dot'+(i<cashierPinEntry.length?' filled':'');
+  }
 }
 
 function cpk(k){
