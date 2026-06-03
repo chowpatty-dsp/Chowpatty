@@ -1130,6 +1130,31 @@ function exportWeekPDF(){
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━
+// AUTO-DELETE SUNDAY 23:59
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function checkAutoDelete(){
+  const now = new Date();
+  const key = 'cp_last_autodelete';
+  const lastDelete = localStorage.getItem(key);
+  const todayKey = now.toISOString().slice(0,10);
+
+  // Only run on Sunday (day 0)
+  if(now.getDay()===0 && now.getHours()===23 && now.getMinutes()===59){
+    if(lastDelete !== todayKey){
+      // Delete all trip data
+      trips = [];
+      saveTrips();
+      localStorage.setItem(key, todayKey);
+      console.log('Auto-deleted all trip data at Sunday 23:59');
+    }
+  }
+}
+
+// Check every minute
+setInterval(checkAutoDelete, 60000);
+checkAutoDelete();
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
 // INIT
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 goHome();
