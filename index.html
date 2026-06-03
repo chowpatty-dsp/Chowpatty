@@ -177,6 +177,16 @@ textarea.f-input{resize:none;line-height:1.5}
 .date-select{width:100%;padding:10px 14px;background:var(--white);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);outline:none;-webkit-appearance:none;margin-bottom:4px}
 .empty{color:var(--muted);font-size:14px;text-align:center;padding:24px}
 
+.cashier-search{width:100%;padding:13px 16px;background:var(--white);border:2px solid var(--border);border-radius:12px;font-family:var(--font);font-size:15px;color:var(--text);outline:none;transition:border-color .15s}
+.cashier-search:focus{border-color:var(--red)}
+.search-result{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:8px}
+.search-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.search-result-driver{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
+.search-result-cash{font-size:15px;font-weight:800;color:var(--green)}
+.search-result-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--border)}
+.search-result-row:last-child{border-bottom:none}
+.no-result{color:var(--muted);font-size:14px;text-align:center;padding:20px}
+
 /* ── MODALS ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
 .modal{background:var(--white);border-radius:16px;padding:26px 22px;width:100%;max-width:320px;text-align:center}
@@ -195,7 +205,8 @@ textarea.f-input{resize:none;line-height:1.5}
   <div class="home-title">Bonyeza jina lako</div>
   <div class="home-sub">Sajili kutoka au kurudi</div>
   <div class="driver-grid" id="driver-grid"></div>
-  <div class="home-footer">
+  <div class="home-footer" style="display:flex;flex-direction:column;gap:8px">
+    <button class="btn-mgr" onclick="show('cashier')">🧾 Cashier View</button>
     <button class="btn-mgr" onclick="startManagerPin()">📊 Meneja</button>
   </div>
 </div>
@@ -217,6 +228,28 @@ textarea.f-input{resize:none;line-height:1.5}
     <div class="pin-key" onclick="goHome()" style="font-size:12px;color:var(--muted)">Back</div>
   </div>
   <div class="pin-err" id="pin-err"></div>
+</div>
+
+<!-- CASHIER PIN -->
+<div class="screen" id="cashier-pin" style="background:var(--white);align-items:center;justify-content:center">
+  <div class="pin-title" id="cp-title"></div>
+  <div class="pin-sub" id="cp-sub"></div>
+  <div class="pin-dots">
+    <div class="pin-dot" id="cpd0"></div><div class="pin-dot" id="cpd1"></div>
+    <div class="pin-dot" id="cpd2"></div><div class="pin-dot" id="cpd3"></div>
+  </div>
+  <div id="cashier-name-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;width:100%;max-width:320px;padding:0 24px"></div>
+  <div id="cashier-pin-pad" style="display:none;flex-direction:column;align-items:center;gap:14px">
+    <div class="pin-pad">
+      <div class="pin-key" onclick="cpk('1')">1</div><div class="pin-key" onclick="cpk('2')">2</div><div class="pin-key" onclick="cpk('3')">3</div>
+      <div class="pin-key" onclick="cpk('4')">4</div><div class="pin-key" onclick="cpk('5')">5</div><div class="pin-key" onclick="cpk('6')">6</div>
+      <div class="pin-key" onclick="cpk('7')">7</div><div class="pin-key" onclick="cpk('8')">8</div><div class="pin-key" onclick="cpk('9')">9</div>
+      <div class="pin-key" onclick="cpk('DEL')" style="font-size:16px">⌫</div>
+      <div class="pin-key" onclick="cpk('0')">0</div>
+      <div class="pin-key" onclick="resetCashierPinScreen()" style="font-size:12px;color:var(--muted)">Back</div>
+    </div>
+  </div>
+  <div class="pin-err" id="cp-err"></div>
 </div>
 
 <!-- DEPART -->
@@ -264,6 +297,15 @@ textarea.f-input{resize:none;line-height:1.5}
   <button class="btn-done" onclick="goHome()">Imekamilika</button>
 </div>
 
+<!-- CASHIER -->
+<div class="screen" id="cashier" style="background:var(--bg);overflow-y:auto">
+  <div class="dash-header">
+    <div><div class="dash-title">Cashier View</div><div class="dash-sub" id="cashier-date"></div></div>
+    <button class="dash-exit" onclick="goHome()">← Back</button>
+  </div>
+  <div class="dash-body" id="cashier-body"></div>
+</div>
+
 <!-- DASHBOARD -->
 <div class="screen" id="dash">
   <div class="dash-header">
@@ -271,6 +313,57 @@ textarea.f-input{resize:none;line-height:1.5}
     <button class="dash-exit" onclick="goHome()">← Exit</button>
   </div>
   <div class="dash-body" id="dash-body"></div>
+</div>
+
+<!-- CANCEL TRIP MODAL -->
+<div class="overlay" id="modal-cancel-trip" style="display:none">
+  <div class="modal">
+    <div class="modal-title">Cancel Delivery?</div>
+    <div class="modal-sub" id="cancel-trip-sub">This will mark the trip as cancelled. Driver returns with no cash collected.</div>
+    <div class="pin-dots" style="justify-content:center;margin:14px 0">
+      <div class="pin-dot" id="ctpd0"></div><div class="pin-dot" id="ctpd1"></div>
+      <div class="pin-dot" id="ctpd2"></div><div class="pin-dot" id="ctpd3"></div>
+    </div>
+    <div class="pin-pad" style="margin:0 auto 0">
+      <div class="pin-key" onclick="ctpk('1')">1</div><div class="pin-key" onclick="ctpk('2')">2</div><div class="pin-key" onclick="ctpk('3')">3</div>
+      <div class="pin-key" onclick="ctpk('4')">4</div><div class="pin-key" onclick="ctpk('5')">5</div><div class="pin-key" onclick="ctpk('6')">6</div>
+      <div class="pin-key" onclick="ctpk('7')">7</div><div class="pin-key" onclick="ctpk('8')">8</div><div class="pin-key" onclick="ctpk('9')">9</div>
+      <div class="pin-key" onclick="ctpk('DEL')" style="font-size:16px">⌫</div>
+      <div class="pin-key" onclick="ctpk('0')">0</div>
+      <div class="pin-key" onclick="closeCancelTrip()" style="font-size:12px;color:var(--muted)">Cancel</div>
+    </div>
+    <div class="pin-err" id="ct-pin-err" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="overlay" id="modal-settings" style="display:none;align-items:flex-start;padding-top:40px">
+  <div class="modal" style="max-width:420px;max-height:80vh;overflow-y:auto;text-align:left">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="modal-title" style="margin:0">⚙️ Settings</div>
+      <button onclick="closeSettings()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted)">✕</button>
+    </div>
+
+    <!-- Individual PIN reset -->
+    <div style="margin-bottom:20px">
+      <div class="sec-title" style="margin-bottom:10px">Reset Individual PIN</div>
+      <div id="settings-pin-list"></div>
+    </div>
+
+    <!-- Driver management -->
+    <div style="margin-bottom:20px">
+      <div class="sec-title" style="margin-bottom:10px">Drivers</div>
+      <div id="settings-driver-list"></div>
+      <button onclick="addStaffMember('driver')" style="width:100%;padding:9px;background:transparent;border:2px dashed var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-top:6px">+ Add Driver</button>
+    </div>
+
+    <!-- Cashier management -->
+    <div style="margin-bottom:8px">
+      <div class="sec-title" style="margin-bottom:10px">Cashiers</div>
+      <div id="settings-cashier-list"></div>
+      <button onclick="addStaffMember('cashier')" style="width:100%;padding:9px;background:transparent;border:2px dashed var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-top:6px">+ Add Cashier</button>
+    </div>
+  </div>
 </div>
 
 <!-- CONFIRM MODAL -->
@@ -315,7 +408,7 @@ const LATE_MIN   = 60;
 const MAX_ORDERS = 3;
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz-7BUB2K-ggCnoM-mv7izIPcL4D3v16T8kCzXJ5Ivy4Il9P2AT9hI9Mgq9P1lGfIeA7Q/exec';
 
-const DRIVER_CONFIG = [
+const DEFAULT_DRIVERS = [
   { name:'Omari',   color:'#b7791f', bg:'#fef9e7' },
   { name:'Moses',   color:'#1a7f4b', bg:'#edf7f2' },
   { name:'Nasoro',  color:'#2563eb', bg:'#eff6ff' },
@@ -325,7 +418,37 @@ const DRIVER_CONFIG = [
   { name:'Trainer', color:'#4b5563', bg:'#f3f4f6', fixedPin:'9999' },
 ];
 
-const ZONES = ['Kariakoo','Ilala','Town','Upanga','Sea View'];
+const DEFAULT_CASHIERS = [
+  { name:'Mehdi',   color:'#b7791f', bg:'#fef9e7' },
+  { name:'Rennata', color:'#1a7f4b', bg:'#edf7f2' },
+  { name:'Irene',   color:'#2563eb', bg:'#eff6ff' },
+  { name:'Mary',    color:'#7c3aed', bg:'#f5f3ff' },
+];
+
+const COLOR_PALETTE = [
+  {color:'#b7791f',bg:'#fef9e7'},{color:'#1a7f4b',bg:'#edf7f2'},
+  {color:'#2563eb',bg:'#eff6ff'},{color:'#7c3aed',bg:'#f5f3ff'},
+  {color:'#c8392b',bg:'#fdf0ef'},{color:'#0891b2',bg:'#ecfeff'},
+  {color:'#4b5563',bg:'#f3f4f6'},{color:'#b45309',bg:'#fef3c7'},
+];
+
+function getDriverConfig(){
+  const stored = localStorage.getItem('cp_drivers');
+  if(stored){ try{ return JSON.parse(stored); }catch(e){} }
+  return DEFAULT_DRIVERS.map(d=>({...d}));
+}
+function getCashierConfig(){
+  const stored = localStorage.getItem('cp_cashiers');
+  if(stored){ try{ return JSON.parse(stored); }catch(e){} }
+  return DEFAULT_CASHIERS.map(c=>({...c}));
+}
+function saveDriverConfig(cfg){ localStorage.setItem('cp_drivers', JSON.stringify(cfg)); }
+function saveCashierConfig(cfg){ localStorage.setItem('cp_cashiers', JSON.stringify(cfg)); }
+
+const ZONES = ['Kariakoo','Fire','Town','Upanga','Sea View','Kamata'];
+
+let DRIVER_CONFIG = getDriverConfig();
+let CASHIER_CONFIG = getCashierConfig();
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 // STATE
@@ -340,6 +463,13 @@ let dashView      = 'day';
 let dashDate      = todayStr();
 let deleteAction  = '';
 let delPinEntry   = '';
+let cashierPinMode = ''; // 'confirm-return' | 'cashier-setup' | 'cashier-setup-confirm'
+let cashierPinEntry = '';
+let cashierSetupFirst = '';
+let activeCashier = null;
+let pendingTrip = null;
+let cancelTripPinEntry = '';
+let cancelTripId = null;
 
 function saveTrips(){ localStorage.setItem('cp_trips', JSON.stringify(trips)); }
 function todayStr(){ return new Date().toISOString().slice(0,10); }
@@ -354,12 +484,17 @@ function getPin(name){
 }
 function hasPin(name){ return !!getPin(name); }
 
+function getStoredCashierPins(){ return JSON.parse(localStorage.getItem('cp_cashier_pins')||'{}'); }
+function saveCashierPin(name,pin){ const p=getStoredCashierPins(); p[name]=pin; localStorage.setItem('cp_cashier_pins',JSON.stringify(p)); }
+function getCashierPin(name){ return getStoredCashierPins()[name]||null; }
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 // SCREEN NAVIGATION
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  if(id==='cashier') buildCashier();
 }
 
 function goHome(){
@@ -371,6 +506,8 @@ function goHome(){
 // HOME
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 function buildHome(){
+  DRIVER_CONFIG = getDriverConfig();
+  CASHIER_CONFIG = getCashierConfig();
   const grid = document.getElementById('driver-grid');
   grid.innerHTML = DRIVER_CONFIG.map(d=>{
     const isOut = trips.some(t=>t.driver===d.name && !t.returned);
@@ -528,11 +665,17 @@ function addOrder(){
   orderCount++;
   const idx=orderCount;
   const taken=getTakenNums();
-  const options=Array.from({length:30},(_,i)=>{
+  const tOptions=Array.from({length:30},(_,i)=>{
     const n='T'+(i+1);
     const t=taken.includes(n);
     return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
   }).join('');
+  const dOptions=Array.from({length:15},(_,i)=>{
+    const n='D'+(i+1);
+    const t=taken.includes(n);
+    return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
+  }).join('');
+  const options=`<optgroup label="T Orders">${tOptions}</optgroup><optgroup label="D Orders">${dOptions}</optgroup>`;
 
   const div=document.createElement('div');
   div.className='order-card';
@@ -710,26 +853,163 @@ function submitReturn(){
   const late=dur>LATE_MIN;
   const notes=document.getElementById('ret-notes').value.trim();
 
-  trip.returned=true;
-  trip.returnTime=rt;
-  trip.duration=dur;
-  trip.late=late;
-  trip.notes=notes;
+  // Don't mark as returned yet — wait for cashier PIN confirmation
+  // Just store all the data for when cashier confirms
+  pendingTrip = {trip, rt, dur, late, notes};
+
+  // Show cashier PIN screen
+  showCashierPinScreen();
+}
+
+function showCashierPinScreen(){
+  cashierPinMode = 'confirm-return';
+  cashierPinEntry = '';
+  activeCashier = null;
+  updateCashierPinDots();
+  document.getElementById('cp-title').textContent = 'Cashier Confirmation';
+  document.getElementById('cp-sub').textContent = 'Select your name and enter PIN to confirm cash received';
+  document.getElementById('cp-err').textContent = '';
+  document.getElementById('cashier-pin-pad').style.display = 'none';
+
+  // Build cashier name buttons dynamically
+  const grid = document.getElementById('cashier-name-grid');
+  grid.innerHTML = CASHIER_CONFIG.map(c=>
+    `<div onclick="cashierSelected('${c.name}')" style="background:${c.bg};border:2px solid ${c.color}40;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent">
+      <div style="width:36px;height:36px;border-radius:50%;background:${c.color}20;color:${c.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin:0 auto 6px">${c.name.slice(0,2).toUpperCase()}</div>
+      <div style="font-size:13px;font-weight:700;color:${c.color}">${c.name}</div>
+    </div>`
+  ).join('');
+
+  show('cashier-pin');
+}
+
+function cashierSelected(name){
+  activeCashier = CASHIER_CONFIG.find(c=>c.name===name);
+  const stored = getCashierPin(name);
+  cashierPinEntry = '';
+  updateCashierPinDots();
+  document.getElementById('cp-err').textContent = '';
+
+  if(!stored){
+    cashierPinMode = 'cashier-setup';
+    document.getElementById('cp-title').textContent = `Hey ${name} 👋`;
+    document.getElementById('cp-sub').textContent = 'First time? Choose a 4-digit PIN';
+  } else {
+    cashierPinMode = 'confirm-return';
+    document.getElementById('cp-title').textContent = `${name}`;
+    document.getElementById('cp-sub').textContent = 'Enter PIN to confirm cash received';
+  }
+  // Hide name grid, show PIN pad
+  document.getElementById('cashier-name-grid').style.display = 'none';
+  document.getElementById('cashier-pin-pad').style.display = 'flex';
+}
+
+function resetCashierPinScreen(){
+  document.getElementById('cashier-pin-pad').style.display = 'none';
+  document.getElementById('cashier-name-grid').style.display = 'grid';
+  cashierPinEntry = '';
+  activeCashier = null;
+  cashierPinMode = 'confirm-return';
+  updateCashierPinDots();
+  document.getElementById('cp-title').textContent = 'Cashier Confirmation';
+  document.getElementById('cp-sub').textContent = 'Select your name and enter PIN to confirm cash received';
+  document.getElementById('cp-err').textContent = '';
+}
+
+function updateCashierPinDots(){
+  for(let i=0;i<4;i++) document.getElementById('cpd'+i).className='pin-dot'+(i<cashierPinEntry.length?' filled':'');
+}
+
+function cpk(k){
+  if(k==='DEL'){ cashierPinEntry=cashierPinEntry.slice(0,-1); updateCashierPinDots(); return; }
+  if(cashierPinEntry.length>=4) return;
+  cashierPinEntry+=k; updateCashierPinDots();
+  if(cashierPinEntry.length<4) return;
+
+  const entered = cashierPinEntry;
+  const capturedCashier = activeCashier;
+  const capturedMode = cashierPinMode;
+  cashierPinEntry = '';
+
+  setTimeout(()=>{
+    // Restore captured state in case something reset it
+    if(!activeCashier && capturedCashier) activeCashier = capturedCashier;
+    if(!cashierPinMode && capturedMode) cashierPinMode = capturedMode;
+    handleCashierPin(entered);
+  }, 150);
+}
+
+function handleCashierPin(entered){
+  // Manager PIN always works
+  if(entered === MGR_PIN){
+    confirmCashReceived('Manager');
+    return;
+  }
+
+  if(cashierPinMode === 'cashier-setup'){
+    cashierSetupFirst = entered;
+    cashierPinMode = 'cashier-setup-confirm';
+    updateCashierPinDots();
+    document.getElementById('cp-title').textContent = 'Confirm PIN';
+    document.getElementById('cp-sub').textContent = 'Enter the same PIN again';
+    return;
+  }
+
+  if(cashierPinMode === 'cashier-setup-confirm'){
+    if(entered === cashierSetupFirst){
+      saveCashierPin(activeCashier.name, entered);
+      cashierSetupFirst = '';
+      confirmCashReceived(activeCashier.name);
+    } else {
+      cashierSetupFirst = '';
+      cashierPinMode = 'cashier-setup';
+      document.getElementById('cp-err').textContent = 'PINs did not match. Try again.';
+      updateCashierPinDots();
+    }
+    return;
+  }
+
+  // Normal verify
+  if(!activeCashier){ document.getElementById('cp-err').textContent = 'Please select your name first.'; return; }
+  const stored = getCashierPin(activeCashier.name);
+  if(!stored){ document.getElementById('cp-err').textContent = 'No PIN set. Please go back and select your name.'; return; }
+  if(entered === stored){
+    confirmCashReceived(activeCashier.name);
+  } else {
+    document.getElementById('cp-err').textContent = 'Wrong PIN. Try again.';
+    updateCashierPinDots();
+  }
+}
+
+function confirmCashReceived(cashierName){
+  if(!pendingTrip) return;
+  const {trip, rt, dur, late, notes} = pendingTrip;
+
+  trip.returned = true;
+  trip.returnTime = rt;
+  trip.duration = dur;
+  trip.late = late;
+  trip.notes = notes;
+  trip.cashierConfirmed = cashierName;
+  trip.cancelled = false;
   saveTrips();
 
   // Sync to Sheets
-  trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:trip.left,returned:rt,duration:dur,late:late?'YES':'NO',status:'RETURNED',notes,timestamp:new Date().toLocaleTimeString('en-GB')}));
+  trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:trip.left,returned:rt,duration:dur,late:late?'YES':'NO',status:'RETURNED',notes,cashier:cashierName,timestamp:new Date().toLocaleTimeString('en-GB')}));
 
-  document.getElementById('suc-icon').textContent='✓';
-  document.getElementById('suc-title').textContent=`Karibu tena, ${activeDriver.name}!`;
-  document.getElementById('suc-sub').textContent=late?`${dur}min — imepigwa bendera ya kuchelewa`:`${dur}min — kwa wakati`;
-  document.getElementById('suc-card').innerHTML=
+  pendingTrip = null;
+
+  document.getElementById('suc-icon').textContent = '✓';
+  document.getElementById('suc-title').textContent = `Karibu tena, ${activeDriver.name}!`;
+  document.getElementById('suc-sub').textContent = late ? `${dur}min — imepigwa bendera ya kuchelewa` : `${dur}min — kwa wakati`;
+  document.getElementById('suc-card').innerHTML =
     `<div class="sc-row"><span>Ametoka</span><span class="sc-val">${trip.left}</span></div>`+
     `<div class="sc-row"><span>Amerudi</span><span class="sc-val">${rt}</span></div>`+
     `<div class="sc-row"><span>Muda</span><span class="sc-val">${dur}min${late?' ⚠️':''}</span></div>`+
-    `<div class="sc-row"><span>Pesa</span><span class="sc-val">${trip.totalCash.toLocaleString()} TZS</span></div>`;
+    `<div class="sc-row"><span>Pesa</span><span class="sc-val">${trip.totalCash.toLocaleString()} TZS</span></div>`+
+    `<div class="sc-row"><span>Confirmed by</span><span class="sc-val">${cashierName}</span></div>`;
   show('success');
-  setTimeout(()=>goHome(),6000);
+  setTimeout(()=>goHome(), 6000);
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━
@@ -881,7 +1161,10 @@ function buildDashboard(){
         const now=new Date(); const [lh,lm]=t.left.split(':').map(Number);
         const el=(now.getHours()*60+now.getMinutes())-(lh*60+lm);
         h+=`<div class="alert-card amber">
-          <div class="alert-title">${t.driver} — departed ${t.left} (${el}min ago)</div>
+          <div class="alert-title" style="display:flex;justify-content:space-between;align-items:center">
+            <span>${t.driver} — departed ${t.left} (${el}min ago)</span>
+            <button onclick="startCancelTrip(${t.id})" style="padding:4px 10px;background:var(--red-light);border:1.5px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Cancel</button>
+          </div>
           ${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 <strong>${o.phone||'—'}</strong></div>`).join('')}
         </div>`;
       });
@@ -935,8 +1218,10 @@ function buildDashboard(){
             <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
             <div class="tm">Cash<div class="tm-val">${t.totalCash.toLocaleString()}</div></div>
           </div>
-          <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}</div>
-          ${t.notes?`<div class="trip-note">📝 ${t.notes}</div>`:''}
+          <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}</div>
+          ${t.cashierConfirmed?`<div style="font-size:11px;color:var(--green);margin-top:4px;font-weight:600">✓ Cash confirmed by ${t.cashierConfirmed}</div>`:''}
+          ${t.cancelled?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">✕ CANCELLED</div>`:''}
+          ${t.notes&&!t.cancelled?`<div class="trip-note">📝 ${t.notes}</div>`:''}
         </div>`;
       });
       h+=`</div>`;
@@ -947,6 +1232,8 @@ function buildDashboard(){
     h+=`<button class="btn-export" onclick="exportDayPDF()">📄 Export Day Report (PDF)</button>`;
     h+=`<button class="btn-clear" onclick="startClear('day')">🗑 Clear ${fmtDate(dashDate)}</button>`;
     h+=`<button class="btn-muted" onclick="startClear('pins')">🔑 Reset All Driver PINs</button>`;
+    h+=`<button class="btn-muted" onclick="startClear('cashier-pins')">🔑 Reset All Cashier PINs</button>`;
+    h+=`<button class="btn-muted" onclick="openSettings()">⚙️ Manage Staff & PINs</button>`;
   }
 
   document.getElementById('dash-body').innerHTML=h;
@@ -971,6 +1258,7 @@ function startClear(action){
   if(action==='day'){   title='Clear Day?';      sub='Delete all trips for '+fmtDate(dashDate)+'? Cannot be undone.'; }
   if(action==='week'){  title='Clear Week?';     sub='Delete all trips for this week? Cannot be undone.'; }
   if(action==='pins'){  title='Reset All PINs?'; sub='All drivers will need to set a new PIN on next use. Trip data is kept.'; }
+  if(action==='cashier-pins'){ title='Reset Cashier PINs?'; sub='All cashiers will need to set a new PIN on next use. Trip data is kept.'; }
   document.getElementById('mc-title').textContent=title;
   document.getElementById('mc-sub').textContent=sub;
   document.getElementById('modal-confirm').style.display='flex';
@@ -1017,6 +1305,9 @@ function execDelete(){
     saveTrips(); dashDate=todayStr(); buildDashboard();
   } else if(deleteAction==='pins'){
     localStorage.removeItem('cp_pins');
+    buildDashboard();
+  } else if(deleteAction==='cashier-pins'){
+    localStorage.removeItem('cp_cashier_pins');
     buildDashboard();
   }
 }
@@ -1130,6 +1421,305 @@ function exportWeekPDF(){
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━
+// CANCEL TRIP
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function startCancelTrip(tripId){
+  cancelTripId = tripId;
+  cancelTripPinEntry = '';
+  updateCtDots();
+  document.getElementById('ct-pin-err').textContent = '';
+  const t = trips.find(t=>t.id===tripId);
+  document.getElementById('cancel-trip-sub').textContent = t ? `Cancel ${t.driver}'s delivery? Driver returns with no cash.` : 'Cancel this delivery?';
+  document.getElementById('modal-cancel-trip').style.display = 'flex';
+}
+
+function closeCancelTrip(){
+  document.getElementById('modal-cancel-trip').style.display = 'none';
+  cancelTripPinEntry = '';
+  updateCtDots();
+}
+
+function updateCtDots(){ for(let i=0;i<4;i++) document.getElementById('ctpd'+i).className='pin-dot'+(i<cancelTripPinEntry.length?' filled':''); }
+
+function ctpk(k){
+  if(k==='DEL'){ cancelTripPinEntry=cancelTripPinEntry.slice(0,-1); updateCtDots(); return; }
+  if(cancelTripPinEntry.length>=4) return;
+  cancelTripPinEntry+=k; updateCtDots();
+  if(cancelTripPinEntry.length<4) return;
+  const entered=cancelTripPinEntry; cancelTripPinEntry='';
+  setTimeout(()=>{
+    if(entered===MGR_PIN){
+      closeCancelTrip();
+      execCancelTrip();
+    } else {
+      document.getElementById('ct-pin-err').textContent='Wrong manager PIN.';
+      updateCtDots();
+    }
+  },150);
+}
+
+function execCancelTrip(){
+  const trip = trips.find(t=>t.id===cancelTripId);
+  if(!trip) return;
+  trip.returned = true;
+  trip.cancelled = true;
+  trip.returnTime = fmtTime(new Date());
+  trip.duration = 0;
+  trip.late = false;
+  trip.totalCash = 0;
+  trip.notes = 'CANCELLED by manager';
+  saveTrips();
+  buildDashboard();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// CASHIER VIEW
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function buildCashier(){
+  DRIVER_CONFIG = getDriverConfig();
+  CASHIER_CONFIG = getCashierConfig();
+  const today = todayStr();
+  const todayTrips = trips.filter(t=>t.date===today);
+  const completed  = todayTrips.filter(t=>t.returned);
+  const out        = todayTrips.filter(t=>!t.returned);
+  const totalCash  = completed.reduce((s,t)=>s+t.totalCash,0);
+
+  document.getElementById('cashier-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+
+  let h = '';
+
+  // KPIs
+  h += `<div class="kpi" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px">
+    <div class="kpi-label">Deliveries Today</div>
+    <div class="kpi-val">${completed.length}</div>
+    <div class="kpi-sub">${out.length} driver${out.length!==1?'s':''} currently out</div>
+  </div>`;
+
+  // Drivers out
+  if(out.length){
+    h += `<div><div class="sec-title">🛵 Currently Out (${out.length})</div>`;
+    out.forEach(t=>{
+      const drv = DRIVER_CONFIG.find(d=>d.name===t.driver);
+      const now = new Date();
+      const [lh,lm] = t.left.split(':').map(Number);
+      const elapsed = (now.getHours()*60+now.getMinutes())-(lh*60+lm);
+      h += `<div class="alert-card amber">
+        <div class="alert-title" style="display:flex;align-items:center;gap:8px">
+          <div class="trip-av" style="background:${drv?.bg};color:${drv?.color};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${t.driver.slice(0,2).toUpperCase()}</div>
+          ${t.driver} — left at ${t.left} (${elapsed}min ago)
+        </div>
+        <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px">
+          ${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'} · ${o.cash.toLocaleString()} TZS</div>`).join('')}
+        </div>
+      </div>`;
+    });
+    h += `</div>`;
+  } else {
+    h += `<div class="alert-card" style="border-left-color:var(--green)"><div class="alert-title" style="color:var(--green)">✓ All drivers are back</div></div>`;
+  }
+
+  // Phone search
+  h += `<div>
+    <div class="sec-title">🔍 Search by Customer Phone</div>
+    <input class="cashier-search" id="cashier-search-input" type="tel" inputmode="numeric" placeholder="Enter customer phone number..." oninput="searchByPhone(this.value)">
+    <div id="cashier-search-results" style="margin-top:10px"></div>
+  </div>`;
+
+  // Today's completed deliveries
+  if(completed.length){
+    h += `<div><div class="sec-title">Today's Completed Deliveries</div>`;
+    [...completed].reverse().forEach(t=>{
+      const drv = DRIVER_CONFIG.find(d=>d.name===t.driver);
+      h += `<div class="trip-card">
+        <div class="trip-head">
+          <div class="trip-driver-row">
+            <div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>
+            ${t.driver}
+          </div>
+          <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
+        </div>
+        <div class="trip-meta">
+          <div class="tm">Left<div class="tm-val">${t.left}</div></div>
+          <div class="tm">Back<div class="tm-val">${t.returnTime}</div></div>
+          <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
+          <div class="tm">Cash<div class="tm-val">${t.totalCash.toLocaleString()}</div></div>
+        </div>
+        <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}</div>
+      </div>`;
+    });
+    h += `</div>`;
+  }
+
+  document.getElementById('cashier-body').innerHTML = h;
+}
+
+function searchByPhone(query){
+  const results = document.getElementById('cashier-search-results');
+  if(!query || query.replace(/\D/g,'').length < 4){ results.innerHTML=''; return; }
+
+  const q = query.replace(/\D/g,'');
+  const matches = [];
+
+  trips.forEach(t=>{
+    t.orders.forEach(o=>{
+      if(o.phone && o.phone.replace(/\D/g,'').includes(q)){
+        matches.push({trip:t, order:o});
+      }
+    });
+  });
+
+  if(!matches.length){
+    results.innerHTML = `<div class="no-result">No deliveries found for this number.</div>`;
+    return;
+  }
+
+  results.innerHTML = matches.map(({trip:t, order:o})=>{
+    const drv = DRIVER_CONFIG.find(d=>d.name===t.driver);
+    const status = !t.returned ? 'Out for delivery' : t.late ? 'Delivered (Late)' : 'Delivered';
+    const statusColor = !t.returned ? 'var(--amber)' : t.late ? 'var(--red)' : 'var(--green)';
+    return `<div class="search-result">
+      <div class="search-result-header">
+        <div class="search-result-driver">
+          <div class="trip-av" style="background:${drv?.bg};color:${drv?.color};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${t.driver.slice(0,2).toUpperCase()}</div>
+          ${t.driver}
+        </div>
+        <span style="font-size:12px;font-weight:700;color:${statusColor}">${status}</span>
+      </div>
+      <div class="search-result-row"><span style="color:var(--muted)">Order</span><span style="font-weight:600">#${o.num}</span></div>
+      <div class="search-result-row"><span style="color:var(--muted)">Zone</span><span style="font-weight:600">${o.zone}</span></div>
+      <div class="search-result-row"><span style="color:var(--muted)">Amount</span><span style="font-weight:600;color:var(--green)">${o.cash.toLocaleString()} TZS</span></div>
+      <div class="search-result-row"><span style="color:var(--muted)">Departed</span><span style="font-weight:600">${t.left}</span></div>
+      ${t.returned?`<div class="search-result-row"><span style="color:var(--muted)">Returned</span><span style="font-weight:600">${t.returnTime}</span></div>`:''}
+      <div class="search-result-row"><span style="color:var(--muted)">Date</span><span style="font-weight:600">${fmtDate(t.date)}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// SETTINGS
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function openSettings(){
+  DRIVER_CONFIG = getDriverConfig();
+  CASHIER_CONFIG = getCashierConfig();
+  buildSettingsPinList();
+  buildSettingsDriverList();
+  buildSettingsCashierList();
+  document.getElementById('modal-settings').style.display='flex';
+}
+
+function closeSettings(){
+  document.getElementById('modal-settings').style.display='none';
+  DRIVER_CONFIG = getDriverConfig();
+  CASHIER_CONFIG = getCashierConfig();
+  buildHome();
+}
+
+function buildSettingsPinList(){
+  const pins = getStoredPins();
+  const cpins = getStoredCashierPins();
+  const drivers = getDriverConfig();
+  const cashiers = getCashierConfig();
+
+  let h = '';
+
+  drivers.forEach(d=>{
+    const hasP = d.fixedPin ? true : !!pins[d.name];
+    h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:28px;height:28px;border-radius:50%;background:${d.bg};color:${d.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${d.name.slice(0,2).toUpperCase()}</div>
+        <span style="font-size:13px;font-weight:600">${d.name} <span style="color:var(--muted);font-size:11px">(driver)</span></span>
+      </div>
+      ${d.fixedPin
+        ? `<span style="font-size:11px;color:var(--muted)">Fixed PIN</span>`
+        : hasP
+          ? `<button onclick="resetIndividualPin('driver','${d.name}')" style="padding:5px 10px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Reset PIN</button>`
+          : `<span style="font-size:11px;color:var(--muted)">No PIN set</span>`
+      }
+    </div>`;
+  });
+
+  cashiers.forEach(c=>{
+    const hasP = !!cpins[c.name];
+    h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:28px;height:28px;border-radius:50%;background:${c.bg};color:${c.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${c.name.slice(0,2).toUpperCase()}</div>
+        <span style="font-size:13px;font-weight:600">${c.name} <span style="color:var(--muted);font-size:11px">(cashier)</span></span>
+      </div>
+      ${hasP
+        ? `<button onclick="resetIndividualPin('cashier','${c.name}')" style="padding:5px 10px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Reset PIN</button>`
+        : `<span style="font-size:11px;color:var(--muted)">No PIN set</span>`
+      }
+    </div>`;
+  });
+
+  document.getElementById('settings-pin-list').innerHTML = h || '<div style="color:var(--muted);font-size:13px">No staff added yet.</div>';
+}
+
+function resetIndividualPin(type, name){
+  if(type === 'driver'){
+    const p = getStoredPins(); delete p[name]; localStorage.setItem('cp_pins', JSON.stringify(p));
+  } else {
+    const p = getStoredCashierPins(); delete p[name]; localStorage.setItem('cp_cashier_pins', JSON.stringify(p));
+  }
+  buildSettingsPinList();
+}
+
+function buildSettingsDriverList(){
+  const drivers = getDriverConfig();
+  document.getElementById('settings-driver-list').innerHTML = drivers.map((d,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="width:28px;height:28px;border-radius:50%;background:${d.bg};color:${d.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${d.name.slice(0,2).toUpperCase()}</div>
+      <input value="${d.name}" onchange="renameStaff('driver',${i},this.value)" style="flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:13px;color:var(--text);background:var(--bg);outline:none">
+      ${d.fixedPin ? `<span style="font-size:10px;color:var(--muted);padding:0 4px">Fixed</span>` : `<button onclick="removeStaff('driver',${i})" style="padding:5px 8px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;flex-shrink:0">✕</button>`}
+    </div>`).join('');
+}
+
+function buildSettingsCashierList(){
+  const cashiers = getCashierConfig();
+  document.getElementById('settings-cashier-list').innerHTML = cashiers.map((c,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="width:28px;height:28px;border-radius:50%;background:${c.bg};color:${c.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${c.name.slice(0,2).toUpperCase()}</div>
+      <input value="${c.name}" onchange="renameStaff('cashier',${i},this.value)" style="flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:13px;color:var(--text);background:var(--bg);outline:none">
+      <button onclick="removeStaff('cashier',${i})" style="padding:5px 8px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;flex-shrink:0">✕</button>
+    </div>`).join('');
+}
+
+function renameStaff(type, idx, newName){
+  if(!newName.trim()) return;
+  if(type === 'driver'){
+    const cfg = getDriverConfig(); cfg[idx].name = newName.trim(); saveDriverConfig(cfg);
+  } else {
+    const cfg = getCashierConfig(); cfg[idx].name = newName.trim(); saveCashierConfig(cfg);
+  }
+  buildSettingsPinList();
+}
+
+function removeStaff(type, idx){
+  if(type === 'driver'){
+    const cfg = getDriverConfig(); cfg.splice(idx,1); saveDriverConfig(cfg); buildSettingsDriverList();
+  } else {
+    const cfg = getCashierConfig(); cfg.splice(idx,1); saveCashierConfig(cfg); buildSettingsCashierList();
+  }
+  buildSettingsPinList();
+}
+
+function addStaffMember(type){
+  const palette = COLOR_PALETTE;
+  if(type === 'driver'){
+    const cfg = getDriverConfig();
+    const c = palette[cfg.length % palette.length];
+    cfg.push({name:'New Driver', color:c.color, bg:c.bg});
+    saveDriverConfig(cfg); buildSettingsDriverList();
+  } else {
+    const cfg = getCashierConfig();
+    const c = palette[cfg.length % palette.length];
+    cfg.push({name:'New Cashier', color:c.color, bg:c.bg});
+    saveCashierConfig(cfg); buildSettingsCashierList();
+  }
+  buildSettingsPinList();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
 // AUTO-DELETE SUNDAY 23:59
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 function checkAutoDelete(){
@@ -1138,8 +1728,8 @@ function checkAutoDelete(){
   const lastDelete = localStorage.getItem(key);
   const todayKey = now.toISOString().slice(0,10);
 
-  // Only run on Sunday (day 0)
-  if(now.getDay()===0 && now.getHours()===23 && now.getMinutes()===59){
+  // Only run on Monday (day 1) at 2:00am
+  if(now.getDay()===1 && now.getHours()===2 && now.getMinutes()===0){
     if(lastDelete !== todayKey){
       // Delete all trip data
       trips = [];
