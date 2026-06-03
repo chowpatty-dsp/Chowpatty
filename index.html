@@ -560,7 +560,8 @@ function showInlineError(msg){ alert(msg); }
 // ── RETURN ──
 function goReturn(){
   const openTrip = trips.find(t=>t.driver===currentDriver.name&&!t.returned);
-  if(!openTrip){ goHome(); return; }
+  if(!openTrip){ alert('DEBUG: No open trip found for ' + currentDriver.name + '. Trips: ' + JSON.stringify(trips.map(t=>({d:t.driver,r:t.returned})))); goHome(); return; }
+  try {
 
   document.getElementById('return-name').textContent = currentDriver.name;
   document.getElementById('return-av').style.background = currentDriver.bg;
@@ -581,6 +582,7 @@ function goReturn(){
     </div>
   `;
   show('return-screen');
+  } catch(e){ alert('DEBUG goReturn error: ' + e.message); }
 }
 
 function submitReturn(){
