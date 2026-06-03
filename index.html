@@ -675,7 +675,12 @@ function addOrder(){
     const t=taken.includes(n);
     return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
   }).join('');
-  const options=`<optgroup label="T Orders">${tOptions}</optgroup><optgroup label="D Orders">${dOptions}</optgroup>`;
+  const mOptions=Array.from({length:15},(_,i)=>{
+    const n='Mast T'+(i+1);
+    const t=taken.includes(n);
+    return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
+  }).join('');
+  const options=`<optgroup label="T Orders">${tOptions}</optgroup><optgroup label="D Orders">${dOptions}</optgroup><optgroup label="Mast Orders">${mOptions}</optgroup>`;
 
   const div=document.createElement('div');
   div.className='order-card';
@@ -1461,14 +1466,23 @@ function ctpk(k){
 function execCancelTrip(){
   const trip = trips.find(t=>t.id===cancelTripId);
   if(!trip) return;
+  const rt = fmtTime(new Date());
   trip.returned = true;
   trip.cancelled = true;
-  trip.returnTime = fmtTime(new Date());
+  trip.returnTime = rt;
   trip.duration = 0;
   trip.late = false;
   trip.totalCash = 0;
   trip.notes = 'CANCELLED by manager';
   saveTrips();
+  // Sync cancellation to Sheets
+  trip.orders.forEach(o=>sync({
+    date: trip.date, driver: trip.driver,
+    orderNum: o.num, zone: o.zone, cash: 0, phone: o.phone||'',
+    left: trip.left, returned: rt, duration: 0,
+    late: 'NO', status: 'CANCELLED', notes: 'CANCELLED by manager',
+    cashier: '', timestamp: new Date().toLocaleTimeString('en-GB')
+  }));
   buildDashboard();
 }
 
