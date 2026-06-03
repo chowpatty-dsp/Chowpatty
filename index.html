@@ -463,6 +463,16 @@ let dashView      = 'day';
 let dashDate      = todayStr();
 let deleteAction  = '';
 let delPinEntry   = '';
+let homeTimer     = null;
+
+function scheduleHome(delay){
+  if(homeTimer) clearTimeout(homeTimer);
+  homeTimer = setTimeout(()=>{ homeTimer=null; goHome(); }, delay);
+}
+
+function cancelHomeTimer(){
+  if(homeTimer){ clearTimeout(homeTimer); homeTimer=null; }
+}
 let cashierPinMode = ''; // 'confirm-return' | 'cashier-setup' | 'cashier-setup-confirm'
 let cashierPinEntry = '';
 let cashierSetupFirst = '';
@@ -492,6 +502,8 @@ function getCashierPin(name){ return getStoredCashierPins()[name]||null; }
 // SCREEN NAVIGATION
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 function show(id){
+  // Cancel any pending home redirect when navigating to a new screen
+  if(id !== 'success') cancelHomeTimer();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id==='cashier') buildCashier();
@@ -807,7 +819,7 @@ function submitDepart(){
     orders.map(o=>`<div class="sc-row"><span>#${o.num} · ${o.zone}</span><span class="sc-val">${o.cash.toLocaleString()} TZS</span></div>`).join('')+
     `<div class="sc-row"><span>Imetoka</span><span class="sc-val">${leftTime}</span></div>`;
   show('success');
-  setTimeout(()=>goHome(),6000);
+  scheduleHome(10000);
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━
@@ -815,7 +827,12 @@ function submitDepart(){
 // ━━━━━━━━━━━━━━━━━━━━━━━━
 function goReturn(){
   const trip=trips.find(t=>t.driver===activeDriver.name && !t.returned);
-  if(!trip){ goHome(); return; }
+  if(!trip){
+    // No open trip found - driver may have already been processed
+    document.getElementById('pin-err').textContent = 'Hakuna safari iliyo wazi. Rudi nyumbani.';
+    setTimeout(()=>goHome(), 2000);
+    return;
+  }
 
   document.getElementById('ret-name').textContent=activeDriver.name;
   document.getElementById('ret-av').style.background=activeDriver.bg;
@@ -853,6 +870,7 @@ function submitReturn(){
   pendingTrip = {trip, rt, dur, late, notes};
 
   // Show cashier PIN screen
+  if(!pendingTrip){ goHome(); return; }
   showCashierPinScreen();
 }
 
@@ -1031,7 +1049,7 @@ function confirmCashReceived(cashierName){
     `<div class="sc-row"><span>Pesa</span><span class="sc-val">${trip.totalCash.toLocaleString()} TZS</span></div>`+
     `<div class="sc-row"><span>Confirmed by</span><span class="sc-val">${cashierName}</span></div>`;
   show('success');
-  setTimeout(()=>goHome(), 6000);
+  scheduleHome(10000);
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━
