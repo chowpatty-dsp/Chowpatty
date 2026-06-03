@@ -570,7 +570,7 @@ function goReturn(){
   const card = document.getElementById('open-trip-card');
   card.innerHTML = `
     <div class="otc-label">Safari ilianza saa ${openTrip.left}</div>
-    ${openTrip.orders_data.map(o=>`
+    ${openTrip.orders.map(o=>`
       <div class="otc-order">
         <div><div class="otc-zone">${o.zone}</div><div class="otc-num">#${o.num} · 📞 ${o.phone||'—'}</div></div>
         <div class="otc-cash">${o.cash.toLocaleString()} TZS</div>
