@@ -9,164 +9,194 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#f5f4f0;--white:#fff;--border:#e0ddd6;--text:#1a1a1a;--muted:#888;
-  --accent:#c8392b;--accent-light:#fdf0ef;
-  --ok:#1a7f4b;--ok-light:#edf7f2;
-  --warn:#d97706;--warn-light:#fffbeb;
+  --red:#c8392b;--red-light:#fdf0ef;
+  --green:#1a7f4b;--green-light:#edf7f2;
+  --amber:#d97706;--amber-light:#fffbeb;
   --radius:14px;--font:'Inter',sans-serif;
 }
 html,body{height:100%;width:100%;overflow:hidden}
 body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ── SCREENS ── */
 .screen{position:absolute;inset:0;display:none;flex-direction:column}
 .screen.active{display:flex}
 
-/* HOME */
-#home{background:var(--white);align-items:center;justify-content:center}
-.home-header{text-align:center;margin-bottom:36px}
-.home-logo{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.home-title{font-size:30px;font-weight:800;letter-spacing:-.02em}
-.home-sub{font-size:14px;color:var(--muted);margin-top:6px}
+/* ── HOME ── */
+#home{background:var(--white);align-items:center;justify-content:center;gap:0}
+.home-logo{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;text-align:center}
+.home-title{font-size:30px;font-weight:800;letter-spacing:-.02em;text-align:center}
+.home-sub{font-size:14px;color:var(--muted);margin-top:6px;margin-bottom:36px;text-align:center}
 .driver-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:560px;padding:0 24px;margin-bottom:28px}
 .driver-btn{background:var(--bg);border:2px solid var(--border);border-radius:var(--radius);padding:18px 10px;text-align:center;cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;user-select:none;position:relative}
-.driver-btn:active{transform:scale(.95);border-color:var(--accent);background:var(--accent-light)}
-.driver-btn.out{border-color:var(--warn);background:var(--warn-light)}
-.driver-initials{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin:0 auto 8px}
+.driver-btn:active{transform:scale(.95)}
+.driver-btn.out{border-color:var(--amber);background:var(--amber-light)}
+.driver-av{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin:0 auto 8px}
 .driver-name{font-size:14px;font-weight:700}
-.driver-status{font-size:11px;margin-top:3px;font-weight:600}
-.status-out{color:var(--warn)}
-.status-in{color:var(--muted)}
-.out-badge{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--warn);animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.home-footer{padding:0 24px;width:100%;max-width:560px}
-.btn-secondary{width:100%;padding:13px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.driver-status{font-size:11px;margin-top:3px;font-weight:600;color:var(--muted)}
+.driver-btn.out .driver-status{color:var(--amber)}
+.out-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--amber);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.home-footer{width:100%;max-width:560px;padding:0 24px}
+.btn-mgr{width:100%;padding:13px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);cursor:pointer;-webkit-tap-highlight-color:transparent}
 
-/* PIN */
-#pin{background:var(--white);align-items:center;justify-content:center}
-.pin-title{font-size:22px;font-weight:800;margin-bottom:6px}
-.pin-sub{font-size:14px;color:var(--muted);margin-bottom:28px;text-align:center;padding:0 24px}
+/* ── PIN ── */
+#pin{background:var(--white);align-items:center;justify-content:center;gap:0}
+.pin-title{font-size:22px;font-weight:800;margin-bottom:6px;text-align:center}
+.pin-sub{font-size:14px;color:var(--muted);margin-bottom:28px;text-align:center;padding:0 24px;line-height:1.4}
 .pin-dots{display:flex;gap:14px;margin-bottom:28px}
 .pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);transition:all .12s}
-.pin-dot.filled{background:var(--accent);border-color:var(--accent)}
+.pin-dot.filled{background:var(--red);border-color:var(--red)}
 .pin-pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px}
 .pin-key{width:72px;height:72px;border-radius:50%;border:2px solid var(--border);background:var(--bg);font-family:var(--font);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:all .12s;user-select:none}
-.pin-key:active{background:var(--accent);border-color:var(--accent);color:#fff;transform:scale(.92)}
-.pin-error{color:var(--accent);font-size:13px;font-weight:600;margin-top:14px;min-height:20px;text-align:center}
-.pin-back-btn{margin-top:20px;padding:10px 24px;background:transparent;border:none;font-family:var(--font);font-size:14px;color:var(--muted);cursor:pointer}
+.pin-key:active{background:var(--red);border-color:var(--red);color:#fff;transform:scale(.92)}
+.pin-err{color:var(--red);font-size:13px;font-weight:600;margin-top:14px;min-height:20px;text-align:center}
+.pin-back{margin-top:16px;padding:8px 24px;background:transparent;border:none;font-family:var(--font);font-size:14px;color:var(--muted);cursor:pointer}
 
-/* DEPART */
-#depart{background:var(--white)}
-.screen-header{display:flex;align-items:center;gap:12px;padding:16px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
-.back-btn{width:36px;height:36px;border-radius:8px;background:var(--bg);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
-.screen-driver-name{font-size:19px;font-weight:800}
-.screen-driver-sub{font-size:12px;color:var(--muted);margin-top:1px}
-.driver-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-left:auto;flex-shrink:0}
-.screen-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
-.field-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.field-input{width:100%;padding:12px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color .15s}
-.field-input:focus{border-color:var(--accent);background:var(--white)}
-.zone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.zone-opt{padding:10px 4px;border:2px solid var(--border);border-radius:9px;text-align:center;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);transition:all .12s;-webkit-tap-highlight-color:transparent;user-select:none}
-.zone-opt.sel{border-color:var(--ok);background:var(--ok-light);color:var(--ok)}
-
-/* Order rows */
-.orders-section{display:flex;flex-direction:column;gap:8px}
-.order-row{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px;position:relative}
-.order-row-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.remove-order{background:none;border:none;color:var(--accent);font-size:16px;cursor:pointer;padding:0;line-height:1}
-.order-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.add-order-btn{width:100%;padding:11px;background:transparent;border:2px dashed var(--border);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .12s}
-.add-order-btn:active{border-color:var(--accent);color:var(--accent)}
-.cash-warning{display:none;margin-top:5px;padding:8px 10px;background:var(--accent-light);border:1.5px solid var(--accent);border-radius:7px;font-size:12px;font-weight:600;color:var(--accent)}
-
-.screen-footer{padding:12px 20px 24px;flex-shrink:0;border-top:1px solid var(--border)}
-.btn-submit{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .12s}
+/* ── SHARED SCREEN PARTS ── */
+.s-header{display:flex;align-items:center;gap:12px;padding:16px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
+.s-back{width:36px;height:36px;border-radius:8px;background:var(--bg);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.s-driver-name{font-size:19px;font-weight:800}
+.s-driver-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.s-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-left:auto;flex-shrink:0}
+.s-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.s-footer{padding:12px 20px 24px;flex-shrink:0;border-top:1px solid var(--border)}
+.f-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.f-input{width:100%;padding:12px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color .15s}
+.f-input:focus{border-color:var(--red);background:var(--white)}
+.f-select{width:100%;padding:12px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text);outline:none;-webkit-appearance:none}
+.btn-submit{width:100%;padding:15px;border:none;border-radius:12px;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .12s}
 .btn-submit:active{transform:scale(.98);opacity:.9}
-.btn-submit.green{background:var(--ok)}
+.btn-red{background:var(--red);color:#fff}
+.btn-green{background:var(--green);color:#fff}
 
-/* RETURN */
-#return-screen{background:var(--white)}
-.open-trip-card{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:4px}
-.otc-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.otc-order{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
-.otc-order:last-child{border-bottom:none}
-.otc-zone{font-weight:600}
-.otc-num{color:var(--muted);font-size:12px}
-.otc-cash{font-weight:700;color:var(--ok)}
-.otc-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:2px solid var(--border)}
-.otc-total-label{font-size:13px;font-weight:700}
-.otc-total-val{font-size:18px;font-weight:800;color:var(--ok)}
-.confirm-note{font-size:13px;color:var(--muted);text-align:center;padding:4px 0}
+/* ── DEPART ── */
+#depart{background:var(--white)}
+.time-display{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.time-val{font-size:22px;font-weight:800}
+.time-tag{font-size:11px;color:var(--muted);font-weight:600}
+.zone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.zone-btn{padding:10px 4px;border:2px solid var(--border);border-radius:9px;text-align:center;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);transition:all .12s;-webkit-tap-highlight-color:transparent;user-select:none}
+.zone-btn.active{border-color:var(--green);background:var(--green-light);color:var(--green)}
+.order-card{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px}
+.order-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.order-card-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.order-remove{background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0}
+.order-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.cash-warn{display:none;margin-top:6px;padding:8px 10px;background:var(--red-light);border:1.5px solid var(--red);border-radius:7px;font-size:12px;font-weight:600;color:var(--red)}
+.add-order-btn{width:100%;padding:11px;background:transparent;border:2px dashed var(--border);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .12s}
+.add-order-btn:active{border-color:var(--red);color:var(--red)}
 
-/* SUCCESS */
-#success{background:var(--ok);align-items:center;justify-content:center;text-align:center;padding:36px}
+/* ── RETURN ── */
+#ret{background:var(--white)}
+.trip-preview{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px}
+.trip-preview-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.trip-order-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.trip-order-row:last-of-type{border-bottom:none}
+.trip-order-zone{font-size:13px;font-weight:600}
+.trip-order-ref{font-size:11px;color:var(--muted)}
+.trip-order-cash{font-size:13px;font-weight:700;color:var(--green)}
+.trip-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:2px solid var(--border)}
+.trip-total-label{font-size:13px;font-weight:700}
+.trip-total-val{font-size:20px;font-weight:800;color:var(--green)}
+.ret-note{font-size:13px;color:var(--muted);text-align:center;padding:4px 0}
+textarea.f-input{resize:none;line-height:1.5}
+
+/* ── SUCCESS ── */
+#success{background:var(--green);align-items:center;justify-content:center;text-align:center;padding:36px}
 .success-icon{font-size:64px;margin-bottom:16px}
 .success-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:6px}
 .success-sub{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:28px}
-.success-summary{background:rgba(255,255,255,.15);border-radius:14px;padding:16px 20px;text-align:left;width:100%;max-width:340px;margin-bottom:28px}
-.ss-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:13px;color:rgba(255,255,255,.8)}
-.ss-row:last-child{border-bottom:none}
-.ss-val{font-weight:700;color:#fff}
-.btn-done{padding:13px 40px;background:#fff;color:var(--ok);border:none;border-radius:12px;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer}
+.success-card{background:rgba(255,255,255,.15);border-radius:14px;padding:16px 20px;text-align:left;width:100%;max-width:340px;margin-bottom:28px}
+.sc-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:13px;color:rgba(255,255,255,.8)}
+.sc-row:last-child{border-bottom:none}
+.sc-val{font-weight:700;color:#fff}
+.btn-done{padding:13px 40px;background:#fff;color:var(--green);border:none;border-radius:12px;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer}
 
-/* DASHBOARD */
-#dashboard{background:var(--bg);overflow-y:auto}
-.dash-header{background:var(--white);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+/* ── DASHBOARD ── */
+#dash{background:var(--bg);overflow-y:auto}
+.dash-header{background:var(--white);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;flex-shrink:0}
 .dash-title{font-size:17px;font-weight:800}
-.dash-date{font-size:12px;color:var(--muted);margin-top:2px}
-.dash-back{padding:7px 13px;background:var(--bg);border:2px solid var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer}
+.dash-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.dash-exit{padding:7px 13px;background:var(--bg);border:2px solid var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer}
 .dash-body{padding:16px 20px;display:flex;flex-direction:column;gap:16px}
-.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px}
+.view-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.view-btn{padding:10px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all .12s;border:2px solid var(--border);background:var(--white);color:var(--muted)}
+.view-btn.active{border-color:var(--red);background:var(--red-light);color:var(--red)}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px}
 .kpi-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .kpi-val{font-size:24px;font-weight:800;letter-spacing:-.02em}
 .kpi-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.alert-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:10px 13px;font-size:13px;margin-bottom:6px}
-.alert-card-title{font-weight:700;margin-bottom:2px}
-.alert-card-sub{color:var(--muted);font-size:12px}
-.ds-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:6px}
-.ds-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
-.ds-info{flex:1}
-.ds-name{font-size:14px;font-weight:700}
-.ds-detail{font-size:12px;color:var(--muted);margin-top:2px}
-.ds-right{text-align:right}
-.ds-cash{font-size:14px;font-weight:700;color:var(--ok)}
-.ds-runs{font-size:11px;color:var(--muted)}
+.sec-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.alert-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--red);border-radius:10px;padding:10px 13px;margin-bottom:6px}
+.alert-card.amber{border-left-color:var(--amber)}
+.alert-title{font-size:13px;font-weight:700;margin-bottom:2px}
+.alert-sub{font-size:12px;color:var(--muted)}
+.driver-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.driver-card.repeat{border-color:var(--red)}
+.dc-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.dc-info{flex:1}
+.dc-name{font-size:14px;font-weight:700}
+.dc-detail{font-size:12px;color:var(--muted);margin-top:2px}
+.dc-right{text-align:right}
+.dc-cash{font-size:14px;font-weight:700;color:var(--green)}
+.dc-runs{font-size:11px;color:var(--muted)}
 .trip-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:6px}
-.trip-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.trip-driver-row{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.trip-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.trip-driver-row{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
 .trip-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
-.trip-pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
-.pill-ok{background:var(--ok-light);color:var(--ok)}
-.pill-late{background:var(--accent-light);color:var(--accent)}
-.pill-open{background:var(--warn-light);color:var(--warn)}
+.pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.pill-ok{background:var(--green-light);color:var(--green)}
+.pill-late{background:var(--red-light);color:var(--red)}
+.pill-out{background:var(--amber-light);color:var(--amber)}
 .trip-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px}
-.tm-item{font-size:10px;color:var(--muted)}
+.tm{font-size:10px;color:var(--muted)}
 .tm-val{font-size:12px;font-weight:600;color:var(--text);margin-top:1px}
 .trip-orders{display:flex;flex-direction:column;gap:3px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
-.trip-order-row{display:flex;justify-content:space-between;font-size:12px}
+.trip-order-line{display:flex;justify-content:space-between;font-size:12px}
+.trip-note{margin-top:6px;padding:7px 10px;background:var(--amber-light);border-radius:7px;font-size:12px;font-weight:600;color:var(--amber)}
+.zone-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.zone-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.zone-name{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:3px}
+.zone-trips{font-size:17px;font-weight:800}
+.zone-cash{font-size:12px;color:var(--green);font-weight:600}
+.day-row{background:var(--white);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden}
+.day-row-head{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.day-row-title{font-size:13px;font-weight:700}
+.day-row-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.day-row-right{text-align:right}
+.day-row-cash{font-size:13px;font-weight:700;color:var(--green)}
+.day-arrow{color:var(--muted);font-size:14px;transition:transform .2s;margin-left:10px}
+.day-detail{display:none;border-top:1px solid var(--border);padding:10px 14px;flex-direction:column;gap:6px}
+.day-trip{background:var(--bg);border-radius:8px;padding:10px 12px}
+.day-trip-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.day-trip-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:6px}
+.btn-export{width:100%;padding:12px;background:transparent;border:2px solid var(--green);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--green);cursor:pointer;margin-bottom:8px}
+.btn-clear{width:100%;padding:12px;background:transparent;border:2px solid var(--red);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--red);cursor:pointer;margin-bottom:8px}
+.btn-muted{width:100%;padding:12px;background:transparent;border:2px solid var(--muted);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-bottom:8px}
+.date-select{width:100%;padding:10px 14px;background:var(--white);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);outline:none;-webkit-appearance:none;margin-bottom:4px}
 .empty{color:var(--muted);font-size:14px;text-align:center;padding:24px}
-.clear-btn{width:100%;padding:12px;background:transparent;border:2px solid var(--accent);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--accent);cursor:pointer;margin-top:4px}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+
+/* ── MODALS ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
 .modal{background:var(--white);border-radius:16px;padding:26px 22px;width:100%;max-width:320px;text-align:center}
 .modal-title{font-size:18px;font-weight:800;margin-bottom:8px}
 .modal-sub{font-size:14px;color:var(--muted);margin-bottom:22px;line-height:1.5}
 .modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .modal-cancel{padding:12px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer}
-.modal-confirm{padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer}
+.modal-confirm{padding:12px;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer}
 </style>
 </head>
 <body>
 
 <!-- HOME -->
 <div class="screen active" id="home">
-  <div class="home-header">
-    <div class="home-logo">Chowpatty Restaurant</div>
-    <div class="home-title" id="home-title">Bonyeza jina lako</div>
-    <div class="home-sub" id="home-sub">Sajili kutoka au kurudi</div>
-  </div>
+  <div class="home-logo">Chowpatty Restaurant</div>
+  <div class="home-title">Bonyeza jina lako</div>
+  <div class="home-sub">Sajili kutoka au kurudi</div>
   <div class="driver-grid" id="driver-grid"></div>
   <div class="home-footer">
-    <button class="btn-secondary" onclick="goManagerPin()">📊 Meneja</button>
+    <button class="btn-mgr" onclick="startManagerPin()">📊 Meneja</button>
   </div>
 </div>
 
@@ -175,116 +205,115 @@ body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font
   <div class="pin-title" id="pin-title"></div>
   <div class="pin-sub" id="pin-sub"></div>
   <div class="pin-dots">
-    <div class="pin-dot" id="pd0"></div>
-    <div class="pin-dot" id="pd1"></div>
-    <div class="pin-dot" id="pd2"></div>
-    <div class="pin-dot" id="pd3"></div>
+    <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+    <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
   </div>
   <div class="pin-pad">
-    <div class="pin-key" onclick="pinKey('1')">1</div>
-    <div class="pin-key" onclick="pinKey('2')">2</div>
-    <div class="pin-key" onclick="pinKey('3')">3</div>
-    <div class="pin-key" onclick="pinKey('4')">4</div>
-    <div class="pin-key" onclick="pinKey('5')">5</div>
-    <div class="pin-key" onclick="pinKey('6')">6</div>
-    <div class="pin-key" onclick="pinKey('7')">7</div>
-    <div class="pin-key" onclick="pinKey('8')">8</div>
-    <div class="pin-key" onclick="pinKey('9')">9</div>
-    <div class="pin-key" onclick="pinKey('DEL')" style="font-size:16px">⌫</div>
-    <div class="pin-key" onclick="pinKey('0')">0</div>
-    <div class="pin-key" onclick="goHome()" style="font-size:13px;color:var(--muted)">Back</div>
+    <div class="pin-key" onclick="pk('1')">1</div><div class="pin-key" onclick="pk('2')">2</div><div class="pin-key" onclick="pk('3')">3</div>
+    <div class="pin-key" onclick="pk('4')">4</div><div class="pin-key" onclick="pk('5')">5</div><div class="pin-key" onclick="pk('6')">6</div>
+    <div class="pin-key" onclick="pk('7')">7</div><div class="pin-key" onclick="pk('8')">8</div><div class="pin-key" onclick="pk('9')">9</div>
+    <div class="pin-key" onclick="pk('DEL')" style="font-size:16px">⌫</div>
+    <div class="pin-key" onclick="pk('0')">0</div>
+    <div class="pin-key" onclick="goHome()" style="font-size:12px;color:var(--muted)">Back</div>
   </div>
-  <div class="pin-error" id="pin-error"></div>
+  <div class="pin-err" id="pin-err"></div>
 </div>
 
 <!-- DEPART -->
 <div class="screen" id="depart">
-  <div class="screen-header">
-    <button class="back-btn" onclick="goHome()">←</button>
+  <div class="s-header">
+    <button class="s-back" onclick="goHome()">←</button>
+    <div><div class="s-driver-name" id="dep-name"></div><div class="s-driver-sub">Kutoka — ongeza maagizo yote</div></div>
+    <div class="s-av" id="dep-av"></div>
+  </div>
+  <div class="s-body">
     <div>
-      <div class="screen-driver-name" id="depart-name"></div>
-      <div class="screen-driver-sub">Kutoka — ongeza maagizo yote ya safari hii</div>
+      <div class="f-label">Wakati wa Kutoka</div>
+      <div class="time-display"><div><div class="time-val" id="dep-time">--:--</div></div><div class="time-tag">Imewekwa otomatiki</div></div>
     </div>
-    <div class="driver-av" id="depart-av"></div>
+    <div id="orders-section"></div>
+    <button class="add-order-btn" id="add-order-btn" onclick="addOrder()">+ Ongeza Agizo Jingine</button>
   </div>
-  <div class="screen-body" id="depart-body">
-    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div class="field-label" style="margin-bottom:2px">Wakati wa Kutoka</div>
-        <div id="depart-time-display" style="font-size:18px;font-weight:800;color:var(--text)">--:--</div>
-      </div>
-      <div style="font-size:11px;color:var(--muted);font-weight:600">Imewekwa otomatiki</div>
-    </div>
-    <div class="orders-section" id="orders-section"></div>
-    <button class="add-order-btn" id="add-order-btn" onclick="addOrderRow()">+ Ongeza Agizo Jingine</button>
-  </div>
-  <div class="screen-footer">
-    <button class="btn-submit" onclick="submitDepart()">🛵 Toka →</button>
-  </div>
+  <div class="s-footer"><button class="btn-submit btn-red" onclick="submitDepart()">🛵 Toka →</button></div>
 </div>
 
 <!-- RETURN -->
-<div class="screen" id="return-screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="goHome()">←</button>
+<div class="screen" id="ret">
+  <div class="s-header">
+    <button class="s-back" onclick="goHome()">←</button>
+    <div><div class="s-driver-name" id="ret-name"></div><div class="s-driver-sub">Thibitisha pesa imepewa</div></div>
+    <div class="s-av" id="ret-av"></div>
+  </div>
+  <div class="s-body">
+    <div class="trip-preview" id="trip-preview"></div>
     <div>
-      <div class="screen-driver-name" id="return-name"></div>
-      <div class="screen-driver-sub">Thibitisha pesa imepewa</div>
+      <div class="f-label">Maelezo (si lazima)</div>
+      <textarea class="f-input" id="ret-notes" rows="3" placeholder="mfano: Mteja hakuwepo, msongamano wa barabara..."></textarea>
     </div>
-    <div class="driver-av" id="return-av"></div>
+    <div class="ret-note">Wakati wa kurudi utawekwa otomatiki.</div>
   </div>
-  <div class="screen-body">
-    <div class="open-trip-card" id="open-trip-card"></div>
-    <div>
-      <div class="field-label">Maelezo (si lazima)</div>
-      <textarea class="field-input" id="return-notes" rows="3" placeholder="mfano: Mteja hakuwepo, msongamano wa Morogoro Rd, agizo lilichelewa..." style="resize:none;font-size:14px;line-height:1.5"></textarea>
-    </div>
-    <div class="confirm-note">Wakati wa kurudi utawekwa otomatiki unapothibitisha.</div>
-  </div>
-  <div class="screen-footer">
-    <button class="btn-submit green" onclick="submitReturn()">✓ Thibitisha Pesa Imepewa</button>
-  </div>
+  <div class="s-footer"><button class="btn-submit btn-green" onclick="submitReturn()">✓ Thibitisha Pesa Imepewa</button></div>
 </div>
 
 <!-- SUCCESS -->
 <div class="screen" id="success">
-  <div class="success-icon" id="s-icon">✓</div>
-  <div class="success-title" id="s-title"></div>
-  <div class="success-sub" id="s-sub"></div>
-  <div class="success-summary" id="s-summary"></div>
+  <div class="success-icon" id="suc-icon">✓</div>
+  <div class="success-title" id="suc-title"></div>
+  <div class="success-sub" id="suc-sub"></div>
+  <div class="success-card" id="suc-card"></div>
   <button class="btn-done" onclick="goHome()">Imekamilika</button>
 </div>
 
 <!-- DASHBOARD -->
-<div class="screen" id="dashboard">
+<div class="screen" id="dash">
   <div class="dash-header">
-    <div>
-      <div class="dash-title">Delivery Dashboard</div>
-      <div class="dash-date" id="dash-date"></div>
-    </div>
-    <button class="dash-back" onclick="goHome()">← Exit</button>
+    <div><div class="dash-title">Delivery Dashboard</div><div class="dash-sub" id="dash-sub"></div></div>
+    <button class="dash-exit" onclick="goHome()">← Exit</button>
   </div>
   <div class="dash-body" id="dash-body"></div>
 </div>
 
 <!-- CONFIRM MODAL -->
-<div class="modal-overlay" id="confirm-modal" style="display:none">
+<div class="overlay" id="modal-confirm" style="display:none">
   <div class="modal">
-    <div class="modal-title">Clear Day?</div>
-    <div class="modal-sub" id="confirm-modal-text"></div>
+    <div class="modal-title" id="mc-title">Are you sure?</div>
+    <div class="modal-sub" id="mc-sub"></div>
     <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-      <button class="modal-confirm" onclick="confirmClear()">Yes, Clear</button>
+      <button class="modal-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="modal-confirm" onclick="proceedToDeletePin()">Continue →</button>
     </div>
   </div>
 </div>
 
+<!-- DELETE PIN MODAL -->
+<div class="overlay" id="modal-delete-pin" style="display:none">
+  <div class="modal">
+    <div class="modal-title">Enter Manager PIN</div>
+    <div class="modal-sub">Verify your identity to delete data</div>
+    <div class="pin-dots" style="justify-content:center;margin:14px 0">
+      <div class="pin-dot" id="dpd0"></div><div class="pin-dot" id="dpd1"></div>
+      <div class="pin-dot" id="dpd2"></div><div class="pin-dot" id="dpd3"></div>
+    </div>
+    <div class="pin-pad" style="margin:0 auto 0">
+      <div class="pin-key" onclick="dpk('1')">1</div><div class="pin-key" onclick="dpk('2')">2</div><div class="pin-key" onclick="dpk('3')">3</div>
+      <div class="pin-key" onclick="dpk('4')">4</div><div class="pin-key" onclick="dpk('5')">5</div><div class="pin-key" onclick="dpk('6')">6</div>
+      <div class="pin-key" onclick="dpk('7')">7</div><div class="pin-key" onclick="dpk('8')">8</div><div class="pin-key" onclick="dpk('9')">9</div>
+      <div class="pin-key" onclick="dpk('DEL')" style="font-size:16px">⌫</div>
+      <div class="pin-key" onclick="dpk('0')">0</div>
+      <div class="pin-key" onclick="closeDeletePin()" style="font-size:12px;color:var(--muted)">Cancel</div>
+    </div>
+    <div class="pin-err" id="del-pin-err" style="margin-top:10px"></div>
+  </div>
+</div>
+
 <script>
-// ── CONFIG ──
-const LATE_MIN    = 60;
-const MANAGER_PIN = '2635';
-const SHEETS_URL  = 'https://script.google.com/macros/s/AKfycbz-7BUB2K-ggCnoM-mv7izIPcL4D3v16T8kCzXJ5Ivy4Il9P2AT9hI9Mgq9P1lGfIeA7Q/exec';
-const MAX_ORDERS  = 3;
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// CONFIG
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+const MGR_PIN    = '2635';
+const LATE_MIN   = 60;
+const MAX_ORDERS = 3;
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz-7BUB2K-ggCnoM-mv7izIPcL4D3v16T8kCzXJ5Ivy4Il9P2AT9hI9Mgq9P1lGfIeA7Q/exec';
 
 const DRIVER_CONFIG = [
   { name:'Omari',   color:'#b7791f', bg:'#fef9e7' },
@@ -296,781 +325,813 @@ const DRIVER_CONFIG = [
   { name:'Trainer', color:'#4b5563', bg:'#f3f4f6', fixedPin:'9999' },
 ];
 
-function getDriverPins(){ return JSON.parse(localStorage.getItem('cp_driver_pins') || '{}'); }
-function saveDriverPin(name, pin){ const p=getDriverPins(); p[name]=pin; localStorage.setItem('cp_driver_pins', JSON.stringify(p)); }
-function getDriverPin(name){
-  const fixed = DRIVER_CONFIG.find(d=>d.name===name)?.fixedPin;
-  if(fixed) return fixed;
-  return getDriverPins()[name] || null;
-}
-
-const DRIVERS = DRIVER_CONFIG.map(d => ({...d, get pin(){ return getDriverPin(d.name); }}));
-
 const ZONES = ['Kariakoo','Ilala','Town','Upanga','Sea View'];
 
-// ── STATE ──
-let currentDriver = null;
-let pinEntry      = '';
-let pinMode       = 'driver';
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// STATE
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+let trips    = JSON.parse(localStorage.getItem('cp_trips') || '[]').map(t=>({...t, orders: Array.isArray(t.orders)?t.orders:[]}));
+let pinEntry = '';
+let pinMode  = ''; // 'driver-depart' | 'driver-return' | 'driver-setup' | 'driver-setup-confirm' | 'manager'
+let pinSetupFirst = '';
+let activeDriver  = null;
 let orderCount    = 0;
-let trips = JSON.parse(localStorage.getItem('cp_trips2') || '[]').map(t => ({...t, orders: t.orders || []}));
+let dashView      = 'day';
 let dashDate      = todayStr();
+let deleteAction  = '';
+let delPinEntry   = '';
 
-function saveTrips(){ localStorage.setItem('cp_trips2', JSON.stringify(trips)); }
+function saveTrips(){ localStorage.setItem('cp_trips', JSON.stringify(trips)); }
 function todayStr(){ return new Date().toISOString().slice(0,10); }
-function todaysTrips(){ return trips.filter(t => t.date === todayStr()); }
-function fmtTime(d){ return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
-function fmtDateLabel(d){ return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
+function fmtTime(d){ return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function fmtDate(s){ return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
+function getStoredPins(){ return JSON.parse(localStorage.getItem('cp_pins')||'{}'); }
+function savePin(name,pin){ const p=getStoredPins(); p[name]=pin; localStorage.setItem('cp_pins',JSON.stringify(p)); }
+function getPin(name){
+  const cfg = DRIVER_CONFIG.find(d=>d.name===name);
+  if(cfg && cfg.fixedPin) return cfg.fixedPin;
+  return getStoredPins()[name]||null;
+}
+function hasPin(name){ return !!getPin(name); }
 
-// ── SCREENS ──
-function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// SCREEN NAVIGATION
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
-// ── HOME ──
+function goHome(){
+  buildHome();
+  show('home');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// HOME
+// ━━━━━━━━━━━━━━━━━━━━━━━━
 function buildHome(){
   const grid = document.getElementById('driver-grid');
-  grid.innerHTML = DRIVERS.map(d => {
-    const openTrip = trips.find(t => t.driver===d.name && !t.returned);
-    const runs = trips.filter(t => t.driver===d.name && t.date===todayStr() && t.returned).length;
-    const isOut = !!openTrip;
-    return `<div class="driver-btn ${isOut?'out':''}" onclick="goDriverPin('${d.name}')">
-      ${isOut?'<div class="out-badge"></div>':''}
-      <div class="driver-initials" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
+  grid.innerHTML = DRIVER_CONFIG.map(d=>{
+    const isOut = trips.some(t=>t.driver===d.name && !t.returned);
+    const runs  = trips.filter(t=>t.driver===d.name && t.date===todayStr() && t.returned).length;
+    return `<div class="driver-btn${isOut?' out':''}" onclick="driverTapped('${d.name}')">
+      ${isOut?'<div class="out-dot"></div>':''}
+      <div class="driver-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
       <div class="driver-name">${d.name}</div>
-      <div class="driver-status ${isOut?'status-out':'status-in'}">${isOut?'AMETOKA — bonyeza kurudi':`${runs} trip${runs!==1?'s':''} today`}</div>
+      <div class="driver-status">${isOut?'AMETOKA — bonyeza kurudi':`${runs} trip${runs!==1?'s':''} leo`}</div>
     </div>`;
   }).join('');
 }
-function goHome(){ buildHome(); show('home'); }
 
-// ── PIN ──
-function resetPin(){ pinEntry=''; updatePinDots(); document.getElementById('pin-error').textContent=''; }
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// PIN SYSTEM
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function resetPin(){
+  pinEntry = '';
+  for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot';
+  document.getElementById('pin-err').textContent='';
+}
 
-function goDriverPin(name){
-  currentDriver = DRIVERS.find(d=>d.name===name);
-  const openTrip = trips.find(t=>t.driver===name&&!t.returned);
-  pinMode = openTrip ? 'return' : 'depart';
-  const hasPin = !!getDriverPin(name);
-  const isFixed = !!DRIVER_CONFIG.find(d=>d.name===name)?.fixedPin;
+function updatePinDots(){
+  for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot'+(i<pinEntry.length?' filled':'');
+}
+
+function driverTapped(name){
+  const cfg = DRIVER_CONFIG.find(d=>d.name===name);
+  activeDriver = cfg;
+  const isOut  = trips.some(t=>t.driver===name && !t.returned);
+  const stored = getPin(name);
+
+
+  resetPin();
   document.getElementById('pin-title').textContent = `Hey ${name} 👋`;
-  document.getElementById('pin-sub').textContent = (!hasPin && !isFixed)
-    ? 'First time? Chagua PIN ya tarakimu 4 — utatumia kila wakati'
-    : openTrip ? 'Ingiza PIN kuthibitisha kurudi' : 'Ingiza PIN kusajili kutoka';
-  window._pinSetupStep = null; window._pinFirst = null;
-  resetPin(); show('pin');
+
+  if(!stored && !cfg.fixedPin){
+    // First time — set PIN
+    pinMode = 'driver-setup';
+    document.getElementById('pin-sub').textContent = 'Mara ya kwanza? Chagua PIN ya tarakimu 4';
+  } else {
+    pinMode = isOut ? 'driver-return' : 'driver-depart';
+    document.getElementById('pin-sub').textContent = isOut ? 'Ingiza PIN kuthibitisha kurudi' : 'Ingiza PIN kusajili kutoka';
+  }
+  show('pin');
 }
 
-function goManagerPin(){
+function startManagerPin(){
+  activeDriver = null;
   pinMode = 'manager';
-  window._pinSetupStep = null; window._pinFirst = null;
+  resetPin();
   document.getElementById('pin-title').textContent = 'Manager Access';
-  document.getElementById('pin-sub').textContent = 'Enter manager PIN';
-  resetPin(); show('pin');
+  document.getElementById('pin-sub').textContent   = 'Enter manager PIN';
+  show('pin');
 }
 
-function pinKey(k){
+function pk(k){
   if(k==='DEL'){ pinEntry=pinEntry.slice(0,-1); updatePinDots(); return; }
   if(pinEntry.length>=4) return;
   pinEntry+=k; updatePinDots();
-  if(pinEntry.length===4){
-    const capturedPin = pinEntry;
-    const capturedMode = pinMode;
-    setTimeout(()=>{
-      if(capturedMode==='manager'){
-        if(capturedPin===MANAGER_PIN){ resetPin(); buildDashboard(); show('dashboard'); }
-        else{ document.getElementById('pin-error').textContent='Wrong PIN.'; pinEntry=''; updatePinDots(); }
-      } else {
-        const storedPin = getDriverPin(currentDriver.name);
-        // Master PIN always works
-        if(capturedPin === MANAGER_PIN){
-          resetPin(); capturedMode==='return'?goReturn():goDepart();
-        }
-        // No PIN set yet — enter setup mode (skip for fixed PIN drivers)
-        else if(!storedPin && !DRIVER_CONFIG.find(d=>d.name===currentDriver.name)?.fixedPin){
-          if(!window._pinSetupStep){
-            window._pinSetupStep = 1;
-            window._pinFirst = capturedPin;
-            pinEntry = '';
-            updatePinDots();
-            document.getElementById('pin-title').textContent = 'Thibitisha PIN yako';
-            document.getElementById('pin-sub').textContent = 'Ingiza PIN ile ile tena kuthibitisha';
-          } else {
-            if(capturedPin === window._pinFirst){
-              saveDriverPin(currentDriver.name, capturedPin);
-              window._pinSetupStep = null; window._pinFirst = null;
-              resetPin(); capturedMode==='return'?goReturn():goDepart();
-            } else {
-              document.getElementById('pin-error').textContent = 'PIN hazikufanana. Jaribu tena.';
-              window._pinSetupStep = null; window._pinFirst = null;
-              pinEntry=''; updatePinDots();
-              document.getElementById('pin-title').textContent = `Hey ${currentDriver.name} 👋`;
-              document.getElementById('pin-sub').textContent = 'Chagua PIN ya tarakimu 4 — utatumia kila wakati';
-            }
-          }
-        }
-        // PIN exists — verify
-        else if(capturedPin === storedPin){
-          resetPin(); capturedMode==='return'?goReturn():goDepart();
-        }
-        else{ document.getElementById('pin-error').textContent='PIN si sahihi. Jaribu tena.'; pinEntry=''; updatePinDots(); }
-      }
-    },150);
+  if(pinEntry.length<4) return;
+
+  // Capture and reset immediately to prevent double-fire
+  const entered = pinEntry;
+  pinEntry = '';
+
+  setTimeout(()=>{
+    handlePin(entered);
+  }, 150);
+}
+
+function handlePin(entered){
+  if(pinMode==='manager'){
+    if(entered===MGR_PIN){
+      resetPin(); buildDashboard(); show('dash');
+    } else {
+      document.getElementById('pin-err').textContent='Wrong PIN.';
+      updatePinDots();
+    }
+    return;
+  }
+
+  // Manager master bypass for driver screens
+  if(entered===MGR_PIN && pinMode!=='driver-setup' && pinMode!=='driver-setup-confirm'){
+    resetPin();
+    if(pinMode==='driver-return') goReturn();
+    else goDepart();
+    return;
+  }
+
+  if(pinMode==='driver-setup'){
+    pinSetupFirst = entered;
+    pinMode = 'driver-setup-confirm';
+    resetPin();
+    document.getElementById('pin-title').textContent = 'Thibitisha PIN yako';
+    document.getElementById('pin-sub').textContent   = 'Ingiza PIN ile ile tena kuthibitisha';
+    updatePinDots();
+    return;
+  }
+
+  if(pinMode==='driver-setup-confirm'){
+    if(entered===pinSetupFirst){
+      savePin(activeDriver.name, entered);
+      pinSetupFirst='';
+      pinMode='driver-depart';
+      resetPin();
+      goDepart();
+    } else {
+      pinSetupFirst='';
+      pinMode='driver-setup';
+      document.getElementById('pin-err').textContent='PIN hazikufanana. Jaribu tena.';
+      document.getElementById('pin-title').textContent=`Hey ${activeDriver.name} 👋`;
+      document.getElementById('pin-sub').textContent='Mara ya kwanza? Chagua PIN ya tarakimu 4';
+      updatePinDots();
+    }
+    return;
+  }
+
+  // Normal driver verify
+  const stored = getPin(activeDriver.name);
+  if(entered===stored){
+    resetPin();
+    if(pinMode==='driver-return') goReturn();
+    else goDepart();
+  } else {
+    document.getElementById('pin-err').textContent='PIN si sahihi. Jaribu tena.';
+    updatePinDots();
   }
 }
-function updatePinDots(){ for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot'+(i<pinEntry.length?' filled':''); }
 
-// ── DEPART ──
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// DEPART
+// ━━━━━━━━━━━━━━━━━━━━━━━━
 function goDepart(){
-  orderCount = 0;
-  document.getElementById('depart-name').textContent = currentDriver.name;
-  document.getElementById('depart-av').style.background = currentDriver.bg;
-  document.getElementById('depart-av').style.color = currentDriver.color;
-  document.getElementById('depart-av').textContent = currentDriver.name.slice(0,2).toUpperCase();
-  window._departTime = fmtTime(new Date());
-  document.getElementById('depart-time-display').textContent = window._departTime;
-  document.getElementById('orders-section').innerHTML = '';
-  addOrderRow();
+  orderCount=0;
+  document.getElementById('dep-name').textContent=activeDriver.name;
+  document.getElementById('dep-av').style.background=activeDriver.bg;
+  document.getElementById('dep-av').style.color=activeDriver.color;
+  document.getElementById('dep-av').textContent=activeDriver.name.slice(0,2).toUpperCase();
+  document.getElementById('dep-time').textContent=fmtTime(new Date());
+  document.getElementById('orders-section').innerHTML='';
+  document.getElementById('add-order-btn').style.display='';
+  addOrder();
   show('depart');
 }
 
-function addOrderRow(){
-  if(orderCount >= MAX_ORDERS) return;
+function getTakenNums(){
+  const taken=[];
+  trips.filter(t=>!t.returned).forEach(t=>t.orders.forEach(o=>{if(o.num) taken.push(o.num);}));
+  return taken;
+}
+
+function addOrder(){
+  if(orderCount>=MAX_ORDERS) return;
   orderCount++;
-  const sec = document.getElementById('orders-section');
-  const idx = orderCount;
-  const div = document.createElement('div');
-  div.className = 'order-row';
-  div.id = `order-row-${idx}`;
-  div.innerHTML = `
-    <div class="order-row-title">
-      Order ${idx}
-      ${idx>1?`<button class="remove-order" onclick="removeOrder(${idx})">✕</button>`:''}
+  const idx=orderCount;
+  const taken=getTakenNums();
+  const options=Array.from({length:30},(_,i)=>{
+    const n='T'+(i+1);
+    const t=taken.includes(n);
+    return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
+  }).join('');
+
+  const div=document.createElement('div');
+  div.className='order-card';
+  div.id='card-'+idx;
+  div.innerHTML=`
+    <div class="order-card-head">
+      <div class="order-card-title">Agizo ${idx}</div>
+      ${idx>1?`<button class="order-remove" onclick="removeOrder(${idx})">✕</button>`:''}
     </div>
     <div class="order-fields">
       <div>
-        <div class="field-label">Nambari ya Agizo</div>
-        <select class="field-input" id="o-num-${idx}" style="font-size:14px;padding:10px 12px" onchange="onOrderNumChange(${idx})">
-          <option value="">Chagua...</option>
-          ${Array.from({length:30},(_,i)=>{const n=`T${i+1}`;const taken=getTakenOrderNums();return `<option value="${n}" ${taken.includes(n)?'disabled style="color:#ccc"':''}>${n}${taken.includes(n)?' (out)':''}</option>`;}).join('')}
+        <div class="f-label">Nambari ya Agizo</div>
+        <select class="f-input" id="on-${idx}" style="font-size:14px;padding:10px 12px" onchange="refreshOrderNums(${idx})">
+          <option value="">Chagua...</option>${options}
         </select>
       </div>
       <div>
-        <div class="field-label">Kiasi (TZS)</div>
-        <input class="field-input" id="o-cash-${idx}" type="number" inputmode="numeric" placeholder="e.g. 25000" style="font-size:14px;padding:10px 12px">
+        <div class="f-label">Kiasi (TZS)</div>
+        <input class="f-input" id="oc-${idx}" type="number" inputmode="numeric" placeholder="e.g. 25000" style="font-size:14px;padding:10px 12px" oninput="const cw=document.getElementById('cw-'+${idx});if(cw&&parseInt(this.value)>=13000)cw.style.display='none'">
       </div>
     </div>
-    <div style="margin-bottom:8px">
-      <div class="field-label">Simu ya Mteja</div>
-      <input class="field-input" id="o-phone-${idx}" type="tel" inputmode="numeric" placeholder="e.g. 0712345678" style="font-size:14px;padding:10px 12px">
+    <div style="margin-bottom:10px">
+      <div class="f-label">Simu ya Mteja</div>
+      <input class="f-input" id="op-${idx}" type="tel" inputmode="numeric" placeholder="e.g. 0712345678" style="font-size:14px;padding:10px 12px">
     </div>
-    <div class="field-label">Eneo</div>
-    <div class="zone-grid">${ZONES.map(z=>`<div class="zone-opt" id="oz-${idx}-${z.replace(' ','')}" onclick="selectOrderEneo(${idx},'${z}')">${z}</div>`).join('')}</div>
-    <div class="cash-warning" id="cw-${idx}">⚠️ Kiwango cha chini ni TZS 13,000</div>
+    <div class="f-label">Eneo</div>
+    <div class="zone-grid" id="zg-${idx}">
+      ${ZONES.map(z=>`<div class="zone-btn" id="zb-${idx}-${z.replace(' ','_')}" onclick="selectZone(${idx},'${z}')">${z}</div>`).join('')}
+    </div>
+    <div class="cash-warn" id="cw-${idx}">⚠️ Kiwango cha chini ni TZS 13,000</div>
   `;
-  sec.appendChild(div);
-  const addBtn = document.getElementById('add-order-btn');
-  if(orderCount>=MAX_ORDERS) addBtn.style.display='none';
-  else addBtn.style.display='';
+  document.getElementById('orders-section').appendChild(div);
+  if(orderCount>=MAX_ORDERS) document.getElementById('add-order-btn').style.display='none';
 }
 
 function removeOrder(idx){
-  const el = document.getElementById(`order-row-${idx}`);
+  const el=document.getElementById('card-'+idx);
   if(el){ el.remove(); orderCount--; document.getElementById('add-order-btn').style.display=''; }
 }
 
-function selectOrderEneo(idx, z){
-  document.querySelectorAll(`[id^="oz-${idx}-"]`).forEach(el=>el.className='zone-opt');
-  const sel = document.getElementById(`oz-${idx}-${z.replace(' ','')}`);
-  if(sel) sel.className='zone-opt sel';
+function selectZone(idx,z){
+  ZONES.forEach(zone=>{
+    const el=document.getElementById('zb-'+idx+'-'+zone.replace(' ','_'));
+    if(el) el.className='zone-btn';
+  });
+  const sel=document.getElementById('zb-'+idx+'-'+z.replace(' ','_'));
+  if(sel) sel.className='zone-btn active';
 }
 
-function getOrders(){
-  const orders = [];
-  document.querySelectorAll('.order-row').forEach(row=>{
-    const idx = row.id.replace('order-row-','');
-    const num   = document.getElementById(`o-num-${idx}`)?.value.trim();
-    const cash  = parseInt(document.getElementById(`o-cash-${idx}`)?.value)||0;
-    const phone = document.getElementById(`o-phone-${idx}`)?.value.trim();
-    const zoneEl = row.querySelector('.zone-opt.sel');
-    const zone  = zoneEl ? zoneEl.textContent.trim() : '';
-    orders.push({num, cash, phone, zone, idx});
+function refreshOrderNums(changedIdx){
+  // Collect all selected nums in this form
+  const selected=[];
+  document.querySelectorAll('.order-card').forEach(card=>{
+    const i=card.id.replace('card-','');
+    const v=document.getElementById('on-'+i);
+    if(v && v.value) selected.push({idx:i, val:v.value});
+  });
+  const taken=getTakenNums();
+  // Update other dropdowns
+  document.querySelectorAll('.order-card').forEach(card=>{
+    const i=card.id.replace('card-','');
+    if(i===String(changedIdx)) return;
+    const sel=document.getElementById('on-'+i);
+    if(!sel) return;
+    const cur=sel.value;
+    // Values taken by other form rows
+    const otherSelected=selected.filter(s=>s.idx!==i).map(s=>s.val);
+    Array.from(sel.options).forEach(opt=>{
+      if(!opt.value) return;
+      const isTaken=taken.includes(opt.value)||otherSelected.includes(opt.value);
+      opt.disabled=isTaken;
+      opt.textContent=opt.value+(isTaken?' (taken)':'');
+    });
+    if(otherSelected.includes(cur)) sel.value='';
+  });
+}
+
+function getFormOrders(){
+  const orders=[];
+  document.querySelectorAll('.order-card').forEach(card=>{
+    const idx=card.id.replace('card-','');
+    const num =document.getElementById('on-'+idx)?.value||'';
+    const cash=parseInt(document.getElementById('oc-'+idx)?.value)||0;
+    const phone=document.getElementById('op-'+idx)?.value.trim()||'';
+    const zoneEl=card.querySelector('.zone-btn.active');
+    const zone=zoneEl?zoneEl.textContent.trim():'';
+    orders.push({idx,num,cash,phone,zone});
   });
   return orders;
 }
 
 function submitDepart(){
-  const leftTime = window._departTime;
-  if(!leftTime){ showInlineError('Departure time missing. Please go back and try again.'); return; }
+  const leftTime=document.getElementById('dep-time').textContent;
+  const orders=getFormOrders();
+  if(!orders.length){ alert('Ongeza agizo moja angalau.'); return; }
 
-  const orders_data = getOrders();
-  let valid = true;
+  // Clear all warnings first
+  orders.forEach(o=>{ const cw=document.getElementById('cw-'+o.idx); if(cw) cw.style.display='none'; });
 
-  orders_data.forEach(o=>{
-    const cw = document.getElementById(`cw-${o.idx}`);
-    if(!o.num){ showInlineError(`Tafadhali chagua nambari ya agizo ${o.idx}.`); valid=false; return; }
-    if(!o.zone){ showInlineError(`Tafadhali chagua eneo la Agizo ${o.idx}.`); valid=false; return; }
-    if(!o.phone || o.phone.replace(/\D/g,'').length < 10){ showInlineError(`Customer phone for Order ${o.idx} must be at least 10 digits.`); valid=false; return; }
-    if(!o.cash || o.cash < 13000){
-      if(cw) cw.style.display='block';
-      valid=false;
-    } else {
-      if(cw) cw.style.display='none';
-    }
-  });
+  // Validate each order — stop on first error
+  for(const o of orders){
+    const cw=document.getElementById('cw-'+o.idx);
+    if(!o.num){ alert(`Chagua nambari ya agizo ${o.idx}.`); return; }
+    if(!o.zone){ alert(`Chagua eneo la agizo ${o.idx}.`); return; }
+    if(!o.phone || o.phone.replace(/\D/g,'').length<10){ alert(`Simu ya mteja lazima iwe na tarakimu 10+ (Agizo ${o.idx}).`); return; }
+    if(!o.cash || o.cash<13000){ if(cw) cw.style.display='block'; return; }
+  }
 
-  if(!orders_data.length){ showInlineError('Ongeza agizo moja angalau.'); return; }
-  if(!valid) return;
-
-  const totalCash = orders_data.reduce((s,o)=>s+o.cash,0);
-  const trip = {
+  const totalCash=orders.reduce((s,o)=>s+o.cash,0);
+  const trip={
     id: Date.now(),
     date: todayStr(),
-    driver: currentDriver.name,
+    driver: activeDriver.name,
     left: leftTime,
-    returned: null,
+    returned: false,
     returnTime: null,
     duration: null,
-    orders: orders_data,
-    totalCash,
-    ts: Date.now()
+    late: false,
+    notes: '',
+    orders: orders.map(o=>({num:o.num,cash:o.cash,phone:o.phone,zone:o.zone})),
+    totalCash
   };
   trips.push(trip);
   saveTrips();
 
-  // Sync each agizo to Sheets
-  orders_data.forEach(o => syncToSheets({
-    date: trip.date, driver: trip.driver,
-    orderNum: o.num, zone: o.zone, cash: o.cash, phone: o.phone||'',
-    left: leftTime, returned: '', duration: '', late: '', status: 'DEPARTED',
-    timestamp: new Date().toLocaleTimeString('en-GB')
-  }));
+  // Sync to Sheets
+  orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:leftTime,returned:'',duration:'',late:'',status:'DEPARTED',timestamp:new Date().toLocaleTimeString('en-GB')}));
 
-  document.getElementById('s-icon').textContent = '🛵';
-  document.getElementById('s-title').textContent = `Safari njema, ${currentDriver.name}!`;
-  document.getElementById('s-sub').textContent = `${orders_data.length} agizo${orders_data.length!==1?'s':''} · ${totalCash.toLocaleString()} TZS`;
-  document.getElementById('s-summary').innerHTML = orders_data.map(o=>`
-    <div class="ss-row"><span>#${o.num} · ${o.zone}</span><span class="ss-val">${o.cash.toLocaleString()} TZS</span></div>
-    <div class="ss-row"><span style="font-size:11px;color:rgba(255,255,255,.6)">📞 ${o.phone}</span><span></span></div>
-  `).join('') + `<div class="ss-row"><span>Ametoka</span><span class="ss-val">${leftTime}</span></div>`;
+  // Success screen
+  document.getElementById('suc-icon').textContent='🛵';
+  document.getElementById('suc-title').textContent=`Safari njema, ${activeDriver.name}!`;
+  document.getElementById('suc-sub').textContent=`${orders.length} agizo · ${totalCash.toLocaleString()} TZS`;
+  document.getElementById('suc-card').innerHTML=
+    orders.map(o=>`<div class="sc-row"><span>#${o.num} · ${o.zone}</span><span class="sc-val">${o.cash.toLocaleString()} TZS</span></div>`).join('')+
+    `<div class="sc-row"><span>Imetoka</span><span class="sc-val">${leftTime}</span></div>`;
   show('success');
-  setTimeout(()=>goHome(), 6000);
+  setTimeout(()=>goHome(),6000);
 }
 
-function showInlineError(msg){ alert(msg); }
-
-// ── RETURN ──
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// RETURN
+// ━━━━━━━━━━━━━━━━━━━━━━━━
 function goReturn(){
-  const openTrip = trips.find(t=>t.driver===currentDriver.name&&!t.returned);
-  if(!openTrip){ alert('DEBUG: No open trip found for ' + currentDriver.name + '. Trips: ' + JSON.stringify(trips.map(t=>({d:t.driver,r:t.returned})))); goHome(); return; }
-  try {
+  const trip=trips.find(t=>t.driver===activeDriver.name && !t.returned);
+  if(!trip){ goHome(); return; }
 
-  document.getElementById('return-name').textContent = currentDriver.name;
-  document.getElementById('return-av').style.background = currentDriver.bg;
-  document.getElementById('return-av').style.color = currentDriver.color;
-  document.getElementById('return-av').textContent = currentDriver.name.slice(0,2).toUpperCase();
+  document.getElementById('ret-name').textContent=activeDriver.name;
+  document.getElementById('ret-av').style.background=activeDriver.bg;
+  document.getElementById('ret-av').style.color=activeDriver.color;
+  document.getElementById('ret-av').textContent=activeDriver.name.slice(0,2).toUpperCase();
+  document.getElementById('ret-notes').value='';
 
-  const card = document.getElementById('open-trip-card');
-  card.innerHTML = `
-    <div class="otc-label">Safari ilianza saa ${openTrip.left}</div>
-    ${openTrip.orders.map(o=>`
-      <div class="otc-order">
-        <div><div class="otc-zone">${o.zone}</div><div class="otc-num">#${o.num} · 📞 ${o.phone||'—'}</div></div>
-        <div class="otc-cash">${o.cash.toLocaleString()} TZS</div>
-      </div>`).join('')}
-    <div class="otc-total">
-      <div class="otc-total-label">Jumla ya kulipa</div>
-      <div class="otc-total-val">${openTrip.totalCash.toLocaleString()} TZS</div>
-    </div>
-  `;
-  show('return-screen');
-  } catch(e){ alert('DEBUG goReturn error: ' + e.message); }
+  const preview=document.getElementById('trip-preview');
+  preview.innerHTML=
+    `<div class="trip-preview-label">Safari ilianza saa ${trip.left}</div>`+
+    trip.orders.map(o=>`
+      <div class="trip-order-row">
+        <div><div class="trip-order-zone">${o.zone}</div><div class="trip-order-ref">#${o.num} · 📞 ${o.phone||'—'}</div></div>
+        <div class="trip-order-cash">${o.cash.toLocaleString()} TZS</div>
+      </div>`).join('')+
+    `<div class="trip-total"><div class="trip-total-label">Jumla ya kulipa</div><div class="trip-total-val">${trip.totalCash.toLocaleString()} TZS</div></div>`;
+
+  show('ret');
 }
 
 function submitReturn(){
-  const openTrip = trips.find(t=>t.driver===currentDriver.name&&!t.returned);
-  if(!openTrip) return;
+  const trip=trips.find(t=>t.driver===activeDriver.name && !t.returned);
+  if(!trip) return;
 
-  const now = new Date();
-  const returnTime = fmtTime(now);
-  const [lh,lm] = openTrip.left.split(':').map(Number);
-  let duration = (now.getHours()*60+now.getMinutes()) - (lh*60+lm);
-  if(duration<0) duration+=24*60;
-  const isLate = duration > LATE_MIN;
+  const now=new Date();
+  const rt=fmtTime(now);
+  const [lh,lm]=trip.left.split(':').map(Number);
+  let dur=(now.getHours()*60+now.getMinutes())-(lh*60+lm);
+  if(dur<0) dur+=24*60;
+  const late=dur>LATE_MIN;
+  const notes=document.getElementById('ret-notes').value.trim();
 
-  const notes = document.getElementById('return-notes').value.trim();
-  openTrip.returned = true;
-  openTrip.returnTime = returnTime;
-  openTrip.duration = duration;
-  openTrip.late = isLate;
-  openTrip.notes = notes;
+  trip.returned=true;
+  trip.returnTime=rt;
+  trip.duration=dur;
+  trip.late=late;
+  trip.notes=notes;
   saveTrips();
 
-  // Update Sheets rows
-  openTrip.orders.forEach(o => syncToSheets({
-    date: openTrip.date, driver: openTrip.driver,
-    orderNum: o.num, zone: o.zone, cash: o.cash, phone: o.phone||'',
-    left: openTrip.left, returned: returnTime, duration, late: isLate?'YES':'NO', status: 'RETURNED',
-    notes: notes||'', timestamp: new Date().toLocaleTimeString('en-GB')
-  }));
+  // Sync to Sheets
+  trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:trip.left,returned:rt,duration:dur,late:late?'YES':'NO',status:'RETURNED',notes,timestamp:new Date().toLocaleTimeString('en-GB')}));
 
-  document.getElementById('s-icon').textContent = '✓';
-  document.getElementById('s-title').textContent = `Karibu tena, ${currentDriver.name}!`;
-  document.getElementById('s-sub').textContent = isLate ? `${duration}min — imepigwa bendera ya kuchelewa` : `${duration}min — kwa wakati`;
-  document.getElementById('s-summary').innerHTML = `
-    <div class="ss-row"><span>Ametoka</span><span class="ss-val">${openTrip.left}</span></div>
-    <div class="ss-row"><span>Amerudi</span><span class="ss-val">${returnTime}</span></div>
-    <div class="ss-row"><span>Muda</span><span class="ss-val">${duration}min ${isLate?'⚠️':''}</span></div>
-    <div class="ss-row"><span>Pesa Iliyokusanywa</span><span class="ss-val">${openTrip.totalCash.toLocaleString()} TZS</span></div>
-  `;
+  document.getElementById('suc-icon').textContent='✓';
+  document.getElementById('suc-title').textContent=`Karibu tena, ${activeDriver.name}!`;
+  document.getElementById('suc-sub').textContent=late?`${dur}min — imepigwa bendera ya kuchelewa`:`${dur}min — kwa wakati`;
+  document.getElementById('suc-card').innerHTML=
+    `<div class="sc-row"><span>Ametoka</span><span class="sc-val">${trip.left}</span></div>`+
+    `<div class="sc-row"><span>Amerudi</span><span class="sc-val">${rt}</span></div>`+
+    `<div class="sc-row"><span>Muda</span><span class="sc-val">${dur}min${late?' ⚠️':''}</span></div>`+
+    `<div class="sc-row"><span>Pesa</span><span class="sc-val">${trip.totalCash.toLocaleString()} TZS</span></div>`;
   show('success');
-  setTimeout(()=>goHome(), 6000);
+  setTimeout(()=>goHome(),6000);
 }
 
-// ── TAKEN ORDER NUMBERS ──
-function getTakenOrderNums(){
-  // Returns agizo numbers currently in open (not yet returned) trips
-  const openTrips = trips.filter(t => !t.returned);
-  const taken = [];
-  openTrips.forEach(t => t.orders.forEach(o => { if(o.num) taken.push(o.num); }));
-  return taken;
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// SHEETS SYNC
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function sync(data){
+  fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
 }
 
-// Also refresh dropdowns when user changes a selection so same trip can't pick same number twice
-function onOrderNumChange(idx){
-  document.querySelectorAll('.order-row').forEach(row => {
-    const rowIdx = row.id.replace('order-row-','');
-    if(rowIdx === String(idx)) return;
-    const sel = document.getElementById(`o-num-${rowIdx}`);
-    if(!sel) return;
-    const currentVal = sel.value;
-    const taken = getTakenOrderNums();
-    // also take values selected in this depart form
-    const selectedInForm = [];
-    document.querySelectorAll('.order-row').forEach(r2 => {
-      const i2 = r2.id.replace('order-row-','');
-      if(i2 === String(rowIdx)) return;
-      const v = document.getElementById(`o-num-${i2}`)?.value;
-      if(v) selectedInForm.push(v);
-    });
-    Array.from(sel.options).forEach(opt => {
-      if(!opt.value) return;
-      const isTaken = taken.includes(opt.value) || selectedInForm.includes(opt.value);
-      opt.disabled = isTaken;
-      opt.style.color = isTaken ? '#ccc' : '';
-      opt.textContent = opt.value + (isTaken ? ' (taken)' : '');
-    });
-    // if current selection became taken, reset it
-    if(selectedInForm.includes(currentVal)){
-      sel.value = '';
-    }
-  });
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// DASHBOARD
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function getWeekData(){
+  const now=new Date(); const day=now.getDay();
+  const mon=new Date(now); mon.setDate(now.getDate()-(day===0?6:day-1));
+  const dates=[]; for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(mon.getDate()+i); dates.push(d.toISOString().slice(0,10)); }
+  return {dates, trips:trips.filter(t=>dates.includes(t.date)&&t.returned)};
 }
 
-// ── SHEETS SYNC ──
-function syncToSheets(data){
-  fetch(SHEETS_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  }).catch(e => console.warn('Sync error:', e));
-}
-
-// ── DASHBOARD ──
-let dashView = 'day'; // 'day' | 'week'
-
-function getWeekTrips(){
-  const now = new Date();
-  const day = now.getDay();
-  const monday = new Date(now);
-  monday.setDate(now.getDate() - (day===0?6:day-1));
-  const weekDates = [];
-  for(let i=0;i<7;i++){
-    const d = new Date(monday);
-    d.setDate(monday.getDate()+i);
-    weekDates.push(d.toISOString().slice(0,10));
-  }
-  return { weekDates, weekTrips: trips.filter(t=>weekDates.includes(t.date)&&t.returned) };
-}
-
-function getRepeatLateDrivers(){
-  const { weekTrips } = getWeekTrips();
-  const counts = {};
-  weekTrips.forEach(t=>{ if(t.late){ counts[t.driver]=(counts[t.driver]||0)+1; } });
-  return Object.entries(counts).filter(([,c])=>c>=3).map(([name,count])=>({name,count}));
-}
-
-function buildPDFHTML(title, bodyHTML){
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <style>
-    body{font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;color:#1a1a1a;padding:32px;max-width:900px;margin:0 auto}
-    h1{font-size:20px;font-weight:800;margin-bottom:4px;color:#1a1a1a}
-    .sub{font-size:12px;color:#888;margin-bottom:24px}
-    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-    .kpi{background:#f5f4f0;border-radius:8px;padding:12px 14px}
-    .kpi-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:4px}
-    .kpi-val{font-size:22px;font-weight:800}
-    .section{margin-bottom:20px}
-    .section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e0ddd6}
-    table{width:100%;border-collapse:collapse;font-size:11px}
-    th{background:#f5f4f0;padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888;border-bottom:2px solid #e0ddd6}
-    td{padding:7px 10px;border-bottom:1px solid #e0ddd6;vertical-align:top}
-    tr:last-child td{border-bottom:none}
-    .late{color:#c8392b;font-weight:700}
-    .ok{color:#1a7f4b;font-weight:700}
-    .note{font-size:10px;color:#d97706;font-style:italic}
-    .footer{margin-top:32px;padding-top:12px;border-top:1px solid #e0ddd6;font-size:10px;color:#888;display:flex;justify-content:space-between}
-    @media print{body{padding:20px}.no-print{display:none}}
-  </style></head><body>
-  <div class="no-print" style="margin-bottom:20px">
-    <button onclick="window.print()" style="padding:10px 24px;background:#c8392b;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">🖨 Print / Save as PDF</button>
-    <span style="margin-left:12px;font-size:12px;color:#888">Use your browser's print dialog → Save as PDF</span>
-  </div>
-  <h1>🍛 Chowpatty Restaurant</h1>
-  <div style="font-size:18px;font-weight:800;margin-bottom:2px">${title}</div>
-  <div class="sub">Generated: ${new Date().toLocaleString('en-GB')}</div>
-  ${bodyHTML}
-  <div class="footer"><span>Chowpatty Restaurant — Delivery Log</span><span>Confidential</span></div>
-  </body></html>`;
-}
-
-function exportDayPDF(){
-  const dayTrips = trips.filter(t=>t.date===dashDate&&t.returned);
-  const totalCash = dayTrips.reduce((s,t)=>s+t.totalCash,0);
-  const late = dayTrips.filter(t=>t.late).length;
-  const avgDur = dayTrips.length?Math.round(dayTrips.reduce((s,t)=>s+t.duration,0)/dayTrips.length):0;
-
-  let body = `
-  <div class="kpi-row">
-    <div class="kpi"><div class="kpi-label">Trips</div><div class="kpi-val">${dayTrips.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val">${totalCash.toLocaleString()}<span style="font-size:13px;font-weight:400"> TZS</span></div></div>
-    <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
-    <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur}m</div></div>
-  </div>
-  <div class="section"><div class="section-title">All Trips</div>
-  <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
-
-  dayTrips.forEach(t=>{
-    t.orders.forEach((o,i)=>{
-      body += `<tr>
-        <td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td>
-        <td>#${o.num}</td><td>${o.zone}</td>
-        <td>📞 ${o.phone||'—'}</td>
-        <td>${o.cash.toLocaleString()}</td>
-        ${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}
-      </tr>`;
-    });
-    if(t.notes) body += `<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
-  });
-
-  // Driver summary
-  body += `</tbody></table></div><div class="section"><div class="section-title">Driver Summary</div><table>
-  <thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
-  DRIVER_CONFIG.forEach(d=>{
-    const dt = dayTrips.filter(t=>t.driver===d.name);
-    const cash = dt.reduce((s,t)=>s+t.totalCash,0);
-    const avg = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-    const lc = dt.filter(t=>t.late).length;
-    body += `<tr><td><strong>${d.name}</strong></td><td>${dt.length}</td><td>${cash.toLocaleString()}</td><td>${avg||'—'}${avg?'min':''}</td><td class="${lc?'late':''}">${lc||'—'}</td></tr>`;
-  });
-  body += `</tbody></table></div>`;
-
-  const w = window.open('','_blank');
-  w.document.write(buildPDFHTML(`Daily Report — ${fmtDateLabel(dashDate)}`, body));
-  w.document.close();
-}
-
-function exportWeek(){
-  const { weekTrips, weekDates } = getWeekTrips();
-  const totalCash = weekTrips.reduce((s,t)=>s+t.totalCash,0);
-  const late = weekTrips.filter(t=>t.late).length;
-  const avgDur = weekTrips.length?Math.round(weekTrips.reduce((s,t)=>s+t.duration,0)/weekTrips.length):0;
-
-  let body = `
-  <div class="kpi-row">
-    <div class="kpi"><div class="kpi-label">Total Trips</div><div class="kpi-val">${weekTrips.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val">${totalCash.toLocaleString()}<span style="font-size:13px;font-weight:400"> TZS</span></div></div>
-    <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
-    <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur}m</div></div>
-  </div>`;
-
-  // Driver summary
-  body += `<div class="section"><div class="section-title">Driver Summary</div><table>
-  <thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
-  DRIVER_CONFIG.forEach(d=>{
-    const dt = weekTrips.filter(t=>t.driver===d.name);
-    const cash = dt.reduce((s,t)=>s+t.totalCash,0);
-    const avg = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-    const lc = dt.filter(t=>t.late).length;
-    body += `<tr><td><strong>${d.name}</strong></td><td>${dt.length}</td><td>${cash.toLocaleString()}</td><td>${avg||'—'}${avg?'min':''}</td><td class="${lc?'late':''}">${lc||'—'}</td></tr>`;
-  });
-  body += `</tbody></table></div>`;
-
-  // Day by day
-  body += `<div class="section"><div class="section-title">Day by Day</div>`;
-  weekDates.forEach(d=>{
-    const dt = trips.filter(t=>t.date===d&&t.returned);
-    if(!dt.length) return;
-    const dc = dt.reduce((s,t)=>s+t.totalCash,0);
-    const dlate = dt.filter(t=>t.late).length;
-    body += `<div style="margin-bottom:16px">
-      <div style="font-weight:700;font-size:13px;margin-bottom:6px">${fmtDateLabel(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dlate?` · <span style="color:#c8392b">${dlate} late</span>`:''}</div>
-      <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
-    dt.forEach(t=>{
-      t.orders.forEach((o,i)=>{
-        body += `<tr>
-          <td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td>
-          <td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>
-          ${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}
-        </tr>`;
-      });
-      if(t.notes) body += `<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
-    });
-    body += `</tbody></table></div>`;
-  });
-  body += `</div>`;
-
-  const weekLabel = `${fmtDateLabel(weekDates[0])} — ${fmtDateLabel(weekDates[6])}`;
-  const w = window.open('','_blank');
-  w.document.write(buildPDFHTML(`Weekly Report — ${weekLabel}`, body));
-  w.document.close();
-}
-
-function toggleDayDetail(uid){
-  const el = document.getElementById('detail-'+uid);
-  const arr = document.getElementById('arr-'+uid);
-  if(!el) return;
-  const open = el.style.display === 'flex';
-  el.style.display = open ? 'none' : 'flex';
-  el.style.flexDirection = 'column';
-  if(arr) arr.style.transform = open ? '' : 'rotate(180deg)';
+function repeatLateDrivers(){
+  const {trips:wt}=getWeekData();
+  const c={}; wt.forEach(t=>{if(t.late) c[t.driver]=(c[t.driver]||0)+1;});
+  return Object.entries(c).filter(([,v])=>v>=3).map(([n,v])=>({name:n,count:v}));
 }
 
 function buildDashboard(){
-  const allDates = [...new Set(trips.map(t=>t.date))].sort().reverse();
-  if(!allDates.includes(dashDate)) dashDate = todayStr();
-  const dayTrips  = trips.filter(t=>t.date===dashDate&&t.returned);
-  const openTrips = trips.filter(t=>t.date===dashDate&&!t.returned);
-  const totalCash = dayTrips.reduce((s,t)=>s+t.totalCash,0);
-  const late      = dayTrips.filter(t=>t.late);
-  const avgDur    = dayTrips.length ? Math.round(dayTrips.reduce((s,t)=>s+t.duration,0)/dayTrips.length) : 0;
-  const repeatLate = getRepeatLateDrivers();
-  const { weekTrips, weekDates } = getWeekTrips();
+  const allDates=[...new Set(trips.map(t=>t.date))].sort().reverse();
+  if(!allDates.includes(dashDate)) dashDate=todayStr();
+  const dayTrips=trips.filter(t=>t.date===dashDate&&t.returned);
+  const openTrips=trips.filter(t=>t.date===dashDate&&!t.returned);
+  const {dates:wDates,trips:wTrips}=getWeekData();
+  const repLate=repeatLateDrivers();
 
-  document.getElementById('dash-date').textContent = fmtDateLabel(dashDate);
+  document.getElementById('dash-sub').textContent=dashView==='week'?'Week View':fmtDate(dashDate);
 
-  const dateOpts = allDates.length
-    ? allDates.map(d=>`<option value="${d}" ${d===dashDate?'selected':''}>${fmtDateLabel(d)}</option>`).join('')
-    : `<option value="${todayStr()}">${fmtDateLabel(todayStr())}</option>`;
+  let h='';
 
   // View toggle
-  let html = `
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px">
-    <button onclick="dashView='day';buildDashboard()" style="padding:10px;border-radius:9px;border:2px solid ${dashView==='day'?'var(--accent)':'var(--border)'};background:${dashView==='day'?'var(--accent-light)':'var(--white)'};font-family:var(--font);font-size:13px;font-weight:700;color:${dashView==='day'?'var(--accent)':'var(--muted)'};cursor:pointer">📅 Day View</button>
-    <button onclick="dashView='week';buildDashboard()" style="padding:10px;border-radius:9px;border:2px solid ${dashView==='week'?'var(--accent)':'var(--border)'};background:${dashView==='week'?'var(--accent-light)':'var(--white)'};font-family:var(--font);font-size:13px;font-weight:700;color:${dashView==='week'?'var(--accent)':'var(--muted)'};cursor:pointer">📆 Week View</button>
+  h+=`<div class="view-toggle">
+    <button class="view-btn${dashView==='day'?' active':''}" onclick="dashView='day';buildDashboard()">📅 Day View</button>
+    <button class="view-btn${dashView==='week'?' active':''}" onclick="dashView='week';buildDashboard()">📆 Week View</button>
   </div>`;
 
-  // ── WEEK VIEW ──
   if(dashView==='week'){
-    const weekCash = weekTrips.reduce((s,t)=>s+t.totalCash,0);
-    const weekLate = weekTrips.filter(t=>t.late).length;
-    const weekAvg  = weekTrips.length?Math.round(weekTrips.reduce((s,t)=>s+t.duration,0)/weekTrips.length):0;
-    html += `
-    <div class="kpi-grid">
-      <div class="kpi-card"><div class="kpi-label">Trips This Week</div><div class="kpi-val">${weekTrips.length}</div><div class="kpi-sub">completed</div></div>
-      <div class="kpi-card"><div class="kpi-label">Cash This Week</div><div class="kpi-val" style="font-size:${weekCash>999999?'15px':'22px'}">${weekCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
-      <div class="kpi-card"><div class="kpi-label">Late This Week</div><div class="kpi-val" style="color:${weekLate?'var(--accent)':'inherit'}">${weekLate}</div><div class="kpi-sub">over ${LATE_MIN} min</div></div>
-      <div class="kpi-card"><div class="kpi-label">Avg Muda</div><div class="kpi-val">${weekAvg||'—'}${weekAvg?'m':''}</div><div class="kpi-sub">this week</div></div>
+    const wCash=wTrips.reduce((s,t)=>s+t.totalCash,0);
+    const wLate=wTrips.filter(t=>t.late).length;
+    const wAvg=wTrips.length?Math.round(wTrips.reduce((s,t)=>s+t.duration,0)/wTrips.length):0;
+
+    h+=`<div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Trips This Week</div><div class="kpi-val">${wTrips.length}</div><div class="kpi-sub">completed</div></div>
+      <div class="kpi"><div class="kpi-label">Cash This Week</div><div class="kpi-val" style="font-size:${wCash>999999?'17px':'24px'}">${wCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
+      <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val"${wLate?' style="color:var(--red)"':''}>${wLate}</div><div class="kpi-sub">over ${LATE_MIN}min</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${wAvg||'—'}${wAvg?'m':''}</div><div class="kpi-sub">per trip</div></div>
     </div>`;
 
-    if(repeatLate.length){
-      html += `<div><div class="section-title">🚨 Repeat Late This Week</div>`;
-      html += repeatLate.map(r=>`<div class="alert-card"><div class="alert-card-title">${r.name} — ${r.count} late trips this week</div><div class="alert-card-sub">Threshold: 3+ late trips in 7 days</div></div>`).join('');
-      html += `</div>`;
+    if(repLate.length){
+      h+=`<div><div class="sec-title">🚨 Repeat Late This Week</div>`;
+      repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for review</div></div>`; });
+      h+=`</div>`;
     }
 
-    html += `<div><div class="section-title">Weekly Driver Breakdown</div>`;
-    DRIVERS.forEach(d=>{
-      const dt = weekTrips.filter(t=>t.driver===d.name);
-      const cash = dt.reduce((s,t)=>s+t.totalCash,0);
-      const avg  = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-      const lc   = dt.filter(t=>t.late).length;
-      const isRepeat = repeatLate.find(r=>r.name===d.name);
-      html+=`<div class="ds-card" style="${isRepeat?'border-color:var(--accent)':''}">
-        <div class="ds-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
-        <div class="ds-info">
-          <div class="ds-name">${d.name}${isRepeat?` <span style="color:var(--accent);font-size:11px">⚠️ Repeat late</span>`:''}</div>
-          <div class="ds-detail">${dt.length} trips · avg ${avg||'—'}min · ${lc} late</div>
-        </div>
-        <div class="ds-right"><div class="ds-cash">${cash.toLocaleString()}</div><div class="ds-runs">TZS</div></div>
+    h+=`<div><div class="sec-title">Driver Summary</div>`;
+    DRIVER_CONFIG.forEach(d=>{
+      const dt=wTrips.filter(t=>t.driver===d.name);
+      const cash=dt.reduce((s,t)=>s+t.totalCash,0);
+      const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+      const lc=dt.filter(t=>t.late).length;
+      const rep=repLate.find(r=>r.name===d.name);
+      h+=`<div class="driver-card${rep?' repeat':''}">
+        <div class="dc-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
+        <div class="dc-info"><div class="dc-name">${d.name}${rep?` <span style="color:var(--red);font-size:11px">⚠️</span>`:''}</div>
+        <div class="dc-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min · ${lc} late</div></div>
+        <div class="dc-right"><div class="dc-cash">${cash.toLocaleString()}</div><div class="dc-runs">TZS</div></div>
       </div>`;
     });
-    html += `</div>`;
+    h+=`</div>`;
 
-    // Daily breakdown for the week
-    html += `<div><div class="section-title">Day by Day</div>`;
-    weekDates.forEach(d=>{
-      const dt = trips.filter(t=>t.date===d&&t.returned);
+    h+=`<div><div class="sec-title">Day by Day</div>`;
+    wDates.forEach(d=>{
+      const dt=trips.filter(t=>t.date===d&&t.returned);
       if(!dt.length) return;
-      const dc = dt.reduce((s,t)=>s+t.totalCash,0);
-      const dlate = dt.filter(t=>t.late).length;
-      const uid = d.replace(/-/g,'');
-      html+=`<div style="background:var(--white);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden">
-        <div onclick="toggleDayDetail('${uid}')" style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+      const dc=dt.reduce((s,t)=>s+t.totalCash,0);
+      const dl=dt.filter(t=>t.late).length;
+      const uid=d.replace(/-/g,'');
+      h+=`<div class="day-row">
+        <div class="day-row-head" onclick="toggleDay('${uid}')">
           <div>
-            <div style="font-size:13px;font-weight:700">${fmtDateLabel(d)}</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px">${dt.length} trips${dlate>0?` · <span style="color:var(--accent)">${dlate} late</span>`:''}</div>
+            <div class="day-row-title">${fmtDate(d)}</div>
+            <div class="day-row-sub">${dt.length} trips${dl?` · <span style="color:var(--red)">${dl} late</span>`:''}</div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:var(--ok)">${dc.toLocaleString()} TZS</div></div>
-            <div id="arr-${uid}" style="color:var(--muted);font-size:16px;transition:transform .2s">▼</div>
+          <div style="display:flex;align-items:center">
+            <div class="day-row-right"><div class="day-row-cash">${dc.toLocaleString()} TZS</div></div>
+            <div class="day-arrow" id="arr-${uid}">▼</div>
           </div>
         </div>
-        <div id="detail-${uid}" style="display:none;border-top:1px solid var(--border);padding:10px 14px;display:none;flex-direction:column;gap:6px">
+        <div class="day-detail" id="det-${uid}">
           ${dt.map(t=>{
-            const dr=DRIVERS.find(x=>x.name===t.driver);
-            return `<div style="background:var(--bg);border-radius:8px;padding:10px 12px">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            const drv=DRIVER_CONFIG.find(x=>x.name===t.driver);
+            return `<div class="day-trip">
+              <div class="day-trip-head">
                 <div style="display:flex;align-items:center;gap:7px">
-                  <div style="width:26px;height:26px;border-radius:50%;background:${dr?.bg};color:${dr?.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${t.driver.slice(0,2).toUpperCase()}</div>
+                  <div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>
                   <span style="font-size:13px;font-weight:700">${t.driver}</span>
                 </div>
-                <span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:${t.late?'var(--accent-light)':'var(--ok-light)'};color:${t.late?'var(--accent)':'var(--ok)'}">${t.late?'Late':'On time'}</span>
+                <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
               </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px">
-                <div style="font-size:10px;color:var(--muted)">Left<div style="font-size:12px;font-weight:600;color:var(--text)">${t.left}</div></div>
-                <div style="font-size:10px;color:var(--muted)">Back<div style="font-size:12px;font-weight:600;color:var(--text)">${t.returnTime}</div></div>
-                <div style="font-size:10px;color:var(--muted)">Muda<div style="font-size:12px;font-weight:600;color:var(--text)">${t.duration}min</div></div>
+              <div class="day-trip-meta">
+                <div class="tm">Left<div class="tm-val">${t.left}</div></div>
+                <div class="tm">Back<div class="tm-val">${t.returnTime}</div></div>
+                <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
               </div>
-              ${t.orders.map(o=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-top:1px solid var(--border)"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}
-              ${t.notes?`<div style="margin-top:6px;padding:6px 8px;background:var(--warn-light);border-radius:6px;font-size:11px;color:var(--warn);font-weight:600">📝 ${t.notes}</div>`:''}
+              ${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}
+              ${t.notes?`<div class="trip-note" style="margin-top:6px">📝 ${t.notes}</div>`:''}
             </div>`;
           }).join('')}
         </div>
       </div>`;
     });
-    html += `</div>`;
+    h+=`</div>`;
 
-    html += `<button onclick="exportWeek()" style="width:100%;padding:12px;background:transparent;border:2px solid var(--ok);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--ok);cursor:pointer;margin-bottom:8px">📄 Export Week Report</button>`;
-    html += `<button class="clear-btn" id="clear-day-btn" style="border-color:var(--muted);color:var(--muted)" onclick="alert('Switch to Day View to clear a specific day.')">🗑 Clear Data</button>`;
-    document.getElementById('dash-body').innerHTML = html;
-    return;
-  }
+    h+=`<button class="btn-export" onclick="exportWeekPDF()">📄 Export Week Report (PDF)</button>`;
+    h+=`<button class="btn-clear" onclick="startClear('week')">🗑 Clear This Week's Data</button>`;
 
-  // ── DAY VIEW ──
-  html += `<select onchange="dashDate=this.value;buildDashboard()" style="width:100%;padding:10px 14px;background:var(--white);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);outline:none;-webkit-appearance:none">${dateOpts}</select>
+  } else {
+    // DAY VIEW
+    const totalCash=dayTrips.reduce((s,t)=>s+t.totalCash,0);
+    const late=dayTrips.filter(t=>t.late);
+    const avgDur=dayTrips.length?Math.round(dayTrips.reduce((s,t)=>s+t.duration,0)/dayTrips.length):0;
+    const dateOpts=allDates.length?allDates.map(d=>`<option value="${d}"${d===dashDate?' selected':''}>${fmtDate(d)}</option>`).join(''):`<option value="${todayStr()}">${fmtDate(todayStr())}</option>`;
 
-  <div class="kpi-grid">
-    <div class="kpi-card"><div class="kpi-label">Trips Completed</div><div class="kpi-val">${dayTrips.length}</div><div class="kpi-sub">${openTrips.length} still out</div></div>
-    <div class="kpi-card"><div class="kpi-label">Pesa Iliyokusanywa</div><div class="kpi-val" style="font-size:${totalCash>999999?'17px':'24px'}">${totalCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
-    <div class="kpi-card"><div class="kpi-label">Late Trips</div><div class="kpi-val" style="color:${late.length?'var(--accent)':'inherit'}">${late.length}</div><div class="kpi-sub">over ${LATE_MIN} min</div></div>
-    <div class="kpi-card"><div class="kpi-label">Avg Muda</div><div class="kpi-val">${avgDur||'—'}${avgDur?'m':''}</div><div class="kpi-sub">per trip</div></div>
-  </div>`;
+    h+=`<select class="date-select" onchange="dashDate=this.value;buildDashboard()">${dateOpts}</select>`;
 
-  if(repeatLate.length){
-    html += `<div><div class="section-title">🚨 Repeat Late Alert</div>`;
-    html += repeatLate.map(r=>`<div class="alert-card"><div class="alert-card-title">${r.name} — ${r.count} late trips this week</div><div class="alert-card-sub">Flagged for manager review</div></div>`).join('');
-    html += `</div>`;
-  }
-
-  if(openTrips.length){
-    html += `<div><div class="section-title">🟡 Currently Out</div>`;
-    html += openTrips.map(t=>{
-      const now = new Date(); const [lh,lm]=t.left.split(':').map(Number);
-      const elapsed = (now.getHours()*60+now.getMinutes())-(lh*60+lm);
-      return `<div class="alert-card" style="border-left-color:var(--warn)">
-        <div class="alert-card-title">${t.driver} — departed ${t.left} (${elapsed}min ago)</div>
-        <div class="alert-card-sub">${t.orders.length} agizo${t.orders.length!==1?'s':''} · ${t.totalCash.toLocaleString()} TZS</div>
-        <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px">${t.orders.map(o=>`<div style="font-size:12px;color:var(--muted)">#${o.num} · ${o.zone} · 📞 <span style="font-weight:600;color:var(--text)">${o.phone||'—'}</span></div>`).join('')}</div>
-      </div>`;
-    }).join('');
-    html += `</div>`;
-  }
-
-  if(late.length){
-    html += `<div><div class="section-title">⚠️ Late Flags</div>`;
-    html += late.map(t=>`<div class="alert-card"><div class="alert-card-title">${t.driver} — ${t.duration}min trip</div><div class="alert-card-sub">${t.left} → ${t.returnTime} · ${t.totalCash.toLocaleString()} TZS${t.notes?' · 📝 '+t.notes:''}</div></div>`).join('');
-    html += `</div>`;
-  }
-
-  const zoneCounts = {};
-  ZONES.forEach(z=>{zoneCounts[z]={runs:0,cash:0};});
-  dayTrips.forEach(t=>t.orders.forEach(o=>{if(zoneCounts[o.zone]){zoneCounts[o.zone].runs++;zoneCounts[o.zone].cash+=o.cash;}}));
-  html += `<div><div class="section-title">By Eneo</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">`;
-  html += ZONES.map(z=>`<div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:11px 13px"><div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:3px">${z}</div><div style="font-size:17px;font-weight:800">${zoneCounts[z].runs} <span style="font-size:12px;color:var(--muted);font-weight:500">maagizo</span></div><div style="font-size:12px;color:var(--ok);font-weight:600">${zoneCounts[z].cash.toLocaleString()} TZS</div></div>`).join('');
-  html += `</div></div>`;
-
-  html += `<div><div class="section-title">Driver Summary</div>`;
-  DRIVERS.forEach(d=>{
-    const dt = dayTrips.filter(t=>t.driver===d.name);
-    const cash = dt.reduce((s,t)=>s+t.totalCash,0);
-    const avg  = dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-    const lc   = dt.filter(t=>t.late).length;
-    const isRepeat = repeatLate.find(r=>r.name===d.name);
-    html+=`<div class="ds-card" style="${isRepeat?'border-color:var(--accent)':''}">
-      <div class="ds-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
-      <div class="ds-info"><div class="ds-name">${d.name}${isRepeat?` <span style="color:var(--accent);font-size:11px">⚠️</span>`:''}</div>
-      <div class="ds-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min${lc>0?` · <span style="color:var(--accent)">${lc} late</span>`:''}</div></div>
-      <div class="ds-right"><div class="ds-cash">${cash.toLocaleString()}</div><div class="ds-runs">TZS</div></div>
+    h+=`<div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Trips Completed</div><div class="kpi-val">${dayTrips.length}</div><div class="kpi-sub">${openTrips.length} still out</div></div>
+      <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val" style="font-size:${totalCash>999999?'17px':'24px'}">${totalCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
+      <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val"${late.length?' style="color:var(--red)"':''}>${late.length}</div><div class="kpi-sub">over ${LATE_MIN}min</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur||'—'}${avgDur?'m':''}</div><div class="kpi-sub">per trip</div></div>
     </div>`;
-  });
-  html += `</div>`;
 
-  if(dayTrips.length){
-    html += `<div><div class="section-title">All Trips</div>`;
-    [...dayTrips].reverse().forEach(t=>{
-      const d=DRIVERS.find(x=>x.name===t.driver);
-      html+=`<div class="trip-card">
-        <div class="trip-top">
-          <div class="trip-driver-row"><div class="trip-av" style="background:${d?.bg};color:${d?.color}">${t.driver.slice(0,2).toUpperCase()}</div>${t.driver}</div>
-          <span class="trip-pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
-        </div>
-        <div class="trip-meta">
-          <div class="tm-item"><div>Left</div><div class="tm-val">${t.left}</div></div>
-          <div class="tm-item"><div>Back</div><div class="tm-val">${t.returnTime}</div></div>
-          <div class="tm-item"><div>Muda</div><div class="tm-val">${t.duration}min</div></div>
-          <div class="tm-item"><div>Cash</div><div class="tm-val">${t.totalCash.toLocaleString()}</div></div>
-        </div>
-        <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-row"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}</div>
-        ${t.notes?`<div style="margin-top:6px;padding:7px 10px;background:var(--warn-light);border-radius:7px;font-size:12px;color:var(--warn);font-weight:600">📝 ${t.notes}</div>`:''}
+    if(repLate.length){
+      h+=`<div><div class="sec-title">🚨 Repeat Late Alert</div>`;
+      repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for manager review</div></div>`; });
+      h+=`</div>`;
+    }
+
+    if(openTrips.length){
+      h+=`<div><div class="sec-title">🟡 Currently Out</div>`;
+      openTrips.forEach(t=>{
+        const now=new Date(); const [lh,lm]=t.left.split(':').map(Number);
+        const el=(now.getHours()*60+now.getMinutes())-(lh*60+lm);
+        h+=`<div class="alert-card amber">
+          <div class="alert-title">${t.driver} — departed ${t.left} (${el}min ago)</div>
+          ${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 <strong>${o.phone||'—'}</strong></div>`).join('')}
+        </div>`;
+      });
+      h+=`</div>`;
+    }
+
+    if(late.length){
+      h+=`<div><div class="sec-title">⚠️ Late Flags</div>`;
+      late.forEach(t=>{ h+=`<div class="alert-card"><div class="alert-title">${t.driver} — ${t.duration}min</div><div class="alert-sub">${t.left} → ${t.returnTime} · ${t.totalCash.toLocaleString()} TZS${t.notes?' · 📝 '+t.notes:''}</div></div>`; });
+      h+=`</div>`;
+    }
+
+    // Zone breakdown
+    const zc={};
+    ZONES.forEach(z=>{zc[z]={runs:0,cash:0};});
+    dayTrips.forEach(t=>t.orders.forEach(o=>{if(zc[o.zone]){zc[o.zone].runs++;zc[o.zone].cash+=o.cash;}}));
+    h+=`<div><div class="sec-title">By Zone</div><div class="zone-breakdown">`;
+    ZONES.forEach(z=>{ h+=`<div class="zone-card"><div class="zone-name">${z}</div><div class="zone-trips">${zc[z].runs} <span style="font-size:12px;color:var(--muted);font-weight:500">orders</span></div><div class="zone-cash">${zc[z].cash.toLocaleString()} TZS</div></div>`; });
+    h+=`</div></div>`;
+
+    // Driver summary
+    h+=`<div><div class="sec-title">Driver Summary</div>`;
+    DRIVER_CONFIG.forEach(d=>{
+      const dt=dayTrips.filter(t=>t.driver===d.name);
+      const cash=dt.reduce((s,t)=>s+t.totalCash,0);
+      const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+      const lc=dt.filter(t=>t.late).length;
+      const rep=repLate.find(r=>r.name===d.name);
+      h+=`<div class="driver-card${rep?' repeat':''}">
+        <div class="dc-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
+        <div class="dc-info"><div class="dc-name">${d.name}${rep?` <span style="color:var(--red);font-size:11px">⚠️</span>`:''}</div>
+        <div class="dc-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min${lc?` · <span style="color:var(--red)">${lc} late</span>`:''}</div></div>
+        <div class="dc-right"><div class="dc-cash">${cash.toLocaleString()}</div><div class="dc-runs">TZS</div></div>
       </div>`;
     });
-    html += `</div>`;
-  } else {
-    html += `<div class="empty">No completed trips for this date.</div>`;
+    h+=`</div>`;
+
+    // All trips
+    if(dayTrips.length){
+      h+=`<div><div class="sec-title">All Trips</div>`;
+      [...dayTrips].reverse().forEach(t=>{
+        const drv=DRIVER_CONFIG.find(x=>x.name===t.driver);
+        h+=`<div class="trip-card">
+          <div class="trip-head">
+            <div class="trip-driver-row"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>${t.driver}</div>
+            <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
+          </div>
+          <div class="trip-meta">
+            <div class="tm">Left<div class="tm-val">${t.left}</div></div>
+            <div class="tm">Back<div class="tm-val">${t.returnTime}</div></div>
+            <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
+            <div class="tm">Cash<div class="tm-val">${t.totalCash.toLocaleString()}</div></div>
+          </div>
+          <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}</div>
+          ${t.notes?`<div class="trip-note">📝 ${t.notes}</div>`:''}
+        </div>`;
+      });
+      h+=`</div>`;
+    } else {
+      h+=`<div class="empty">No completed trips for this date.</div>`;
+    }
+
+    h+=`<button class="btn-export" onclick="exportDayPDF()">📄 Export Day Report (PDF)</button>`;
+    h+=`<button class="btn-clear" onclick="startClear('day')">🗑 Clear ${fmtDate(dashDate)}</button>`;
+    h+=`<button class="btn-muted" onclick="startClear('pins')">🔑 Reset All Driver PINs</button>`;
   }
 
-  html += `<button onclick="exportDayPDF()" style="width:100%;padding:12px;background:transparent;border:2px solid var(--ok);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--ok);cursor:pointer;margin-bottom:8px">📄 Export Day Report (PDF)</button>`;
-  html += `<button class="clear-btn" id="clear-day-btn" style="margin-bottom:8px">🗑 Clear ${fmtDateLabel(dashDate)}</button>`;
-  html += `<button onclick="resetAllPins()" style="width:100%;padding:12px;background:transparent;border:2px solid var(--muted);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer">🔑 Reset All Driver PINs</button>`;
-  document.getElementById('dash-body').innerHTML = html;
-  const cb = document.getElementById('clear-day-btn');
-  if(cb) cb.addEventListener('click', clearDate);
+  document.getElementById('dash-body').innerHTML=h;
 }
 
-function clearDate(){
-  document.getElementById('confirm-modal-text').textContent = 'This will delete all trips for ' + fmtDateLabel(dashDate) + '. Cannot be undone.';
-  window._clearMode = 'date';
-  document.getElementById('confirm-modal').style.display='flex';
+function toggleDay(uid){
+  const el=document.getElementById('det-'+uid);
+  const ar=document.getElementById('arr-'+uid);
+  if(!el) return;
+  const open=el.style.display==='flex';
+  el.style.display=open?'none':'flex';
+  el.style.flexDirection='column';
+  if(ar) ar.style.transform=open?'':'rotate(180deg)';
 }
 
-function resetAllPins(){
-  document.getElementById('confirm-modal-text').textContent = 'This will reset ALL driver PINs (drivers will set new ones on next use). Trip data is kept. Continue?';
-  window._clearMode = 'pins';
-  document.getElementById('confirm-modal').style.display='flex';
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// CLEAR + DELETE PIN
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function startClear(action){
+  deleteAction=action;
+  let title='', sub='';
+  if(action==='day'){   title='Clear Day?';      sub='Delete all trips for '+fmtDate(dashDate)+'? Cannot be undone.'; }
+  if(action==='week'){  title='Clear Week?';     sub='Delete all trips for this week? Cannot be undone.'; }
+  if(action==='pins'){  title='Reset All PINs?'; sub='All drivers will need to set a new PIN on next use. Trip data is kept.'; }
+  document.getElementById('mc-title').textContent=title;
+  document.getElementById('mc-sub').textContent=sub;
+  document.getElementById('modal-confirm').style.display='flex';
 }
-function closeModal(){ document.getElementById('confirm-modal').style.display='none'; }
-function confirmClear(){
-  if(window._clearMode === 'pins'){
-    localStorage.removeItem('cp_driver_pins');
-    window._pinSetupStep = null; window._pinFirst = null;
-    closeModal(); buildDashboard();
-    return;
+
+function closeConfirm(){ document.getElementById('modal-confirm').style.display='none'; }
+
+function proceedToDeletePin(){
+  closeConfirm();
+  delPinEntry='';
+  updateDelDots();
+  document.getElementById('del-pin-err').textContent='';
+  document.getElementById('modal-delete-pin').style.display='flex';
+}
+
+function closeDeletePin(){ document.getElementById('modal-delete-pin').style.display='none'; delPinEntry=''; updateDelDots(); }
+
+function updateDelDots(){ for(let i=0;i<4;i++) document.getElementById('dpd'+i).className='pin-dot'+(i<delPinEntry.length?' filled':''); }
+
+function dpk(k){
+  if(k==='DEL'){ delPinEntry=delPinEntry.slice(0,-1); updateDelDots(); return; }
+  if(delPinEntry.length>=4) return;
+  delPinEntry+=k; updateDelDots();
+  if(delPinEntry.length<4) return;
+  const entered=delPinEntry; delPinEntry='';
+  setTimeout(()=>{
+    if(entered===MGR_PIN){
+      closeDeletePin();
+      execDelete();
+    } else {
+      document.getElementById('del-pin-err').textContent='Wrong PIN. Try again.';
+      updateDelDots();
+    }
+  },150);
+}
+
+function execDelete(){
+  if(deleteAction==='day'){
+    trips=trips.filter(t=>t.date!==dashDate);
+    saveTrips(); dashDate=todayStr(); buildDashboard();
+  } else if(deleteAction==='week'){
+    const {dates}=getWeekData();
+    trips=trips.filter(t=>!dates.includes(t.date));
+    saveTrips(); dashDate=todayStr(); buildDashboard();
+  } else if(deleteAction==='pins'){
+    localStorage.removeItem('cp_pins');
+    buildDashboard();
   }
-  trips = trips.filter(t=>t.date!==dashDate);
-  saveTrips(); closeModal(); dashDate=todayStr(); buildDashboard();
 }
 
-// ── INIT ──
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// PDF EXPORT
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function pdfWrap(title, body){
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+  body{font-family:Arial,sans-serif;font-size:12px;color:#1a1a1a;padding:28px;max-width:900px;margin:0 auto}
+  h1{font-size:20px;font-weight:800;margin-bottom:2px}
+  .sub{font-size:12px;color:#888;margin-bottom:20px}
+  .no-print{margin-bottom:18px}
+  .print-btn{padding:9px 22px;background:#c8392b;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+  .kpi{background:#f5f4f0;border-radius:7px;padding:10px 12px}
+  .kpi-l{font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:3px}
+  .kpi-v{font-size:20px;font-weight:800}
+  .sec{margin-bottom:18px}
+  .sec-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#888;border-bottom:1px solid #e0ddd6;padding-bottom:4px;margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th{background:#f5f4f0;padding:6px 9px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:#888;border-bottom:2px solid #e0ddd6}
+  td{padding:6px 9px;border-bottom:1px solid #e0ddd6;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .late{color:#c8392b;font-weight:700}.ok{color:#1a7f4b;font-weight:700}
+  .note{font-size:10px;color:#d97706;font-style:italic}
+  .footer{margin-top:28px;padding-top:10px;border-top:1px solid #e0ddd6;font-size:10px;color:#888;display:flex;justify-content:space-between}
+  @media print{.no-print{display:none}}
+  </style></head><body>
+  <div class="no-print"><button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button><span style="margin-left:10px;font-size:12px;color:#888">Print → Save as PDF</span></div>
+  <h1>🍛 Chowpatty Restaurant</h1>
+  <div style="font-size:16px;font-weight:800;margin-bottom:2px">${title}</div>
+  <div class="sub">Generated: ${new Date().toLocaleString('en-GB')}</div>
+  ${body}
+  <div class="footer"><span>Chowpatty Restaurant · Delivery Log</span><span>Confidential</span></div>
+  </body></html>`;
+}
+
+function exportDayPDF(){
+  const dt=trips.filter(t=>t.date===dashDate&&t.returned);
+  const cash=dt.reduce((s,t)=>s+t.totalCash,0);
+  const late=dt.filter(t=>t.late).length;
+  const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+  let body=`<div class="kpis">
+    <div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${dt.length}</div></div>
+    <div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div>
+    <div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
+    <div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div>
+  </div>
+  <div class="sec"><div class="sec-title">All Trips</div>
+  <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
+  dt.forEach(t=>{
+    t.orders.forEach((o,i)=>{
+      body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}</tr>`;
+    });
+    if(t.notes) body+=`<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
+  });
+  body+=`</tbody></table></div>`;
+  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{
+    const ddt=dt.filter(t=>t.driver===d.name);
+    const dc=ddt.reduce((s,t)=>s+t.totalCash,0);
+    const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0;
+    const dl=ddt.filter(t=>t.late).length;
+    body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`;
+  });
+  body+=`</tbody></table></div>`;
+  const w=window.open('','_blank');
+  w.document.write(pdfWrap(`Daily Report — ${fmtDate(dashDate)}`,body));
+  w.document.close();
+}
+
+function exportWeekPDF(){
+  const {dates,trips:wt}=getWeekData();
+  const cash=wt.reduce((s,t)=>s+t.totalCash,0);
+  const late=wt.filter(t=>t.late).length;
+  const avg=wt.length?Math.round(wt.reduce((s,t)=>s+t.duration,0)/wt.length):0;
+  let body=`<div class="kpis">
+    <div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${wt.length}</div></div>
+    <div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div>
+    <div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
+    <div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div>
+  </div>`;
+  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{
+    const ddt=wt.filter(t=>t.driver===d.name);
+    const dc=ddt.reduce((s,t)=>s+t.totalCash,0);
+    const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0;
+    const dl=ddt.filter(t=>t.late).length;
+    body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`;
+  });
+  body+=`</tbody></table></div>`;
+  dates.forEach(d=>{
+    const dt=trips.filter(t=>t.date===d&&t.returned);
+    if(!dt.length) return;
+    const dc=dt.reduce((s,t)=>s+t.totalCash,0);
+    const dl=dt.filter(t=>t.late).length;
+    body+=`<div class="sec"><div class="sec-title">${fmtDate(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dl?` · <span style="color:#c8392b">${dl} late</span>`:''}</div>
+    <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
+    dt.forEach(t=>{
+      t.orders.forEach((o,i)=>{
+        body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}</tr>`;
+      });
+      if(t.notes) body+=`<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
+    });
+    body+=`</tbody></table></div>`;
+  });
+  const w=window.open('','_blank');
+  w.document.write(pdfWrap(`Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`,body));
+  w.document.close();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+// INIT
+// ━━━━━━━━━━━━━━━━━━━━━━━━
 goHome();
 </script>
 </body>
