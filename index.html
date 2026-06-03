@@ -361,6 +361,7 @@ function goDriverPin(name){
 
 function goManagerPin(){
   pinMode = 'manager';
+  window._pinSetupStep = null; window._pinFirst = null;
   document.getElementById('pin-title').textContent = 'Manager Access';
   document.getElementById('pin-sub').textContent = 'Enter manager PIN';
   resetPin(); show('pin');
@@ -394,9 +395,9 @@ function pinKey(k){
             document.getElementById('pin-sub').textContent = 'Ingiza PIN ile ile tena kuthibitisha';
           } else {
             if(capturedPin === window._pinFirst){
-              saveDriverPin(currentDriver.name, pinEntry);
+              saveDriverPin(currentDriver.name, capturedPin);
               window._pinSetupStep = null; window._pinFirst = null;
-              resetPin(); pinMode==='return'?goReturn():goDepart();
+              resetPin(); capturedMode==='return'?goReturn():goDepart();
             } else {
               document.getElementById('pin-error').textContent = 'PIN hazikufanana. Jaribu tena.';
               window._pinSetupStep = null; window._pinFirst = null;
@@ -408,7 +409,7 @@ function pinKey(k){
         }
         // PIN exists — verify
         else if(capturedPin === storedPin){
-          resetPin(); pinMode==='return'?goReturn():goDepart();
+          resetPin(); capturedMode==='return'?goReturn():goDepart();
         }
         else{ document.getElementById('pin-error').textContent='PIN si sahihi. Jaribu tena.'; pinEntry=''; updatePinDots(); }
       }
@@ -477,8 +478,6 @@ function removeOrder(idx){
 }
 
 function selectOrderEneo(idx, z){
-  ZONES.forEach(zone=>{ const el=document.getElementById(`oz-${idx}-${zone.replace(' ','')}}`); if(el) el.className='zone-opt'; });
-  // fix selector
   document.querySelectorAll(`[id^="oz-${idx}-"]`).forEach(el=>el.className='zone-opt');
   const sel = document.getElementById(`oz-${idx}-${z.replace(' ','')}`);
   if(sel) sel.className='zone-opt sel';
@@ -604,7 +603,7 @@ function submitReturn(){
   saveTrips();
 
   // Update Sheets rows
-  openTrip.orders_data.forEach(o => syncToSheets({
+  openTrip.orders.forEach(o => syncToSheets({
     date: openTrip.date, driver: openTrip.driver,
     orderNum: o.num, zone: o.zone, cash: o.cash, phone: o.phone||'',
     left: openTrip.left, returned: returnTime, duration, late: isLate?'YES':'NO', status: 'RETURNED',
@@ -1038,8 +1037,9 @@ function buildDashboard(){
     html += `<div class="empty">No completed trips for this date.</div>`;
   }
 
-  html += `<button onclick="exportDayPDF()" style="width:100%;padding:12px;background:transparent;border:2px solid var(--ok);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--ok);cursor:pointer;margin-bottom:8px">📄 Export Day Log</button>`;
-  html += `<button class="clear-btn" id="clear-day-btn">🗑 Clear ${fmtDateLabel(dashDate)}</button>`;
+  html += `<button onclick="exportDayPDF()" style="width:100%;padding:12px;background:transparent;border:2px solid var(--ok);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--ok);cursor:pointer;margin-bottom:8px">📄 Export Day Report (PDF)</button>`;
+  html += `<button class="clear-btn" id="clear-day-btn" style="margin-bottom:8px">🗑 Clear ${fmtDateLabel(dashDate)}</button>`;
+  html += `<button onclick="resetAllPins()" style="width:100%;padding:12px;background:transparent;border:2px solid var(--muted);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer">🔑 Reset All Driver PINs</button>`;
   document.getElementById('dash-body').innerHTML = html;
   const cb = document.getElementById('clear-day-btn');
   if(cb) cb.addEventListener('click', clearDate);
@@ -1047,10 +1047,23 @@ function buildDashboard(){
 
 function clearDate(){
   document.getElementById('confirm-modal-text').textContent = 'This will delete all trips for ' + fmtDateLabel(dashDate) + '. Cannot be undone.';
+  window._clearMode = 'date';
+  document.getElementById('confirm-modal').style.display='flex';
+}
+
+function resetAllPins(){
+  document.getElementById('confirm-modal-text').textContent = 'This will reset ALL driver PINs (drivers will set new ones on next use). Trip data is kept. Continue?';
+  window._clearMode = 'pins';
   document.getElementById('confirm-modal').style.display='flex';
 }
 function closeModal(){ document.getElementById('confirm-modal').style.display='none'; }
 function confirmClear(){
+  if(window._clearMode === 'pins'){
+    localStorage.removeItem('cp_driver_pins');
+    window._pinSetupStep = null; window._pinFirst = null;
+    closeModal(); buildDashboard();
+    return;
+  }
   trips = trips.filter(t=>t.date!==dashDate);
   saveTrips(); closeModal(); dashDate=todayStr(); buildDashboard();
 }
