@@ -665,22 +665,15 @@ function addOrder(){
   orderCount++;
   const idx=orderCount;
   const taken=getTakenNums();
-  const tOptions=Array.from({length:30},(_,i)=>{
-    const n='T'+(i+1);
+  const allNums = [
+    ...Array.from({length:30},(_,i)=>'T'+(i+1)),
+    ...Array.from({length:15},(_,i)=>'D'+(i+1)),
+    ...Array.from({length:15},(_,i)=>'Mast T'+(i+1)),
+  ];
+  const options = allNums.map(n=>{
     const t=taken.includes(n);
     return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
   }).join('');
-  const dOptions=Array.from({length:15},(_,i)=>{
-    const n='D'+(i+1);
-    const t=taken.includes(n);
-    return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
-  }).join('');
-  const mOptions=Array.from({length:15},(_,i)=>{
-    const n='Mast T'+(i+1);
-    const t=taken.includes(n);
-    return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
-  }).join('');
-  const options=`<optgroup label="T Orders">${tOptions}</optgroup><optgroup label="D Orders">${dOptions}</optgroup><optgroup label="Mast Orders">${mOptions}</optgroup>`;
 
   const div=document.createElement('div');
   div.className='order-card';
