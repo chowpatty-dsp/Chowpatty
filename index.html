@@ -16,12 +16,8 @@
 }
 html,body{height:100%;width:100%;overflow:hidden}
 body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased}
-
-/* ── SCREENS ── */
 .screen{position:absolute;inset:0;display:none;flex-direction:column}
 .screen.active{display:flex}
-
-/* ── HOME ── */
 #home{background:var(--white);align-items:center;justify-content:center;gap:0}
 .home-logo{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;text-align:center}
 .home-title{font-size:30px;font-weight:800;letter-spacing:-.02em;text-align:center}
@@ -36,10 +32,8 @@ body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font
 .driver-btn.out .driver-status{color:var(--amber)}
 .out-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--amber);animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.home-footer{width:100%;max-width:560px;padding:0 24px}
+.home-footer{width:100%;max-width:560px;padding:0 24px;display:flex;flex-direction:column;gap:8px}
 .btn-mgr{width:100%;padding:13px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);cursor:pointer;-webkit-tap-highlight-color:transparent}
-
-/* ── PIN ── */
 #pin{background:var(--white);align-items:center;justify-content:center;gap:0}
 .pin-title{font-size:22px;font-weight:800;margin-bottom:6px;text-align:center}
 .pin-sub{font-size:14px;color:var(--muted);margin-bottom:28px;text-align:center;padding:0 24px;line-height:1.4}
@@ -50,9 +44,6 @@ body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font
 .pin-key{width:72px;height:72px;border-radius:50%;border:2px solid var(--border);background:var(--bg);font-family:var(--font);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:all .12s;user-select:none}
 .pin-key:active{background:var(--red);border-color:var(--red);color:#fff;transform:scale(.92)}
 .pin-err{color:var(--red);font-size:13px;font-weight:600;margin-top:14px;min-height:20px;text-align:center}
-.pin-back{margin-top:16px;padding:8px 24px;background:transparent;border:none;font-family:var(--font);font-size:14px;color:var(--muted);cursor:pointer}
-
-/* ── SHARED SCREEN PARTS ── */
 .s-header{display:flex;align-items:center;gap:12px;padding:16px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
 .s-back{width:36px;height:36px;border-radius:8px;background:var(--bg);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
 .s-driver-name{font-size:19px;font-weight:800}
@@ -63,13 +54,10 @@ body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font
 .f-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .f-input{width:100%;padding:12px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color .15s}
 .f-input:focus{border-color:var(--red);background:var(--white)}
-.f-select{width:100%;padding:12px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text);outline:none;-webkit-appearance:none}
 .btn-submit{width:100%;padding:15px;border:none;border-radius:12px;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .12s}
 .btn-submit:active{transform:scale(.98);opacity:.9}
 .btn-red{background:var(--red);color:#fff}
 .btn-green{background:var(--green);color:#fff}
-
-/* ── DEPART ── */
 #depart{background:var(--white)}
 .time-display{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
 .time-val{font-size:22px;font-weight:800}
@@ -85,8 +73,6 @@ body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font
 .cash-warn{display:none;margin-top:6px;padding:8px 10px;background:var(--red-light);border:1.5px solid var(--red);border-radius:7px;font-size:12px;font-weight:600;color:var(--red)}
 .add-order-btn{width:100%;padding:11px;background:transparent;border:2px dashed var(--border);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .12s}
 .add-order-btn:active{border-color:var(--red);color:var(--red)}
-
-/* ── RETURN ── */
 #ret{background:var(--white)}
 .trip-preview{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px}
 .trip-preview-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
@@ -100,8 +86,6 @@ body{background:var(--bg);font-family:var(--font);color:var(--text);-webkit-font
 .trip-total-val{font-size:20px;font-weight:800;color:var(--green)}
 .ret-note{font-size:13px;color:var(--muted);text-align:center;padding:4px 0}
 textarea.f-input{resize:none;line-height:1.5}
-
-/* ── SUCCESS ── */
 #success{background:var(--green);align-items:center;justify-content:center;text-align:center;padding:36px}
 .success-icon{font-size:64px;margin-bottom:16px}
 .success-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:6px}
@@ -111,8 +95,6 @@ textarea.f-input{resize:none;line-height:1.5}
 .sc-row:last-child{border-bottom:none}
 .sc-val{font-weight:700;color:#fff}
 .btn-done{padding:13px 40px;background:#fff;color:var(--green);border:none;border-radius:12px;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer}
-
-/* ── DASHBOARD ── */
 #dash{background:var(--bg);overflow-y:auto}
 .dash-header{background:var(--white);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;flex-shrink:0}
 .dash-title{font-size:17px;font-weight:800}
@@ -164,7 +146,6 @@ textarea.f-input{resize:none;line-height:1.5}
 .day-row-head{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .day-row-title{font-size:13px;font-weight:700}
 .day-row-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.day-row-right{text-align:right}
 .day-row-cash{font-size:13px;font-weight:700;color:var(--green)}
 .day-arrow{color:var(--muted);font-size:14px;transition:transform .2s;margin-left:10px}
 .day-detail{display:none;border-top:1px solid var(--border);padding:10px 14px;flex-direction:column;gap:6px}
@@ -176,18 +157,15 @@ textarea.f-input{resize:none;line-height:1.5}
 .btn-muted{width:100%;padding:12px;background:transparent;border:2px solid var(--muted);border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-bottom:8px}
 .date-select{width:100%;padding:10px 14px;background:var(--white);border:2px solid var(--border);border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);outline:none;-webkit-appearance:none;margin-bottom:4px}
 .empty{color:var(--muted);font-size:14px;text-align:center;padding:24px}
-
+#cashier{background:var(--bg);overflow-y:auto}
 .cashier-search{width:100%;padding:13px 16px;background:var(--white);border:2px solid var(--border);border-radius:12px;font-family:var(--font);font-size:15px;color:var(--text);outline:none;transition:border-color .15s}
 .cashier-search:focus{border-color:var(--red)}
 .search-result{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:8px}
 .search-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .search-result-driver{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
-.search-result-cash{font-size:15px;font-weight:800;color:var(--green)}
 .search-result-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--border)}
 .search-result-row:last-child{border-bottom:none}
 .no-result{color:var(--muted);font-size:14px;text-align:center;padding:20px}
-
-/* ── MODALS ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
 .modal{background:var(--white);border-radius:16px;padding:26px 22px;width:100%;max-width:320px;text-align:center}
 .modal-title{font-size:18px;font-weight:800;margin-bottom:8px}
@@ -204,9 +182,11 @@ textarea.f-input{resize:none;line-height:1.5}
   <div class="home-logo">Chowpatty Restaurant</div>
   <div class="home-title">Bonyeza jina lako</div>
   <div class="home-sub">Sajili kutoka au kurudi</div>
-  <div class="driver-grid" id="driver-grid"></div>
-  <div class="home-footer" style="display:flex;flex-direction:column;gap:8px">
-    <button class="btn-mgr" onclick="show('cashier')">🧾 Cashier View</button>
+  <div class="driver-grid" id="driver-grid">
+    <div style="color:var(--muted);font-size:13px;text-align:center;padding:20px;grid-column:1/-1">Inaunganisha...</div>
+  </div>
+  <div class="home-footer">
+    <button class="btn-mgr" onclick="show('cashier');buildCashier()">🧾 Cashier View</button>
     <button class="btn-mgr" onclick="startManagerPin()">📊 Meneja</button>
   </div>
 </div>
@@ -232,8 +212,8 @@ textarea.f-input{resize:none;line-height:1.5}
 
 <!-- CASHIER PIN -->
 <div class="screen" id="cashier-pin" style="background:var(--white);align-items:center;justify-content:center">
-  <div class="pin-title" id="cp-title"></div>
-  <div class="pin-sub" id="cp-sub"></div>
+  <div class="pin-title" id="cp-title">Cashier Confirmation</div>
+  <div class="pin-sub" id="cp-sub">Select your name to confirm cash received</div>
   <div class="pin-dots">
     <div class="pin-dot" id="cpd0"></div><div class="pin-dot" id="cpd1"></div>
     <div class="pin-dot" id="cpd2"></div><div class="pin-dot" id="cpd3"></div>
@@ -297,8 +277,8 @@ textarea.f-input{resize:none;line-height:1.5}
   <button class="btn-done" onclick="goHome()">Imekamilika</button>
 </div>
 
-<!-- CASHIER -->
-<div class="screen" id="cashier" style="background:var(--bg);overflow-y:auto">
+<!-- CASHIER VIEW -->
+<div class="screen" id="cashier">
   <div class="dash-header">
     <div><div class="dash-title">Cashier View</div><div class="dash-sub" id="cashier-date"></div></div>
     <button class="dash-exit" onclick="goHome()">← Back</button>
@@ -315,11 +295,35 @@ textarea.f-input{resize:none;line-height:1.5}
   <div class="dash-body" id="dash-body"></div>
 </div>
 
+<!-- SETTINGS MODAL -->
+<div class="overlay" id="modal-settings" style="display:none;align-items:flex-start;padding-top:40px">
+  <div class="modal" style="max-width:420px;max-height:80vh;overflow-y:auto;text-align:left">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="modal-title" style="margin:0">⚙️ Settings</div>
+      <button onclick="closeSettings()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted)">✕</button>
+    </div>
+    <div style="margin-bottom:20px">
+      <div class="sec-title" style="margin-bottom:10px">Reset Individual PIN</div>
+      <div id="settings-pin-list"></div>
+    </div>
+    <div style="margin-bottom:20px">
+      <div class="sec-title" style="margin-bottom:10px">Drivers</div>
+      <div id="settings-driver-list"></div>
+      <button onclick="addStaffMember('driver')" style="width:100%;padding:9px;background:transparent;border:2px dashed var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-top:6px">+ Add Driver</button>
+    </div>
+    <div style="margin-bottom:8px">
+      <div class="sec-title" style="margin-bottom:10px">Cashiers</div>
+      <div id="settings-cashier-list"></div>
+      <button onclick="addStaffMember('cashier')" style="width:100%;padding:9px;background:transparent;border:2px dashed var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-top:6px">+ Add Cashier</button>
+    </div>
+  </div>
+</div>
+
 <!-- CANCEL TRIP MODAL -->
 <div class="overlay" id="modal-cancel-trip" style="display:none">
   <div class="modal">
     <div class="modal-title">Cancel Delivery?</div>
-    <div class="modal-sub" id="cancel-trip-sub">This will mark the trip as cancelled. Driver returns with no cash collected.</div>
+    <div class="modal-sub" id="cancel-trip-sub"></div>
     <div class="pin-dots" style="justify-content:center;margin:14px 0">
       <div class="pin-dot" id="ctpd0"></div><div class="pin-dot" id="ctpd1"></div>
       <div class="pin-dot" id="ctpd2"></div><div class="pin-dot" id="ctpd3"></div>
@@ -333,36 +337,6 @@ textarea.f-input{resize:none;line-height:1.5}
       <div class="pin-key" onclick="closeCancelTrip()" style="font-size:12px;color:var(--muted)">Cancel</div>
     </div>
     <div class="pin-err" id="ct-pin-err" style="margin-top:10px"></div>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
-<div class="overlay" id="modal-settings" style="display:none;align-items:flex-start;padding-top:40px">
-  <div class="modal" style="max-width:420px;max-height:80vh;overflow-y:auto;text-align:left">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div class="modal-title" style="margin:0">⚙️ Settings</div>
-      <button onclick="closeSettings()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted)">✕</button>
-    </div>
-
-    <!-- Individual PIN reset -->
-    <div style="margin-bottom:20px">
-      <div class="sec-title" style="margin-bottom:10px">Reset Individual PIN</div>
-      <div id="settings-pin-list"></div>
-    </div>
-
-    <!-- Driver management -->
-    <div style="margin-bottom:20px">
-      <div class="sec-title" style="margin-bottom:10px">Drivers</div>
-      <div id="settings-driver-list"></div>
-      <button onclick="addStaffMember('driver')" style="width:100%;padding:9px;background:transparent;border:2px dashed var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-top:6px">+ Add Driver</button>
-    </div>
-
-    <!-- Cashier management -->
-    <div style="margin-bottom:8px">
-      <div class="sec-title" style="margin-bottom:10px">Cashiers</div>
-      <div id="settings-cashier-list"></div>
-      <button onclick="addStaffMember('cashier')" style="width:100%;padding:9px;background:transparent;border:2px dashed var(--border);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;margin-top:6px">+ Add Cashier</button>
-    </div>
   </div>
 </div>
 
@@ -399,14 +373,33 @@ textarea.f-input{resize:none;line-height:1.5}
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script>
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
+// FIREBASE
+// ═══════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyBZVDOOK1QlK1NHqSS-clVoNmqdziLlh8o",
+  authDomain: "chowpatty-dispatch.firebaseapp.com",
+  databaseURL: "https://chowpatty-dispatch-default-rtdb.firebaseio.com",
+  projectId: "chowpatty-dispatch",
+  storageBucket: "chowpatty-dispatch.firebasestorage.app",
+  messagingSenderId: "426960552221",
+  appId: "1:426960552221:web:c2fddd917b1e9e21c061f4"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const tripsRef = db.ref('trips');
+
+// ═══════════════════════════════════════
 // CONFIG
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 const MGR_PIN    = '2635';
 const LATE_MIN   = 60;
 const MAX_ORDERS = 3;
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz-7BUB2K-ggCnoM-mv7izIPcL4D3v16T8kCzXJ5Ivy4Il9P2AT9hI9Mgq9P1lGfIeA7Q/exec';
+const ZONES      = ['Kariakoo','Fire','Town','Upanga','Sea View','Kamata'];
 
 const DEFAULT_DRIVERS = [
   { name:'Omari',   color:'#b7791f', bg:'#fef9e7' },
@@ -417,14 +410,12 @@ const DEFAULT_DRIVERS = [
   { name:'Kassim',  color:'#0891b2', bg:'#ecfeff' },
   { name:'Trainer', color:'#4b5563', bg:'#f3f4f6', fixedPin:'9999' },
 ];
-
 const DEFAULT_CASHIERS = [
   { name:'Mehdi',   color:'#b7791f', bg:'#fef9e7' },
   { name:'Rennata', color:'#1a7f4b', bg:'#edf7f2' },
   { name:'Irene',   color:'#2563eb', bg:'#eff6ff' },
   { name:'Mary',    color:'#7c3aed', bg:'#f5f3ff' },
 ];
-
 const COLOR_PALETTE = [
   {color:'#b7791f',bg:'#fef9e7'},{color:'#1a7f4b',bg:'#edf7f2'},
   {color:'#2563eb',bg:'#eff6ff'},{color:'#7c3aed',bg:'#f5f3ff'},
@@ -432,98 +423,83 @@ const COLOR_PALETTE = [
   {color:'#4b5563',bg:'#f3f4f6'},{color:'#b45309',bg:'#fef3c7'},
 ];
 
-function getDriverConfig(){
-  const stored = localStorage.getItem('cp_drivers');
-  if(stored){ try{ return JSON.parse(stored); }catch(e){} }
-  return DEFAULT_DRIVERS.map(d=>({...d}));
-}
-function getCashierConfig(){
-  const stored = localStorage.getItem('cp_cashiers');
-  if(stored){ try{ return JSON.parse(stored); }catch(e){} }
-  return DEFAULT_CASHIERS.map(c=>({...c}));
-}
-function saveDriverConfig(cfg){ localStorage.setItem('cp_drivers', JSON.stringify(cfg)); }
-function saveCashierConfig(cfg){ localStorage.setItem('cp_cashiers', JSON.stringify(cfg)); }
+function getDriverConfig(){ const s=localStorage.getItem('cp_drivers'); if(s){try{return JSON.parse(s);}catch(e){}} return DEFAULT_DRIVERS.map(d=>({...d})); }
+function getCashierConfig(){ const s=localStorage.getItem('cp_cashiers'); if(s){try{return JSON.parse(s);}catch(e){}} return DEFAULT_CASHIERS.map(c=>({...c})); }
+function saveDriverConfig(cfg){ localStorage.setItem('cp_drivers',JSON.stringify(cfg)); }
+function saveCashierConfig(cfg){ localStorage.setItem('cp_cashiers',JSON.stringify(cfg)); }
 
-const ZONES = ['Kariakoo','Fire','Town','Upanga','Sea View','Kamata'];
-
-let DRIVER_CONFIG = getDriverConfig();
+let DRIVER_CONFIG  = getDriverConfig();
 let CASHIER_CONFIG = getCashierConfig();
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 // STATE
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-let trips    = JSON.parse(localStorage.getItem('cp_trips') || '[]').map(t=>({...t, orders: Array.isArray(t.orders)?t.orders:[]}));
-let pinEntry = '';
-let pinMode  = ''; // 'driver-depart' | 'driver-return' | 'driver-setup' | 'driver-setup-confirm' | 'manager'
-let pinSetupFirst = '';
-let activeDriver  = null;
-let orderCount    = 0;
-let dashView      = 'day';
-let dashDate      = todayStr();
-let deleteAction  = '';
-let delPinEntry   = '';
-let homeTimer     = null;
-
-function scheduleHome(delay){
-  if(homeTimer) clearTimeout(homeTimer);
-  homeTimer = setTimeout(()=>{ homeTimer=null; goHome(); }, delay);
-}
-
-function cancelHomeTimer(){
-  if(homeTimer){ clearTimeout(homeTimer); homeTimer=null; }
-}
-let cashierPinMode = ''; // 'confirm-return' | 'cashier-setup' | 'cashier-setup-confirm'
-let cashierPinEntry = '';
+// ═══════════════════════════════════════
+let trips          = [];
+let pinEntry       = '';
+let pinMode        = '';
+let pinSetupFirst  = '';
+let activeDriver   = null;
+let orderCount     = 0;
+let dashView       = 'day';
+let dashDate       = todayStr();
+let deleteAction   = '';
+let delPinEntry    = '';
+let cashierPinMode = '';
+let cashierPinEntry= '';
 let cashierSetupFirst = '';
-let activeCashier = null;
-let pendingTrip = null;
+let activeCashier  = null;
+let pendingTrip    = null;
 let cancelTripPinEntry = '';
-let cancelTripId = null;
+let cancelTripId   = null;
+let homeTimer      = null;
 
-function saveTrips(){ localStorage.setItem('cp_trips', JSON.stringify(trips)); }
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 function fmtTime(d){ return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
 function fmtDate(s){ return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
 function getStoredPins(){ return JSON.parse(localStorage.getItem('cp_pins')||'{}'); }
 function savePin(name,pin){ const p=getStoredPins(); p[name]=pin; localStorage.setItem('cp_pins',JSON.stringify(p)); }
-function getPin(name){
-  const cfg = DRIVER_CONFIG.find(d=>d.name===name);
-  if(cfg && cfg.fixedPin) return cfg.fixedPin;
-  return getStoredPins()[name]||null;
-}
-function hasPin(name){ return !!getPin(name); }
-
+function getPin(name){ const cfg=DRIVER_CONFIG.find(d=>d.name===name); if(cfg&&cfg.fixedPin) return cfg.fixedPin; return getStoredPins()[name]||null; }
 function getStoredCashierPins(){ return JSON.parse(localStorage.getItem('cp_cashier_pins')||'{}'); }
 function saveCashierPin(name,pin){ const p=getStoredCashierPins(); p[name]=pin; localStorage.setItem('cp_cashier_pins',JSON.stringify(p)); }
 function getCashierPin(name){ return getStoredCashierPins()[name]||null; }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// SCREEN NAVIGATION
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+function saveTrips(){
+  const data={};
+  trips.forEach(t=>{ data[t.id]=t; });
+  tripsRef.set(data).catch(e=>console.error('Firebase write:',e));
+}
+
+function scheduleHome(ms){
+  if(homeTimer) clearTimeout(homeTimer);
+  homeTimer=setTimeout(()=>{ homeTimer=null; goHome(); },ms);
+}
+function cancelHomeTimer(){ if(homeTimer){ clearTimeout(homeTimer); homeTimer=null; } }
+
+function sync(data){
+  fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
+}
+
+// ═══════════════════════════════════════
+// SCREENS
+// ═══════════════════════════════════════
 function show(id){
-  // Cancel any pending home redirect when navigating to a new screen
-  if(id !== 'success') cancelHomeTimer();
+  if(id!=='success') cancelHomeTimer();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='cashier') buildCashier();
 }
 
 function goHome(){
-  buildHome();
-  show('home');
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// HOME
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function buildHome(){
-  DRIVER_CONFIG = getDriverConfig();
-  CASHIER_CONFIG = getCashierConfig();
-  const grid = document.getElementById('driver-grid');
-  grid.innerHTML = DRIVER_CONFIG.map(d=>{
-    const isOut = trips.some(t=>t.driver===d.name && !t.returned);
-    const runs  = trips.filter(t=>t.driver===d.name && t.date===todayStr() && t.returned).length;
+  DRIVER_CONFIG=getDriverConfig();
+  CASHIER_CONFIG=getCashierConfig();
+  cancelHomeTimer();
+  const grid=document.getElementById('driver-grid');
+  if(!grid) return;
+  grid.innerHTML=DRIVER_CONFIG.map(d=>{
+    const isOut=trips.some(t=>t.driver===d.name&&!t.returned);
+    const runs=trips.filter(t=>t.driver===d.name&&t.date===todayStr()&&t.returned).length;
     return `<div class="driver-btn${isOut?' out':''}" onclick="driverTapped('${d.name}')">
       ${isOut?'<div class="out-dot"></div>':''}
       <div class="driver-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
@@ -531,48 +507,38 @@ function buildHome(){
       <div class="driver-status">${isOut?'AMETOKA — bonyeza kurudi':`${runs} trip${runs!==1?'s':''} leo`}</div>
     </div>`;
   }).join('');
+  show('home');
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// PIN SYSTEM
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function resetPin(){
-  pinEntry = '';
-  for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot';
-  document.getElementById('pin-err').textContent='';
-}
-
-function updatePinDots(){
-  for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot'+(i<pinEntry.length?' filled':'');
-}
+// ═══════════════════════════════════════
+// PIN
+// ═══════════════════════════════════════
+function resetPin(){ pinEntry=''; for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot'; document.getElementById('pin-err').textContent=''; }
+function updatePinDots(){ for(let i=0;i<4;i++) document.getElementById('pd'+i).className='pin-dot'+(i<pinEntry.length?' filled':''); }
 
 function driverTapped(name){
-  const cfg = DRIVER_CONFIG.find(d=>d.name===name);
-  activeDriver = cfg;
-  const isOut  = trips.some(t=>t.driver===name && !t.returned);
-  const stored = getPin(name);
-
-
+  DRIVER_CONFIG=getDriverConfig();
+  const cfg=DRIVER_CONFIG.find(d=>d.name===name);
+  if(!cfg) return;
+  activeDriver=cfg;
+  const isOut=trips.some(t=>t.driver===name&&!t.returned);
+  const stored=getPin(name);
   resetPin();
-  document.getElementById('pin-title').textContent = `Hey ${name} 👋`;
-
-  if(!stored && !cfg.fixedPin){
-    // First time — set PIN
-    pinMode = 'driver-setup';
-    document.getElementById('pin-sub').textContent = 'Mara ya kwanza? Chagua PIN ya tarakimu 4';
+  document.getElementById('pin-title').textContent=`Hey ${name} 👋`;
+  if(!stored&&!cfg.fixedPin){
+    pinMode='driver-setup';
+    document.getElementById('pin-sub').textContent='Mara ya kwanza? Chagua PIN ya tarakimu 4';
   } else {
-    pinMode = isOut ? 'driver-return' : 'driver-depart';
-    document.getElementById('pin-sub').textContent = isOut ? 'Ingiza PIN kuthibitisha kurudi' : 'Ingiza PIN kusajili kutoka';
+    pinMode=isOut?'driver-return':'driver-depart';
+    document.getElementById('pin-sub').textContent=isOut?'Ingiza PIN kuthibitisha kurudi':'Ingiza PIN kusajili kutoka';
   }
   show('pin');
 }
 
 function startManagerPin(){
-  activeDriver = null;
-  pinMode = 'manager';
-  resetPin();
-  document.getElementById('pin-title').textContent = 'Manager Access';
-  document.getElementById('pin-sub').textContent   = 'Enter manager PIN';
+  activeDriver=null; pinMode='manager'; resetPin();
+  document.getElementById('pin-title').textContent='Manager Access';
+  document.getElementById('pin-sub').textContent='Enter manager PIN';
   show('pin');
 }
 
@@ -581,55 +547,34 @@ function pk(k){
   if(pinEntry.length>=4) return;
   pinEntry+=k; updatePinDots();
   if(pinEntry.length<4) return;
-
-  // Capture and reset immediately to prevent double-fire
-  const entered = pinEntry;
-  pinEntry = '';
-
-  setTimeout(()=>{
-    handlePin(entered);
-  }, 150);
+  const entered=pinEntry; const capturedMode=pinMode; pinEntry='';
+  setTimeout(()=>handlePin(entered,capturedMode),150);
 }
 
-function handlePin(entered){
-  if(pinMode==='manager'){
-    if(entered===MGR_PIN){
-      resetPin(); buildDashboard(); show('dash');
-    } else {
-      document.getElementById('pin-err').textContent='Wrong PIN.';
-      updatePinDots();
-    }
+function handlePin(entered,capturedMode){
+  if(capturedMode==='manager'){
+    if(entered===MGR_PIN){ resetPin(); buildDashboard(); show('dash'); }
+    else { document.getElementById('pin-err').textContent='Wrong PIN.'; updatePinDots(); }
     return;
   }
-
-  // Manager master bypass for driver screens
-  if(entered===MGR_PIN && pinMode!=='driver-setup' && pinMode!=='driver-setup-confirm'){
+  if(entered===MGR_PIN&&capturedMode!=='driver-setup'&&capturedMode!=='driver-setup-confirm'){
     resetPin();
-    if(pinMode==='driver-return') goReturn();
+    if(capturedMode==='driver-return') goReturn();
     else goDepart();
     return;
   }
-
-  if(pinMode==='driver-setup'){
-    pinSetupFirst = entered;
-    pinMode = 'driver-setup-confirm';
-    resetPin();
-    document.getElementById('pin-title').textContent = 'Thibitisha PIN yako';
-    document.getElementById('pin-sub').textContent   = 'Ingiza PIN ile ile tena kuthibitisha';
-    updatePinDots();
+  if(capturedMode==='driver-setup'){
+    pinSetupFirst=entered; pinMode='driver-setup-confirm'; resetPin();
+    document.getElementById('pin-title').textContent='Thibitisha PIN yako';
+    document.getElementById('pin-sub').textContent='Ingiza PIN ile ile tena';
     return;
   }
-
-  if(pinMode==='driver-setup-confirm'){
+  if(capturedMode==='driver-setup-confirm'){
     if(entered===pinSetupFirst){
-      savePin(activeDriver.name, entered);
-      pinSetupFirst='';
-      pinMode='driver-depart';
-      resetPin();
-      goDepart();
+      savePin(activeDriver.name,entered); pinSetupFirst=''; resetPin();
+      pinMode='driver-depart'; goDepart();
     } else {
-      pinSetupFirst='';
-      pinMode='driver-setup';
+      pinSetupFirst=''; pinMode='driver-setup';
       document.getElementById('pin-err').textContent='PIN hazikufanana. Jaribu tena.';
       document.getElementById('pin-title').textContent=`Hey ${activeDriver.name} 👋`;
       document.getElementById('pin-sub').textContent='Mara ya kwanza? Chagua PIN ya tarakimu 4';
@@ -637,22 +582,14 @@ function handlePin(entered){
     }
     return;
   }
-
-  // Normal driver verify
-  const stored = getPin(activeDriver.name);
-  if(entered===stored){
-    resetPin();
-    if(pinMode==='driver-return') goReturn();
-    else goDepart();
-  } else {
-    document.getElementById('pin-err').textContent='PIN si sahihi. Jaribu tena.';
-    updatePinDots();
-  }
+  const stored=getPin(activeDriver.name);
+  if(entered===stored){ resetPin(); if(capturedMode==='driver-return') goReturn(); else goDepart(); }
+  else { document.getElementById('pin-err').textContent='PIN si sahihi. Jaribu tena.'; updatePinDots(); }
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 // DEPART
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 function goDepart(){
   orderCount=0;
   document.getElementById('dep-name').textContent=activeDriver.name;
@@ -677,16 +614,10 @@ function addOrder(){
   orderCount++;
   const idx=orderCount;
   const taken=getTakenNums();
-  const allNums = [
-    ...Array.from({length:30},(_,i)=>'T'+(i+1)),
-    ...Array.from({length:15},(_,i)=>'D'+(i+1)),
-    ...Array.from({length:15},(_,i)=>'Mast T'+(i+1)),
-  ];
-  const options = allNums.map(n=>{
-    const t=taken.includes(n);
-    return `<option value="${n}"${t?' disabled':''}>` + n + (t?' (out)':'') + '</option>';
-  }).join('');
-
+  const tOpts=Array.from({length:30},(_,i)=>{ const n='T'+(i+1),t=taken.includes(n); return `<option value="${n}"${t?' disabled':''}>` +n+(t?' (out)':'')+`</option>`; }).join('');
+  const dOpts=Array.from({length:15},(_,i)=>{ const n='D'+(i+1),t=taken.includes(n); return `<option value="${n}"${t?' disabled':''}>` +n+(t?' (out)':'')+`</option>`; }).join('');
+  const mOpts=Array.from({length:15},(_,i)=>{ const n='Mast T'+(i+1),t=taken.includes(n); return `<option value="${n}"${t?' disabled':''}>` +n+(t?' (out)':'')+`</option>`; }).join('');
+  const options=`<optgroup label="T Orders">${tOpts}</optgroup><optgroup label="D Orders">${dOpts}</optgroup><optgroup label="Mast Orders">${mOpts}</optgroup>`;
   const div=document.createElement('div');
   div.className='order-card';
   div.id='card-'+idx;
@@ -696,27 +627,23 @@ function addOrder(){
       ${idx>1?`<button class="order-remove" onclick="removeOrder(${idx})">✕</button>`:''}
     </div>
     <div class="order-fields">
-      <div>
-        <div class="f-label">Nambari ya Agizo</div>
+      <div><div class="f-label">Nambari ya Agizo</div>
         <select class="f-input" id="on-${idx}" style="font-size:14px;padding:10px 12px" onchange="refreshOrderNums(${idx})">
           <option value="">Chagua...</option>${options}
         </select>
       </div>
-      <div>
-        <div class="f-label">Kiasi (TZS)</div>
+      <div><div class="f-label">Kiasi (TZS)</div>
         <input class="f-input" id="oc-${idx}" type="number" inputmode="numeric" placeholder="e.g. 25000" style="font-size:14px;padding:10px 12px" oninput="const cw=document.getElementById('cw-'+${idx});if(cw&&parseInt(this.value)>=13000)cw.style.display='none'">
       </div>
     </div>
-    <div style="margin-bottom:10px">
-      <div class="f-label">Simu ya Mteja</div>
+    <div style="margin-bottom:10px"><div class="f-label">Simu ya Mteja</div>
       <input class="f-input" id="op-${idx}" type="tel" inputmode="numeric" placeholder="e.g. 0712345678" style="font-size:14px;padding:10px 12px">
     </div>
     <div class="f-label">Eneo</div>
     <div class="zone-grid" id="zg-${idx}">
-      ${ZONES.map(z=>`<div class="zone-btn" id="zb-${idx}-${z.replace(' ','_')}" onclick="selectZone(${idx},'${z}')">${z}</div>`).join('')}
+      ${ZONES.map(z=>`<div class="zone-btn" id="zb-${idx}-${z.replace(/ /g,'_')}" onclick="selectZone(${idx},'${z}')">${z}</div>`).join('')}
     </div>
-    <div class="cash-warn" id="cw-${idx}">⚠️ Kiwango cha chini ni TZS 13,000</div>
-  `;
+    <div class="cash-warn" id="cw-${idx}">⚠️ Kiwango cha chini ni TZS 13,000</div>`;
   document.getElementById('orders-section').appendChild(div);
   if(orderCount>=MAX_ORDERS) document.getElementById('add-order-btn').style.display='none';
 }
@@ -727,39 +654,26 @@ function removeOrder(idx){
 }
 
 function selectZone(idx,z){
-  ZONES.forEach(zone=>{
-    const el=document.getElementById('zb-'+idx+'-'+zone.replace(' ','_'));
-    if(el) el.className='zone-btn';
-  });
-  const sel=document.getElementById('zb-'+idx+'-'+z.replace(' ','_'));
+  ZONES.forEach(zone=>{ const el=document.getElementById('zb-'+idx+'-'+zone.replace(/ /g,'_')); if(el) el.className='zone-btn'; });
+  const sel=document.getElementById('zb-'+idx+'-'+z.replace(/ /g,'_'));
   if(sel) sel.className='zone-btn active';
 }
 
 function refreshOrderNums(changedIdx){
-  // Collect all selected nums in this form
   const selected=[];
   document.querySelectorAll('.order-card').forEach(card=>{
-    const i=card.id.replace('card-','');
-    const v=document.getElementById('on-'+i);
-    if(v && v.value) selected.push({idx:i, val:v.value});
+    const i=card.id.replace('card-',''); const v=document.getElementById('on-'+i);
+    if(v&&v.value) selected.push({idx:i,val:v.value});
   });
   const taken=getTakenNums();
-  // Update other dropdowns
   document.querySelectorAll('.order-card').forEach(card=>{
     const i=card.id.replace('card-','');
     if(i===String(changedIdx)) return;
-    const sel=document.getElementById('on-'+i);
-    if(!sel) return;
+    const sel=document.getElementById('on-'+i); if(!sel) return;
     const cur=sel.value;
-    // Values taken by other form rows
-    const otherSelected=selected.filter(s=>s.idx!==i).map(s=>s.val);
-    Array.from(sel.options).forEach(opt=>{
-      if(!opt.value) return;
-      const isTaken=taken.includes(opt.value)||otherSelected.includes(opt.value);
-      opt.disabled=isTaken;
-      opt.textContent=opt.value+(isTaken?' (taken)':'');
-    });
-    if(otherSelected.includes(cur)) sel.value='';
+    const otherSel=selected.filter(s=>s.idx!==i).map(s=>s.val);
+    Array.from(sel.options).forEach(opt=>{ if(!opt.value) return; const isTaken=taken.includes(opt.value)||otherSel.includes(opt.value); opt.disabled=isTaken; opt.textContent=opt.value+(isTaken?' (taken)':''); });
+    if(otherSel.includes(cur)) sel.value='';
   });
 }
 
@@ -767,7 +681,7 @@ function getFormOrders(){
   const orders=[];
   document.querySelectorAll('.order-card').forEach(card=>{
     const idx=card.id.replace('card-','');
-    const num =document.getElementById('on-'+idx)?.value||'';
+    const num=document.getElementById('on-'+idx)?.value||'';
     const cash=parseInt(document.getElementById('oc-'+idx)?.value)||0;
     const phone=document.getElementById('op-'+idx)?.value.trim()||'';
     const zoneEl=card.querySelector('.zone-btn.active');
@@ -781,37 +695,24 @@ function submitDepart(){
   const leftTime=document.getElementById('dep-time').textContent;
   const orders=getFormOrders();
   if(!orders.length){ alert('Ongeza agizo moja angalau.'); return; }
-
-  // Clear all warnings first
   orders.forEach(o=>{ const cw=document.getElementById('cw-'+o.idx); if(cw) cw.style.display='none'; });
-
-  // Validate each order — stop on first error
   for(const o of orders){
     const cw=document.getElementById('cw-'+o.idx);
     if(!o.num){ alert(`Chagua nambari ya agizo ${o.idx}.`); return; }
     if(!o.zone){ alert(`Chagua eneo la agizo ${o.idx}.`); return; }
-    if(!o.phone || o.phone.replace(/\D/g,'').length<10){ alert(`Simu ya mteja lazima iwe na tarakimu 10+ (Agizo ${o.idx}).`); return; }
-    if(!o.cash || o.cash<13000){ if(cw) cw.style.display='block'; return; }
+    if(!o.phone||o.phone.replace(/\D/g,'').length<10){ alert(`Simu ya mteja lazima iwe na tarakimu 10+ (Agizo ${o.idx}).`); return; }
+    if(!o.cash||o.cash<13000){ if(cw) cw.style.display='block'; return; }
   }
-
   const totalCash=orders.reduce((s,o)=>s+o.cash,0);
   const trip={
-    id: Date.now(),
-    date: todayStr(),
-    driver: activeDriver.name,
-    left: leftTime,
-    returned: false,
-    returnTime: null,
-    duration: null,
-    late: false,
-    notes: '',
-    orders: orders.map(o=>({num:o.num,cash:o.cash,phone:o.phone,zone:o.zone})),
+    id:Date.now(), date:todayStr(), driver:activeDriver.name,
+    left:leftTime, returned:false, returnTime:null, duration:null,
+    late:false, notes:'', cancelled:false, cashierConfirmed:'',
+    orders:orders.map(o=>({num:o.num,cash:o.cash,phone:o.phone,zone:o.zone})),
     totalCash
   };
   trips.push(trip);
   saveTrips();
-
-  // Success screen
   document.getElementById('suc-icon').textContent='🛵';
   document.getElementById('suc-title').textContent=`Safari njema, ${activeDriver.name}!`;
   document.getElementById('suc-sub').textContent=`${orders.length} agizo · ${totalCash.toLocaleString()} TZS`;
@@ -822,41 +723,31 @@ function submitDepart(){
   scheduleHome(10000);
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 // RETURN
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 function goReturn(){
-  const trip=trips.find(t=>t.driver===activeDriver.name && !t.returned);
+  const trip=trips.find(t=>t.driver===activeDriver.name&&!t.returned);
   if(!trip){
-    // No open trip found - driver may have already been processed
-    document.getElementById('pin-err').textContent = 'Hakuna safari iliyo wazi. Rudi nyumbani.';
-    setTimeout(()=>goHome(), 2000);
+    document.getElementById('pin-err').textContent='Hakuna safari iliyo wazi.';
+    setTimeout(()=>goHome(),2000);
     return;
   }
-
   document.getElementById('ret-name').textContent=activeDriver.name;
   document.getElementById('ret-av').style.background=activeDriver.bg;
   document.getElementById('ret-av').style.color=activeDriver.color;
   document.getElementById('ret-av').textContent=activeDriver.name.slice(0,2).toUpperCase();
   document.getElementById('ret-notes').value='';
-
   const preview=document.getElementById('trip-preview');
-  preview.innerHTML=
-    `<div class="trip-preview-label">Safari ilianza saa ${trip.left}</div>`+
-    trip.orders.map(o=>`
-      <div class="trip-order-row">
-        <div><div class="trip-order-zone">${o.zone}</div><div class="trip-order-ref">#${o.num} · 📞 ${o.phone||'—'}</div></div>
-        <div class="trip-order-cash">${o.cash.toLocaleString()} TZS</div>
-      </div>`).join('')+
+  preview.innerHTML=`<div class="trip-preview-label">Safari ilianza saa ${trip.left}</div>`+
+    trip.orders.map(o=>`<div class="trip-order-row"><div><div class="trip-order-zone">${o.zone}</div><div class="trip-order-ref">#${o.num} · 📞 ${o.phone||'—'}</div></div><div class="trip-order-cash">${o.cash.toLocaleString()} TZS</div></div>`).join('')+
     `<div class="trip-total"><div class="trip-total-label">Jumla ya kulipa</div><div class="trip-total-val">${trip.totalCash.toLocaleString()} TZS</div></div>`;
-
   show('ret');
 }
 
 function submitReturn(){
-  const trip=trips.find(t=>t.driver===activeDriver.name && !t.returned);
+  const trip=trips.find(t=>t.driver===activeDriver.name&&!t.returned);
   if(!trip) return;
-
   const now=new Date();
   const rt=fmtTime(now);
   const [lh,lm]=trip.left.split(':').map(Number);
@@ -864,185 +755,95 @@ function submitReturn(){
   if(dur<0) dur+=24*60;
   const late=dur>LATE_MIN;
   const notes=document.getElementById('ret-notes').value.trim();
-
-  // Don't mark as returned yet — wait for cashier PIN confirmation
-  // Just store all the data for when cashier confirms
-  pendingTrip = {trip, rt, dur, late, notes};
-
-  // Show cashier PIN screen
-  if(!pendingTrip){ goHome(); return; }
+  pendingTrip={trip,rt,dur,late,notes};
   showCashierPinScreen();
 }
 
+// ═══════════════════════════════════════
+// CASHIER PIN
+// ═══════════════════════════════════════
 function showCashierPinScreen(){
-  // Reset all cashier PIN state completely
-  cashierPinMode = 'confirm-return';
-  cashierPinEntry = '';
-  cashierSetupFirst = '';
-  activeCashier = null;
-
-  // Reset dots safely
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('cpd'+i);
-    if(d) d.className='pin-dot';
-  }
-
-  // Reset text
-  const title = document.getElementById('cp-title');
-  const sub   = document.getElementById('cp-sub');
-  const err   = document.getElementById('cp-err');
-  const pad   = document.getElementById('cashier-pin-pad');
-  const grid  = document.getElementById('cashier-name-grid');
-
-  if(title) title.textContent = 'Cashier Confirmation';
-  if(sub)   sub.textContent   = 'Select your name to confirm cash received';
-  if(err)   err.textContent   = '';
-  if(pad)   pad.style.display = 'none';
-
-  // Rebuild cashier buttons
-  if(grid){
-    CASHIER_CONFIG = getCashierConfig();
-    grid.style.display = 'grid';
-    grid.innerHTML = CASHIER_CONFIG.map(c=>
-      `<div onclick="cashierSelected('${c.name}')" style="background:${c.bg};border:2px solid ${c.color}40;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none">
-        <div style="width:36px;height:36px;border-radius:50%;background:${c.color}20;color:${c.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin:0 auto 6px">${c.name.slice(0,2).toUpperCase()}</div>
-        <div style="font-size:13px;font-weight:700;color:${c.color}">${c.name}</div>
-      </div>`
-    ).join('');
-  }
-
+  if(!pendingTrip){ goHome(); return; }
+  cashierPinMode='confirm-return'; cashierPinEntry=''; cashierSetupFirst=''; activeCashier=null;
+  for(let i=0;i<4;i++){ const d=document.getElementById('cpd'+i); if(d) d.className='pin-dot'; }
+  const el=id=>document.getElementById(id);
+  el('cp-title').textContent='Cashier Confirmation';
+  el('cp-sub').textContent='Select your name to confirm cash received';
+  el('cp-err').textContent='';
+  el('cashier-pin-pad').style.display='none';
+  CASHIER_CONFIG=getCashierConfig();
+  el('cashier-name-grid').style.display='grid';
+  el('cashier-name-grid').innerHTML=CASHIER_CONFIG.map(c=>
+    `<div onclick="cashierSelected('${c.name}')" style="background:${c.bg};border:2px solid ${c.color}40;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none">
+      <div style="width:36px;height:36px;border-radius:50%;background:${c.color}20;color:${c.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin:0 auto 6px">${c.name.slice(0,2).toUpperCase()}</div>
+      <div style="font-size:13px;font-weight:700;color:${c.color}">${c.name}</div>
+    </div>`).join('');
   show('cashier-pin');
 }
 
 function cashierSelected(name){
-  activeCashier = CASHIER_CONFIG.find(c=>c.name===name);
-  const stored = getCashierPin(name);
-  cashierPinEntry = '';
-  updateCashierPinDots();
-  document.getElementById('cp-err').textContent = '';
-
-  if(!stored){
-    cashierPinMode = 'cashier-setup';
-    document.getElementById('cp-title').textContent = `Hey ${name} 👋`;
-    document.getElementById('cp-sub').textContent = 'First time? Choose a 4-digit PIN';
-  } else {
-    cashierPinMode = 'confirm-return';
-    document.getElementById('cp-title').textContent = `${name}`;
-    document.getElementById('cp-sub').textContent = 'Enter PIN to confirm cash received';
-  }
-  // Hide name grid, show PIN pad
-  document.getElementById('cashier-name-grid').style.display = 'none';
-  document.getElementById('cashier-pin-pad').style.display = 'flex';
+  activeCashier=getCashierConfig().find(c=>c.name===name);
+  const stored=getCashierPin(name);
+  cashierPinEntry=''; updateCashierPinDots();
+  document.getElementById('cp-err').textContent='';
+  if(!stored){ cashierPinMode='cashier-setup'; document.getElementById('cp-title').textContent=`Hey ${name} 👋`; document.getElementById('cp-sub').textContent='First time? Choose a 4-digit PIN'; }
+  else { cashierPinMode='confirm-return'; document.getElementById('cp-title').textContent=name; document.getElementById('cp-sub').textContent='Enter PIN to confirm cash received'; }
+  document.getElementById('cashier-name-grid').style.display='none';
+  document.getElementById('cashier-pin-pad').style.display='flex';
 }
 
 function resetCashierPinScreen(){
-  cashierPinEntry = '';
-  cashierSetupFirst = '';
-  activeCashier = null;
-  cashierPinMode = 'confirm-return';
+  cashierPinEntry=''; cashierSetupFirst=''; activeCashier=null; cashierPinMode='confirm-return';
   for(let i=0;i<4;i++){ const d=document.getElementById('cpd'+i); if(d) d.className='pin-dot'; }
-  const pad  = document.getElementById('cashier-pin-pad');
-  const grid = document.getElementById('cashier-name-grid');
-  const err  = document.getElementById('cp-err');
-  const title= document.getElementById('cp-title');
-  const sub  = document.getElementById('cp-sub');
-  if(pad)  pad.style.display  = 'none';
-  if(grid) grid.style.display = 'grid';
-  if(err)  err.textContent    = '';
-  if(title)title.textContent  = 'Cashier Confirmation';
-  if(sub)  sub.textContent    = 'Select your name to confirm cash received';
+  document.getElementById('cashier-pin-pad').style.display='none';
+  document.getElementById('cashier-name-grid').style.display='grid';
+  document.getElementById('cp-err').textContent='';
+  document.getElementById('cp-title').textContent='Cashier Confirmation';
+  document.getElementById('cp-sub').textContent='Select your name to confirm cash received';
 }
 
-function updateCashierPinDots(){
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('cpd'+i);
-    if(d) d.className='pin-dot'+(i<cashierPinEntry.length?' filled':'');
-  }
-}
+function updateCashierPinDots(){ for(let i=0;i<4;i++){ const d=document.getElementById('cpd'+i); if(d) d.className='pin-dot'+(i<cashierPinEntry.length?' filled':''); } }
 
 function cpk(k){
   if(k==='DEL'){ cashierPinEntry=cashierPinEntry.slice(0,-1); updateCashierPinDots(); return; }
   if(cashierPinEntry.length>=4) return;
   cashierPinEntry+=k; updateCashierPinDots();
   if(cashierPinEntry.length<4) return;
-
-  const entered = cashierPinEntry;
-  const capturedCashier = activeCashier;
-  const capturedMode = cashierPinMode;
-  cashierPinEntry = '';
-
+  const entered=cashierPinEntry; const capCashier=activeCashier; const capMode=cashierPinMode;
+  cashierPinEntry='';
   setTimeout(()=>{
-    // Restore captured state in case something reset it
-    if(!activeCashier && capturedCashier) activeCashier = capturedCashier;
-    if(!cashierPinMode && capturedMode) cashierPinMode = capturedMode;
+    if(!activeCashier&&capCashier) activeCashier=capCashier;
+    if(!cashierPinMode&&capMode) cashierPinMode=capMode;
     handleCashierPin(entered);
-  }, 150);
+  },150);
 }
 
 function handleCashierPin(entered){
-  // Manager PIN always works
-  if(entered === MGR_PIN){
-    confirmCashReceived('Manager');
+  if(entered===MGR_PIN){ confirmCashReceived('Manager'); return; }
+  if(cashierPinMode==='cashier-setup'){ cashierSetupFirst=entered; cashierPinMode='cashier-setup-confirm'; updateCashierPinDots(); document.getElementById('cp-title').textContent='Confirm PIN'; document.getElementById('cp-sub').textContent='Enter the same PIN again'; return; }
+  if(cashierPinMode==='cashier-setup-confirm'){
+    if(entered===cashierSetupFirst){ saveCashierPin(activeCashier.name,entered); cashierSetupFirst=''; confirmCashReceived(activeCashier.name); }
+    else { cashierSetupFirst=''; cashierPinMode='cashier-setup'; document.getElementById('cp-err').textContent='PINs did not match. Try again.'; updateCashierPinDots(); }
     return;
   }
-
-  if(cashierPinMode === 'cashier-setup'){
-    cashierSetupFirst = entered;
-    cashierPinMode = 'cashier-setup-confirm';
-    updateCashierPinDots();
-    document.getElementById('cp-title').textContent = 'Confirm PIN';
-    document.getElementById('cp-sub').textContent = 'Enter the same PIN again';
-    return;
-  }
-
-  if(cashierPinMode === 'cashier-setup-confirm'){
-    if(entered === cashierSetupFirst){
-      saveCashierPin(activeCashier.name, entered);
-      cashierSetupFirst = '';
-      confirmCashReceived(activeCashier.name);
-    } else {
-      cashierSetupFirst = '';
-      cashierPinMode = 'cashier-setup';
-      document.getElementById('cp-err').textContent = 'PINs did not match. Try again.';
-      updateCashierPinDots();
-    }
-    return;
-  }
-
-  // Normal verify
-  if(!activeCashier){ document.getElementById('cp-err').textContent = 'Please select your name first.'; return; }
-  const stored = getCashierPin(activeCashier.name);
-  if(!stored){ document.getElementById('cp-err').textContent = 'No PIN set. Please go back and select your name.'; return; }
-  if(entered === stored){
-    confirmCashReceived(activeCashier.name);
-  } else {
-    document.getElementById('cp-err').textContent = 'Wrong PIN. Try again.';
-    updateCashierPinDots();
-  }
+  if(!activeCashier){ document.getElementById('cp-err').textContent='Please select your name first.'; return; }
+  const stored=getCashierPin(activeCashier.name);
+  if(!stored){ document.getElementById('cp-err').textContent='No PIN set. Select your name first.'; return; }
+  if(entered===stored){ confirmCashReceived(activeCashier.name); }
+  else { document.getElementById('cp-err').textContent='Wrong PIN. Try again.'; updateCashierPinDots(); }
 }
 
 function confirmCashReceived(cashierName){
   if(!pendingTrip) return;
-  const {trip, rt, dur, late, notes} = pendingTrip;
-
-  trip.returned = true;
-  trip.returnTime = rt;
-  trip.duration = dur;
-  trip.late = late;
-  trip.notes = notes;
-  trip.cashierConfirmed = cashierName;
-  trip.cancelled = false;
+  const {trip,rt,dur,late,notes}=pendingTrip;
+  trip.returned=true; trip.returnTime=rt; trip.duration=dur; trip.late=late; trip.notes=notes; trip.cashierConfirmed=cashierName; trip.cancelled=false;
   saveTrips();
-
-  // Sync to Sheets
   trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:trip.left,returned:rt,duration:dur,late:late?'YES':'NO',status:'RETURNED',notes,cashier:cashierName,timestamp:new Date().toLocaleTimeString('en-GB')}));
-
-  pendingTrip = null;
-
-  document.getElementById('suc-icon').textContent = '✓';
-  document.getElementById('suc-title').textContent = `Karibu tena, ${activeDriver.name}!`;
-  document.getElementById('suc-sub').textContent = late ? `${dur}min — imepigwa bendera ya kuchelewa` : `${dur}min — kwa wakati`;
-  document.getElementById('suc-card').innerHTML =
+  pendingTrip=null;
+  document.getElementById('suc-icon').textContent='✓';
+  document.getElementById('suc-title').textContent=`Karibu tena, ${activeDriver.name}!`;
+  document.getElementById('suc-sub').textContent=late?`${dur}min — imepigwa bendera ya kuchelewa`:`${dur}min — kwa wakati`;
+  document.getElementById('suc-card').innerHTML=
     `<div class="sc-row"><span>Ametoka</span><span class="sc-val">${trip.left}</span></div>`+
     `<div class="sc-row"><span>Amerudi</span><span class="sc-val">${rt}</span></div>`+
     `<div class="sc-row"><span>Muda</span><span class="sc-val">${dur}min${late?' ⚠️':''}</span></div>`+
@@ -1052,435 +853,17 @@ function confirmCashReceived(cashierName){
   scheduleHome(10000);
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// SHEETS SYNC
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function sync(data){
-  fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// DASHBOARD
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function getWeekData(){
-  const now=new Date(); const day=now.getDay();
-  const mon=new Date(now); mon.setDate(now.getDate()-(day===0?6:day-1));
-  const dates=[]; for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(mon.getDate()+i); dates.push(d.toISOString().slice(0,10)); }
-  return {dates, trips:trips.filter(t=>dates.includes(t.date)&&t.returned)};
-}
-
-function repeatLateDrivers(){
-  const {trips:wt}=getWeekData();
-  const c={}; wt.forEach(t=>{if(t.late) c[t.driver]=(c[t.driver]||0)+1;});
-  return Object.entries(c).filter(([,v])=>v>=3).map(([n,v])=>({name:n,count:v}));
-}
-
-function buildDashboard(){
-  const allDates=[...new Set(trips.map(t=>t.date))].sort().reverse();
-  if(!allDates.includes(dashDate)) dashDate=todayStr();
-  const dayTrips=trips.filter(t=>t.date===dashDate&&t.returned);
-  const openTrips=trips.filter(t=>t.date===dashDate&&!t.returned);
-  const {dates:wDates,trips:wTrips}=getWeekData();
-  const repLate=repeatLateDrivers();
-
-  document.getElementById('dash-sub').textContent=dashView==='week'?'Week View':fmtDate(dashDate);
-
-  let h='';
-
-  // View toggle
-  h+=`<div class="view-toggle">
-    <button class="view-btn${dashView==='day'?' active':''}" onclick="dashView='day';buildDashboard()">📅 Day View</button>
-    <button class="view-btn${dashView==='week'?' active':''}" onclick="dashView='week';buildDashboard()">📆 Week View</button>
-  </div>`;
-
-  if(dashView==='week'){
-    const wCash=wTrips.reduce((s,t)=>s+t.totalCash,0);
-    const wLate=wTrips.filter(t=>t.late).length;
-    const wAvg=wTrips.length?Math.round(wTrips.reduce((s,t)=>s+t.duration,0)/wTrips.length):0;
-
-    h+=`<div class="kpi-grid">
-      <div class="kpi"><div class="kpi-label">Trips This Week</div><div class="kpi-val">${wTrips.length}</div><div class="kpi-sub">completed</div></div>
-      <div class="kpi"><div class="kpi-label">Cash This Week</div><div class="kpi-val" style="font-size:${wCash>999999?'17px':'24px'}">${wCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
-      <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val"${wLate?' style="color:var(--red)"':''}>${wLate}</div><div class="kpi-sub">over ${LATE_MIN}min</div></div>
-      <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${wAvg||'—'}${wAvg?'m':''}</div><div class="kpi-sub">per trip</div></div>
-    </div>`;
-
-    if(repLate.length){
-      h+=`<div><div class="sec-title">🚨 Repeat Late This Week</div>`;
-      repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for review</div></div>`; });
-      h+=`</div>`;
-    }
-
-    h+=`<div><div class="sec-title">Driver Summary</div>`;
-    DRIVER_CONFIG.forEach(d=>{
-      const dt=wTrips.filter(t=>t.driver===d.name);
-      const cash=dt.reduce((s,t)=>s+t.totalCash,0);
-      const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-      const lc=dt.filter(t=>t.late).length;
-      const rep=repLate.find(r=>r.name===d.name);
-      h+=`<div class="driver-card${rep?' repeat':''}">
-        <div class="dc-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
-        <div class="dc-info"><div class="dc-name">${d.name}${rep?` <span style="color:var(--red);font-size:11px">⚠️</span>`:''}</div>
-        <div class="dc-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min · ${lc} late</div></div>
-        <div class="dc-right"><div class="dc-cash">${cash.toLocaleString()}</div><div class="dc-runs">TZS</div></div>
-      </div>`;
-    });
-    h+=`</div>`;
-
-    h+=`<div><div class="sec-title">Day by Day</div>`;
-    wDates.forEach(d=>{
-      const dt=trips.filter(t=>t.date===d&&t.returned);
-      if(!dt.length) return;
-      const dc=dt.reduce((s,t)=>s+t.totalCash,0);
-      const dl=dt.filter(t=>t.late).length;
-      const uid=d.replace(/-/g,'');
-      h+=`<div class="day-row">
-        <div class="day-row-head" onclick="toggleDay('${uid}')">
-          <div>
-            <div class="day-row-title">${fmtDate(d)}</div>
-            <div class="day-row-sub">${dt.length} trips${dl?` · <span style="color:var(--red)">${dl} late</span>`:''}</div>
-          </div>
-          <div style="display:flex;align-items:center">
-            <div class="day-row-right"><div class="day-row-cash">${dc.toLocaleString()} TZS</div></div>
-            <div class="day-arrow" id="arr-${uid}">▼</div>
-          </div>
-        </div>
-        <div class="day-detail" id="det-${uid}">
-          ${dt.map(t=>{
-            const drv=DRIVER_CONFIG.find(x=>x.name===t.driver);
-            return `<div class="day-trip">
-              <div class="day-trip-head">
-                <div style="display:flex;align-items:center;gap:7px">
-                  <div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>
-                  <span style="font-size:13px;font-weight:700">${t.driver}</span>
-                </div>
-                <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
-              </div>
-              <div class="day-trip-meta">
-                <div class="tm">Left<div class="tm-val">${t.left}</div></div>
-                <div class="tm">Back<div class="tm-val">${t.returnTime}</div></div>
-                <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
-              </div>
-              ${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}
-              ${t.notes?`<div class="trip-note" style="margin-top:6px">📝 ${t.notes}</div>`:''}
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-    });
-    h+=`</div>`;
-
-    h+=`<button class="btn-export" onclick="exportWeekPDF()">📄 Export Week Report (PDF)</button>`;
-    h+=`<button class="btn-clear" onclick="startClear('week')">🗑 Clear This Week's Data</button>`;
-
-  } else {
-    // DAY VIEW
-    const totalCash=dayTrips.reduce((s,t)=>s+t.totalCash,0);
-    const late=dayTrips.filter(t=>t.late);
-    const avgDur=dayTrips.length?Math.round(dayTrips.reduce((s,t)=>s+t.duration,0)/dayTrips.length):0;
-    const dateOpts=allDates.length?allDates.map(d=>`<option value="${d}"${d===dashDate?' selected':''}>${fmtDate(d)}</option>`).join(''):`<option value="${todayStr()}">${fmtDate(todayStr())}</option>`;
-
-    h+=`<select class="date-select" onchange="dashDate=this.value;buildDashboard()">${dateOpts}</select>`;
-
-    h+=`<div class="kpi-grid">
-      <div class="kpi"><div class="kpi-label">Trips Completed</div><div class="kpi-val">${dayTrips.length}</div><div class="kpi-sub">${openTrips.length} still out</div></div>
-      <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val" style="font-size:${totalCash>999999?'17px':'24px'}">${totalCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
-      <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val"${late.length?' style="color:var(--red)"':''}>${late.length}</div><div class="kpi-sub">over ${LATE_MIN}min</div></div>
-      <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur||'—'}${avgDur?'m':''}</div><div class="kpi-sub">per trip</div></div>
-    </div>`;
-
-    if(repLate.length){
-      h+=`<div><div class="sec-title">🚨 Repeat Late Alert</div>`;
-      repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for manager review</div></div>`; });
-      h+=`</div>`;
-    }
-
-    if(openTrips.length){
-      h+=`<div><div class="sec-title">🟡 Currently Out</div>`;
-      openTrips.forEach(t=>{
-        const now=new Date(); const [lh,lm]=t.left.split(':').map(Number);
-        const el=(now.getHours()*60+now.getMinutes())-(lh*60+lm);
-        h+=`<div class="alert-card amber">
-          <div class="alert-title" style="display:flex;justify-content:space-between;align-items:center">
-            <span>${t.driver} — departed ${t.left} (${el}min ago)</span>
-            <button onclick="startCancelTrip(${t.id})" style="padding:4px 10px;background:var(--red-light);border:1.5px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Cancel</button>
-          </div>
-          ${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 <strong>${o.phone||'—'}</strong></div>`).join('')}
-        </div>`;
-      });
-      h+=`</div>`;
-    }
-
-    if(late.length){
-      h+=`<div><div class="sec-title">⚠️ Late Flags</div>`;
-      late.forEach(t=>{ h+=`<div class="alert-card"><div class="alert-title">${t.driver} — ${t.duration}min</div><div class="alert-sub">${t.left} → ${t.returnTime} · ${t.totalCash.toLocaleString()} TZS${t.notes?' · 📝 '+t.notes:''}</div></div>`; });
-      h+=`</div>`;
-    }
-
-    // Zone breakdown
-    const zc={};
-    ZONES.forEach(z=>{zc[z]={runs:0,cash:0};});
-    dayTrips.forEach(t=>t.orders.forEach(o=>{if(zc[o.zone]){zc[o.zone].runs++;zc[o.zone].cash+=o.cash;}}));
-    h+=`<div><div class="sec-title">By Zone</div><div class="zone-breakdown">`;
-    ZONES.forEach(z=>{ h+=`<div class="zone-card"><div class="zone-name">${z}</div><div class="zone-trips">${zc[z].runs} <span style="font-size:12px;color:var(--muted);font-weight:500">orders</span></div><div class="zone-cash">${zc[z].cash.toLocaleString()} TZS</div></div>`; });
-    h+=`</div></div>`;
-
-    // Driver summary
-    h+=`<div><div class="sec-title">Driver Summary</div>`;
-    DRIVER_CONFIG.forEach(d=>{
-      const dt=dayTrips.filter(t=>t.driver===d.name);
-      const cash=dt.reduce((s,t)=>s+t.totalCash,0);
-      const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-      const lc=dt.filter(t=>t.late).length;
-      const rep=repLate.find(r=>r.name===d.name);
-      h+=`<div class="driver-card${rep?' repeat':''}">
-        <div class="dc-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
-        <div class="dc-info"><div class="dc-name">${d.name}${rep?` <span style="color:var(--red);font-size:11px">⚠️</span>`:''}</div>
-        <div class="dc-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min${lc?` · <span style="color:var(--red)">${lc} late</span>`:''}</div></div>
-        <div class="dc-right"><div class="dc-cash">${cash.toLocaleString()}</div><div class="dc-runs">TZS</div></div>
-      </div>`;
-    });
-    h+=`</div>`;
-
-    // All trips
-    if(dayTrips.length){
-      h+=`<div><div class="sec-title">All Trips</div>`;
-      [...dayTrips].reverse().forEach(t=>{
-        const drv=DRIVER_CONFIG.find(x=>x.name===t.driver);
-        h+=`<div class="trip-card">
-          <div class="trip-head">
-            <div class="trip-driver-row"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>${t.driver}</div>
-            <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
-          </div>
-          <div class="trip-meta">
-            <div class="tm">Left<div class="tm-val">${t.left}</div></div>
-            <div class="tm">Back<div class="tm-val">${t.returnTime}</div></div>
-            <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
-            <div class="tm">Cash<div class="tm-val">${t.totalCash.toLocaleString()}</div></div>
-          </div>
-          <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}</div>
-          ${t.cashierConfirmed?`<div style="font-size:11px;color:var(--green);margin-top:4px;font-weight:600">✓ Cash confirmed by ${t.cashierConfirmed}</div>`:''}
-          ${t.cancelled?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">✕ CANCELLED</div>`:''}
-          ${t.notes&&!t.cancelled?`<div class="trip-note">📝 ${t.notes}</div>`:''}
-        </div>`;
-      });
-      h+=`</div>`;
-    } else {
-      h+=`<div class="empty">No completed trips for this date.</div>`;
-    }
-
-    h+=`<button class="btn-export" onclick="exportDayPDF()">📄 Export Day Report (PDF)</button>`;
-    h+=`<button class="btn-clear" onclick="startClear('day')">🗑 Clear ${fmtDate(dashDate)}</button>`;
-    h+=`<button class="btn-muted" onclick="startClear('pins')">🔑 Reset All Driver PINs</button>`;
-    h+=`<button class="btn-muted" onclick="startClear('cashier-pins')">🔑 Reset All Cashier PINs</button>`;
-    h+=`<button class="btn-muted" onclick="openSettings()">⚙️ Manage Staff & PINs</button>`;
-  }
-
-  document.getElementById('dash-body').innerHTML=h;
-}
-
-function toggleDay(uid){
-  const el=document.getElementById('det-'+uid);
-  const ar=document.getElementById('arr-'+uid);
-  if(!el) return;
-  const open=el.style.display==='flex';
-  el.style.display=open?'none':'flex';
-  el.style.flexDirection='column';
-  if(ar) ar.style.transform=open?'':'rotate(180deg)';
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// CLEAR + DELETE PIN
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function startClear(action){
-  deleteAction=action;
-  let title='', sub='';
-  if(action==='day'){   title='Clear Day?';      sub='Delete all trips for '+fmtDate(dashDate)+'? Cannot be undone.'; }
-  if(action==='week'){  title='Clear Week?';     sub='Delete all trips for this week? Cannot be undone.'; }
-  if(action==='pins'){  title='Reset All PINs?'; sub='All drivers will need to set a new PIN on next use. Trip data is kept.'; }
-  if(action==='cashier-pins'){ title='Reset Cashier PINs?'; sub='All cashiers will need to set a new PIN on next use. Trip data is kept.'; }
-  document.getElementById('mc-title').textContent=title;
-  document.getElementById('mc-sub').textContent=sub;
-  document.getElementById('modal-confirm').style.display='flex';
-}
-
-function closeConfirm(){ document.getElementById('modal-confirm').style.display='none'; }
-
-function proceedToDeletePin(){
-  closeConfirm();
-  delPinEntry='';
-  updateDelDots();
-  document.getElementById('del-pin-err').textContent='';
-  document.getElementById('modal-delete-pin').style.display='flex';
-}
-
-function closeDeletePin(){ document.getElementById('modal-delete-pin').style.display='none'; delPinEntry=''; updateDelDots(); }
-
-function updateDelDots(){ for(let i=0;i<4;i++) document.getElementById('dpd'+i).className='pin-dot'+(i<delPinEntry.length?' filled':''); }
-
-function dpk(k){
-  if(k==='DEL'){ delPinEntry=delPinEntry.slice(0,-1); updateDelDots(); return; }
-  if(delPinEntry.length>=4) return;
-  delPinEntry+=k; updateDelDots();
-  if(delPinEntry.length<4) return;
-  const entered=delPinEntry; delPinEntry='';
-  setTimeout(()=>{
-    if(entered===MGR_PIN){
-      closeDeletePin();
-      execDelete();
-    } else {
-      document.getElementById('del-pin-err').textContent='Wrong PIN. Try again.';
-      updateDelDots();
-    }
-  },150);
-}
-
-function execDelete(){
-  if(deleteAction==='day'){
-    trips=trips.filter(t=>t.date!==dashDate);
-    saveTrips(); dashDate=todayStr(); buildDashboard();
-  } else if(deleteAction==='week'){
-    const {dates}=getWeekData();
-    trips=trips.filter(t=>!dates.includes(t.date));
-    saveTrips(); dashDate=todayStr(); buildDashboard();
-  } else if(deleteAction==='pins'){
-    localStorage.removeItem('cp_pins');
-    buildDashboard();
-  } else if(deleteAction==='cashier-pins'){
-    localStorage.removeItem('cp_cashier_pins');
-    buildDashboard();
-  }
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// PDF EXPORT
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function pdfWrap(title, body){
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
-  body{font-family:Arial,sans-serif;font-size:12px;color:#1a1a1a;padding:28px;max-width:900px;margin:0 auto}
-  h1{font-size:20px;font-weight:800;margin-bottom:2px}
-  .sub{font-size:12px;color:#888;margin-bottom:20px}
-  .no-print{margin-bottom:18px}
-  .print-btn{padding:9px 22px;background:#c8392b;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-  .kpi{background:#f5f4f0;border-radius:7px;padding:10px 12px}
-  .kpi-l{font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:3px}
-  .kpi-v{font-size:20px;font-weight:800}
-  .sec{margin-bottom:18px}
-  .sec-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#888;border-bottom:1px solid #e0ddd6;padding-bottom:4px;margin-bottom:8px}
-  table{width:100%;border-collapse:collapse;font-size:11px}
-  th{background:#f5f4f0;padding:6px 9px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:#888;border-bottom:2px solid #e0ddd6}
-  td{padding:6px 9px;border-bottom:1px solid #e0ddd6;vertical-align:top}
-  tr:last-child td{border-bottom:none}
-  .late{color:#c8392b;font-weight:700}.ok{color:#1a7f4b;font-weight:700}
-  .note{font-size:10px;color:#d97706;font-style:italic}
-  .footer{margin-top:28px;padding-top:10px;border-top:1px solid #e0ddd6;font-size:10px;color:#888;display:flex;justify-content:space-between}
-  @media print{.no-print{display:none}}
-  </style></head><body>
-  <div class="no-print"><button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button><span style="margin-left:10px;font-size:12px;color:#888">Print → Save as PDF</span></div>
-  <h1>🍛 Chowpatty Restaurant</h1>
-  <div style="font-size:16px;font-weight:800;margin-bottom:2px">${title}</div>
-  <div class="sub">Generated: ${new Date().toLocaleString('en-GB')}</div>
-  ${body}
-  <div class="footer"><span>Chowpatty Restaurant · Delivery Log</span><span>Confidential</span></div>
-  </body></html>`;
-}
-
-function exportDayPDF(){
-  const dt=trips.filter(t=>t.date===dashDate&&t.returned);
-  const cash=dt.reduce((s,t)=>s+t.totalCash,0);
-  const late=dt.filter(t=>t.late).length;
-  const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
-  let body=`<div class="kpis">
-    <div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${dt.length}</div></div>
-    <div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div>
-    <div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
-    <div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div>
-  </div>
-  <div class="sec"><div class="sec-title">All Trips</div>
-  <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
-  dt.forEach(t=>{
-    t.orders.forEach((o,i)=>{
-      body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}</tr>`;
-    });
-    if(t.notes) body+=`<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
-  });
-  body+=`</tbody></table></div>`;
-  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
-  DRIVER_CONFIG.forEach(d=>{
-    const ddt=dt.filter(t=>t.driver===d.name);
-    const dc=ddt.reduce((s,t)=>s+t.totalCash,0);
-    const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0;
-    const dl=ddt.filter(t=>t.late).length;
-    body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`;
-  });
-  body+=`</tbody></table></div>`;
-  const w=window.open('','_blank');
-  w.document.write(pdfWrap(`Daily Report — ${fmtDate(dashDate)}`,body));
-  w.document.close();
-}
-
-function exportWeekPDF(){
-  const {dates,trips:wt}=getWeekData();
-  const cash=wt.reduce((s,t)=>s+t.totalCash,0);
-  const late=wt.filter(t=>t.late).length;
-  const avg=wt.length?Math.round(wt.reduce((s,t)=>s+t.duration,0)/wt.length):0;
-  let body=`<div class="kpis">
-    <div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${wt.length}</div></div>
-    <div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div>
-    <div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div>
-    <div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div>
-  </div>`;
-  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
-  DRIVER_CONFIG.forEach(d=>{
-    const ddt=wt.filter(t=>t.driver===d.name);
-    const dc=ddt.reduce((s,t)=>s+t.totalCash,0);
-    const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0;
-    const dl=ddt.filter(t=>t.late).length;
-    body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`;
-  });
-  body+=`</tbody></table></div>`;
-  dates.forEach(d=>{
-    const dt=trips.filter(t=>t.date===d&&t.returned);
-    if(!dt.length) return;
-    const dc=dt.reduce((s,t)=>s+t.totalCash,0);
-    const dl=dt.filter(t=>t.late).length;
-    body+=`<div class="sec"><div class="sec-title">${fmtDate(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dl?` · <span style="color:#c8392b">${dl} late</span>`:''}</div>
-    <table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`;
-    dt.forEach(t=>{
-      t.orders.forEach((o,i)=>{
-        body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}</tr>`;
-      });
-      if(t.notes) body+=`<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`;
-    });
-    body+=`</tbody></table></div>`;
-  });
-  const w=window.open('','_blank');
-  w.document.write(pdfWrap(`Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`,body));
-  w.document.close();
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 // CANCEL TRIP
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 function startCancelTrip(tripId){
-  cancelTripId = tripId;
-  cancelTripPinEntry = '';
-  updateCtDots();
-  document.getElementById('ct-pin-err').textContent = '';
-  const t = trips.find(t=>t.id===tripId);
-  document.getElementById('cancel-trip-sub').textContent = t ? `Cancel ${t.driver}'s delivery? Driver returns with no cash.` : 'Cancel this delivery?';
-  document.getElementById('modal-cancel-trip').style.display = 'flex';
+  cancelTripId=tripId; cancelTripPinEntry=''; updateCtDots(); document.getElementById('ct-pin-err').textContent='';
+  const t=trips.find(t=>t.id===tripId);
+  document.getElementById('cancel-trip-sub').textContent=t?`Cancel ${t.driver}'s delivery? Driver returns with no cash.`:'Cancel this delivery?';
+  document.getElementById('modal-cancel-trip').style.display='flex';
 }
-
-function closeCancelTrip(){
-  document.getElementById('modal-cancel-trip').style.display = 'none';
-  cancelTripPinEntry = '';
-  updateCtDots();
-}
-
+function closeCancelTrip(){ document.getElementById('modal-cancel-trip').style.display='none'; cancelTripPinEntry=''; updateCtDots(); }
 function updateCtDots(){ for(let i=0;i<4;i++) document.getElementById('ctpd'+i).className='pin-dot'+(i<cancelTripPinEntry.length?' filled':''); }
-
 function ctpk(k){
   if(k==='DEL'){ cancelTripPinEntry=cancelTripPinEntry.slice(0,-1); updateCtDots(); return; }
   if(cancelTripPinEntry.length>=4) return;
@@ -1488,152 +871,94 @@ function ctpk(k){
   if(cancelTripPinEntry.length<4) return;
   const entered=cancelTripPinEntry; cancelTripPinEntry='';
   setTimeout(()=>{
-    if(entered===MGR_PIN){
-      closeCancelTrip();
-      execCancelTrip();
-    } else {
-      document.getElementById('ct-pin-err').textContent='Wrong manager PIN.';
-      updateCtDots();
-    }
+    if(entered===MGR_PIN){ closeCancelTrip(); execCancelTrip(); }
+    else { document.getElementById('ct-pin-err').textContent='Wrong manager PIN.'; updateCtDots(); }
   },150);
 }
-
 function execCancelTrip(){
-  const trip = trips.find(t=>t.id===cancelTripId);
-  if(!trip) return;
-  const rt = fmtTime(new Date());
-  trip.returned = true;
-  trip.cancelled = true;
-  trip.returnTime = rt;
-  trip.duration = 0;
-  trip.late = false;
-  trip.totalCash = 0;
-  trip.notes = 'CANCELLED by manager';
+  const trip=trips.find(t=>t.id===cancelTripId); if(!trip) return;
+  const rt=fmtTime(new Date());
+  trip.returned=true; trip.cancelled=true; trip.returnTime=rt; trip.duration=0; trip.late=false; trip.totalCash=0; trip.notes='CANCELLED by manager';
   saveTrips();
-  // Sync cancellation to Sheets
-  trip.orders.forEach(o=>sync({
-    date: trip.date, driver: trip.driver,
-    orderNum: o.num, zone: o.zone, cash: 0, phone: o.phone||'',
-    left: trip.left, returned: rt, duration: 0,
-    late: 'NO', status: 'CANCELLED', notes: 'CANCELLED by manager',
-    cashier: '', timestamp: new Date().toLocaleTimeString('en-GB')
-  }));
+  trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:0,phone:o.phone||'',left:trip.left,returned:rt,duration:0,late:'NO',status:'CANCELLED',notes:'CANCELLED by manager',cashier:'',timestamp:new Date().toLocaleTimeString('en-GB')}));
   buildDashboard();
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
+// SHEETS SYNC
+// ═══════════════════════════════════════
+// sync() defined above in HELPERS
+
+// ═══════════════════════════════════════
 // CASHIER VIEW
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 function buildCashier(){
-  DRIVER_CONFIG = getDriverConfig();
-  CASHIER_CONFIG = getCashierConfig();
-  const today = todayStr();
-  const todayTrips = trips.filter(t=>t.date===today);
-  const completed  = todayTrips.filter(t=>t.returned);
-  const out        = todayTrips.filter(t=>!t.returned);
-  const totalCash  = completed.reduce((s,t)=>s+t.totalCash,0);
-
-  document.getElementById('cashier-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-
-  let h = '';
-
-  // KPIs
-  h += `<div class="kpi" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px">
-    <div class="kpi-label">Deliveries Today</div>
-    <div class="kpi-val">${completed.length}</div>
+  DRIVER_CONFIG=getDriverConfig();
+  const today=todayStr();
+  const todayTrips=trips.filter(t=>t.date===today);
+  const completed=todayTrips.filter(t=>t.returned);
+  const out=todayTrips.filter(t=>!t.returned);
+  document.getElementById('cashier-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  let h=`<div class="kpi" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px">
+    <div class="kpi-label">Deliveries Today</div><div class="kpi-val">${completed.length}</div>
     <div class="kpi-sub">${out.length} driver${out.length!==1?'s':''} currently out</div>
   </div>`;
-
-  // Drivers out
   if(out.length){
-    h += `<div><div class="sec-title">🛵 Currently Out (${out.length})</div>`;
+    h+=`<div><div class="sec-title">🛵 Currently Out (${out.length})</div>`;
     out.forEach(t=>{
-      const drv = DRIVER_CONFIG.find(d=>d.name===t.driver);
-      const now = new Date();
-      const [lh,lm] = t.left.split(':').map(Number);
-      const elapsed = (now.getHours()*60+now.getMinutes())-(lh*60+lm);
-      h += `<div class="alert-card amber">
-        <div class="alert-title" style="display:flex;align-items:center;gap:8px">
-          <div class="trip-av" style="background:${drv?.bg};color:${drv?.color};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${t.driver.slice(0,2).toUpperCase()}</div>
-          ${t.driver} — left at ${t.left} (${elapsed}min ago)
-        </div>
-        <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px">
-          ${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'} · ${o.cash.toLocaleString()} TZS</div>`).join('')}
-        </div>
+      const drv=DRIVER_CONFIG.find(d=>d.name===t.driver);
+      const now=new Date(); const [lh,lm]=t.left.split(':').map(Number);
+      const elapsed=(now.getHours()*60+now.getMinutes())-(lh*60+lm);
+      h+=`<div class="alert-card amber"><div class="alert-title" style="display:flex;align-items:center;gap:8px">
+        <div style="width:28px;height:28px;border-radius:50%;background:${drv?.bg};color:${drv?.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${t.driver.slice(0,2).toUpperCase()}</div>
+        ${t.driver} — left at ${t.left} (${elapsed}min ago)</div>
+        ${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'} · ${o.cash.toLocaleString()} TZS</div>`).join('')}
       </div>`;
     });
-    h += `</div>`;
+    h+=`</div>`;
   } else {
-    h += `<div class="alert-card" style="border-left-color:var(--green)"><div class="alert-title" style="color:var(--green)">✓ All drivers are back</div></div>`;
+    h+=`<div class="alert-card" style="border-left-color:var(--green)"><div class="alert-title" style="color:var(--green)">✓ All drivers are back</div></div>`;
   }
-
-  // Phone search
-  h += `<div>
-    <div class="sec-title">🔍 Search by Customer Phone</div>
+  h+=`<div><div class="sec-title">🔍 Search by Customer Phone</div>
     <input class="cashier-search" id="cashier-search-input" type="tel" inputmode="numeric" placeholder="Enter customer phone number..." oninput="searchByPhone(this.value)">
     <div id="cashier-search-results" style="margin-top:10px"></div>
   </div>`;
-
-  // Today's completed deliveries
   if(completed.length){
-    h += `<div><div class="sec-title">Today's Completed Deliveries</div>`;
+    h+=`<div><div class="sec-title">Today's Completed Deliveries</div>`;
     [...completed].reverse().forEach(t=>{
-      const drv = DRIVER_CONFIG.find(d=>d.name===t.driver);
-      h += `<div class="trip-card">
-        <div class="trip-head">
-          <div class="trip-driver-row">
-            <div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>
-            ${t.driver}
-          </div>
-          <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span>
-        </div>
+      const drv=DRIVER_CONFIG.find(d=>d.name===t.driver);
+      h+=`<div class="trip-card">
+        <div class="trip-head"><div class="trip-driver-row"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>${t.driver}</div>
+        <span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span></div>
         <div class="trip-meta">
           <div class="tm">Left<div class="tm-val">${t.left}</div></div>
           <div class="tm">Back<div class="tm-val">${t.returnTime}</div></div>
           <div class="tm">Duration<div class="tm-val">${t.duration}min</div></div>
           <div class="tm">Cash<div class="tm-val">${t.totalCash.toLocaleString()}</div></div>
         </div>
-        <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${o.cash.toLocaleString()} TZS</span></div>`).join('')}</div>
+        <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}</div>
       </div>`;
     });
-    h += `</div>`;
+    h+=`</div>`;
   }
-
-  document.getElementById('cashier-body').innerHTML = h;
+  document.getElementById('cashier-body').innerHTML=h;
 }
 
 function searchByPhone(query){
-  const results = document.getElementById('cashier-search-results');
-  if(!query || query.replace(/\D/g,'').length < 4){ results.innerHTML=''; return; }
-
-  const q = query.replace(/\D/g,'');
-  const matches = [];
-
-  trips.forEach(t=>{
-    t.orders.forEach(o=>{
-      if(o.phone && o.phone.replace(/\D/g,'').includes(q)){
-        matches.push({trip:t, order:o});
-      }
-    });
-  });
-
-  if(!matches.length){
-    results.innerHTML = `<div class="no-result">No deliveries found for this number.</div>`;
-    return;
-  }
-
-  results.innerHTML = matches.map(({trip:t, order:o})=>{
-    const drv = DRIVER_CONFIG.find(d=>d.name===t.driver);
-    const status = !t.returned ? 'Out for delivery' : t.late ? 'Delivered (Late)' : 'Delivered';
-    const statusColor = !t.returned ? 'var(--amber)' : t.late ? 'var(--red)' : 'var(--green)';
+  const results=document.getElementById('cashier-search-results');
+  if(!results) return;
+  if(!query||query.replace(/\D/g,'').length<4){ results.innerHTML=''; return; }
+  const q=query.replace(/\D/g,'');
+  const matches=[];
+  trips.forEach(t=>{ t.orders.forEach(o=>{ if(o.phone&&o.phone.replace(/\D/g,'').includes(q)) matches.push({trip:t,order:o}); }); });
+  if(!matches.length){ results.innerHTML=`<div class="no-result">No deliveries found for this number.</div>`; return; }
+  results.innerHTML=matches.map(({trip:t,order:o})=>{
+    const drv=DRIVER_CONFIG.find(d=>d.name===t.driver);
+    const status=!t.returned?'Out for delivery':t.cancelled?'Cancelled':t.late?'Delivered (Late)':'Delivered';
+    const statusColor=!t.returned?'var(--amber)':t.cancelled?'var(--red)':t.late?'var(--red)':'var(--green)';
     return `<div class="search-result">
-      <div class="search-result-header">
-        <div class="search-result-driver">
-          <div class="trip-av" style="background:${drv?.bg};color:${drv?.color};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${t.driver.slice(0,2).toUpperCase()}</div>
-          ${t.driver}
-        </div>
-        <span style="font-size:12px;font-weight:700;color:${statusColor}">${status}</span>
-      </div>
+      <div class="search-result-header"><div class="search-result-driver"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${t.driver.slice(0,2).toUpperCase()}</div>${t.driver}</div>
+      <span style="font-size:12px;font-weight:700;color:${statusColor}">${status}</span></div>
       <div class="search-result-row"><span style="color:var(--muted)">Order</span><span style="font-weight:600">#${o.num}</span></div>
       <div class="search-result-row"><span style="color:var(--muted)">Zone</span><span style="font-weight:600">${o.zone}</span></div>
       <div class="search-result-row"><span style="color:var(--muted)">Amount</span><span style="font-weight:600;color:var(--green)">${o.cash.toLocaleString()} TZS</span></div>
@@ -1644,159 +969,327 @@ function searchByPhone(query){
   }).join('');
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════
+function getWeekData(){
+  const now=new Date(); const day=now.getDay();
+  const mon=new Date(now); mon.setDate(now.getDate()-(day===0?6:day-1));
+  const dates=[]; for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(mon.getDate()+i); dates.push(d.toISOString().slice(0,10)); }
+  return {dates,trips:trips.filter(t=>dates.includes(t.date)&&t.returned)};
+}
+function repeatLateDrivers(){
+  const {trips:wt}=getWeekData(); const c={};
+  wt.forEach(t=>{ if(t.late) c[t.driver]=(c[t.driver]||0)+1; });
+  return Object.entries(c).filter(([,v])=>v>=3).map(([n,v])=>({name:n,count:v}));
+}
+
+function buildDashboard(){
+  DRIVER_CONFIG=getDriverConfig();
+  const allDates=[...new Set(trips.map(t=>t.date))].sort().reverse();
+  if(!allDates.includes(dashDate)) dashDate=todayStr();
+  const dayTrips=trips.filter(t=>t.date===dashDate&&t.returned);
+  const openTrips=trips.filter(t=>t.date===dashDate&&!t.returned);
+  const {dates:wDates,trips:wTrips}=getWeekData();
+  const repLate=repeatLateDrivers();
+  document.getElementById('dash-sub').textContent=dashView==='week'?'Week View':fmtDate(dashDate);
+  let h='';
+  h+=`<div class="view-toggle">
+    <button class="view-btn${dashView==='day'?' active':''}" onclick="dashView='day';buildDashboard()">📅 Day View</button>
+    <button class="view-btn${dashView==='week'?' active':''}" onclick="dashView='week';buildDashboard()">📆 Week View</button>
+  </div>`;
+
+  if(dashView==='week'){
+    const wCash=wTrips.reduce((s,t)=>s+t.totalCash,0);
+    const wLate=wTrips.filter(t=>t.late).length;
+    const wAvg=wTrips.length?Math.round(wTrips.reduce((s,t)=>s+t.duration,0)/wTrips.length):0;
+    h+=`<div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Trips This Week</div><div class="kpi-val">${wTrips.length}</div><div class="kpi-sub">completed</div></div>
+      <div class="kpi"><div class="kpi-label">Cash This Week</div><div class="kpi-val" style="font-size:${wCash>999999?'17px':'24px'}">${wCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
+      <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val"${wLate?' style="color:var(--red)"':''}>${wLate}</div><div class="kpi-sub">over ${LATE_MIN}min</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${wAvg||'—'}${wAvg?'m':''}</div><div class="kpi-sub">per trip</div></div>
+    </div>`;
+    if(repLate.length){ h+=`<div><div class="sec-title">🚨 Repeat Late This Week</div>`; repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for review</div></div>`; }); h+=`</div>`; }
+    h+=`<div><div class="sec-title">Driver Summary</div>`;
+    DRIVER_CONFIG.forEach(d=>{
+      const dt=wTrips.filter(t=>t.driver===d.name);
+      const cash=dt.reduce((s,t)=>s+t.totalCash,0);
+      const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+      const lc=dt.filter(t=>t.late).length;
+      const rep=repLate.find(r=>r.name===d.name);
+      h+=`<div class="driver-card${rep?' repeat':''}"><div class="dc-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div><div class="dc-info"><div class="dc-name">${d.name}${rep?` <span style="color:var(--red);font-size:11px">⚠️</span>`:''}</div><div class="dc-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min · ${lc} late</div></div><div class="dc-right"><div class="dc-cash">${cash.toLocaleString()}</div><div class="dc-runs">TZS</div></div></div>`;
+    });
+    h+=`</div><div><div class="sec-title">Day by Day</div>`;
+    wDates.forEach(d=>{
+      const dt=trips.filter(t=>t.date===d&&t.returned); if(!dt.length) return;
+      const dc=dt.reduce((s,t)=>s+t.totalCash,0); const dl=dt.filter(t=>t.late).length;
+      const uid=d.replace(/-/g,'');
+      h+=`<div class="day-row"><div class="day-row-head" onclick="toggleDay('${uid}')"><div><div class="day-row-title">${fmtDate(d)}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${dt.length} trips${dl?` · <span style="color:var(--red)">${dl} late</span>`:''}</div></div><div style="display:flex;align-items:center"><div class="day-row-cash">${dc.toLocaleString()} TZS</div><div class="day-arrow" id="arr-${uid}">▼</div></div></div>
+      <div class="day-detail" id="det-${uid}">${dt.map(t=>{
+        const drv=DRIVER_CONFIG.find(x=>x.name===t.driver);
+        return `<div class="day-trip"><div class="day-trip-head"><div style="display:flex;align-items:center;gap:7px"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div><span style="font-size:13px;font-weight:700">${t.driver}</span></div><span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span></div>
+        <div class="day-trip-meta"><div class="tm">Left<div class="tm-val">${t.left}</div></div><div class="tm">Back<div class="tm-val">${t.returnTime}</div></div><div class="tm">Duration<div class="tm-val">${t.duration}min</div></div></div>
+        ${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}
+        ${t.notes&&!t.cancelled?`<div class="trip-note" style="margin-top:6px">📝 ${t.notes}</div>`:''}
+        ${t.cancelled?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">✕ CANCELLED</div>`:''}
+        </div>`;
+      }).join('')}</div></div>`;
+    });
+    h+=`</div><button class="btn-export" onclick="exportWeekPDF()">📄 Export Week Report (PDF)</button>`;
+    h+=`<button class="btn-clear" onclick="startClear('week')">🗑 Clear This Week's Data</button>`;
+  } else {
+    const totalCash=dayTrips.reduce((s,t)=>s+t.totalCash,0);
+    const late=dayTrips.filter(t=>t.late);
+    const avgDur=dayTrips.length?Math.round(dayTrips.reduce((s,t)=>s+t.duration,0)/dayTrips.length):0;
+    const dateOpts=allDates.length?allDates.map(d=>`<option value="${d}"${d===dashDate?' selected':''}>${fmtDate(d)}</option>`).join(''):`<option value="${todayStr()}">${fmtDate(todayStr())}</option>`;
+    h+=`<select class="date-select" onchange="dashDate=this.value;buildDashboard()">${dateOpts}</select>`;
+    h+=`<div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Trips Completed</div><div class="kpi-val">${dayTrips.length}</div><div class="kpi-sub">${openTrips.length} still out</div></div>
+      <div class="kpi"><div class="kpi-label">Cash Collected</div><div class="kpi-val" style="font-size:${totalCash>999999?'17px':'24px'}">${totalCash.toLocaleString()}</div><div class="kpi-sub">TZS</div></div>
+      <div class="kpi"><div class="kpi-label">Late Trips</div><div class="kpi-val"${late.length?' style="color:var(--red)"':''}>${late.length}</div><div class="kpi-sub">over ${LATE_MIN}min</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur||'—'}${avgDur?'m':''}</div><div class="kpi-sub">per trip</div></div>
+    </div>`;
+    if(repLate.length){ h+=`<div><div class="sec-title">🚨 Repeat Late Alert</div>`; repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for manager review</div></div>`; }); h+=`</div>`; }
+    if(openTrips.length){
+      h+=`<div><div class="sec-title">🟡 Currently Out</div>`;
+      openTrips.forEach(t=>{
+        const now=new Date(); const [lh,lm]=t.left.split(':').map(Number);
+        const el=(now.getHours()*60+now.getMinutes())-(lh*60+lm);
+        h+=`<div class="alert-card amber"><div class="alert-title" style="display:flex;justify-content:space-between;align-items:center"><span>${t.driver} — departed ${t.left} (${el}min ago)</span><button onclick="startCancelTrip(${t.id})" style="padding:4px 10px;background:var(--red-light);border:1.5px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Cancel</button></div>${t.orders.map(o=>`<div class="alert-sub">#${o.num} · ${o.zone} · 📞 <strong>${o.phone||'—'}</strong></div>`).join('')}</div>`;
+      });
+      h+=`</div>`;
+    }
+    if(late.length){ h+=`<div><div class="sec-title">⚠️ Late Flags</div>`; late.forEach(t=>{ h+=`<div class="alert-card"><div class="alert-title">${t.driver} — ${t.duration}min</div><div class="alert-sub">${t.left} → ${t.returnTime} · ${t.totalCash.toLocaleString()} TZS${t.notes?' · 📝 '+t.notes:''}</div></div>`; }); h+=`</div>`; }
+    const zc={}; ZONES.forEach(z=>{zc[z]={runs:0,cash:0};});
+    dayTrips.forEach(t=>t.orders.forEach(o=>{if(zc[o.zone]){zc[o.zone].runs++;zc[o.zone].cash+=o.cash;}}));
+    h+=`<div><div class="sec-title">By Zone</div><div class="zone-breakdown">`;
+    ZONES.forEach(z=>{ h+=`<div class="zone-card"><div class="zone-name">${z}</div><div class="zone-trips">${zc[z].runs} <span style="font-size:12px;color:var(--muted);font-weight:500">orders</span></div><div class="zone-cash">${zc[z].cash.toLocaleString()} TZS</div></div>`; });
+    h+=`</div></div><div><div class="sec-title">Driver Summary</div>`;
+    DRIVER_CONFIG.forEach(d=>{
+      const dt=dayTrips.filter(t=>t.driver===d.name);
+      const cash=dt.reduce((s,t)=>s+t.totalCash,0);
+      const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+      const lc=dt.filter(t=>t.late).length;
+      const rep=repLate.find(r=>r.name===d.name);
+      h+=`<div class="driver-card${rep?' repeat':''}"><div class="dc-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div><div class="dc-info"><div class="dc-name">${d.name}${rep?` <span style="color:var(--red);font-size:11px">⚠️</span>`:''}</div><div class="dc-detail">${dt.length} trip${dt.length!==1?'s':''} · avg ${avg||'—'}min${lc?` · <span style="color:var(--red)">${lc} late</span>`:''}</div></div><div class="dc-right"><div class="dc-cash">${cash.toLocaleString()}</div><div class="dc-runs">TZS</div></div></div>`;
+    });
+    h+=`</div>`;
+    if(dayTrips.length){
+      h+=`<div><div class="sec-title">All Trips</div>`;
+      [...dayTrips].reverse().forEach(t=>{
+        const drv=DRIVER_CONFIG.find(x=>x.name===t.driver);
+        h+=`<div class="trip-card"><div class="trip-head"><div class="trip-driver-row"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div>${t.driver}</div><span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span></div>
+          <div class="trip-meta"><div class="tm">Left<div class="tm-val">${t.left}</div></div><div class="tm">Back<div class="tm-val">${t.returnTime}</div></div><div class="tm">Duration<div class="tm-val">${t.duration}min</div></div><div class="tm">Cash<div class="tm-val">${t.totalCash.toLocaleString()}</div></div></div>
+          <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}</div>
+          ${t.cashierConfirmed?`<div style="font-size:11px;color:var(--green);margin-top:4px;font-weight:600">✓ Cash confirmed by ${t.cashierConfirmed}</div>`:''}
+          ${t.cancelled?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">✕ CANCELLED</div>`:''}
+          ${t.notes&&!t.cancelled?`<div class="trip-note">📝 ${t.notes}</div>`:''}
+        </div>`;
+      });
+      h+=`</div>`;
+    } else { h+=`<div class="empty">No completed trips for this date.</div>`; }
+    h+=`<button class="btn-export" onclick="exportDayPDF()">📄 Export Day Report (PDF)</button>`;
+    h+=`<button class="btn-clear" onclick="startClear('day')">🗑 Clear ${fmtDate(dashDate)}</button>`;
+    h+=`<button class="btn-muted" onclick="startClear('pins')">🔑 Reset All Driver PINs</button>`;
+    h+=`<button class="btn-muted" onclick="startClear('cashier-pins')">🔑 Reset All Cashier PINs</button>`;
+    h+=`<button class="btn-muted" onclick="openSettings()">⚙️ Manage Staff & PINs</button>`;
+  }
+  document.getElementById('dash-body').innerHTML=h;
+}
+
+function toggleDay(uid){
+  const el=document.getElementById('det-'+uid); const ar=document.getElementById('arr-'+uid); if(!el) return;
+  const open=el.style.display==='flex'; el.style.display=open?'none':'flex'; el.style.flexDirection='column';
+  if(ar) ar.style.transform=open?'':'rotate(180deg)';
+}
+
+// ═══════════════════════════════════════
+// CLEAR + DELETE PIN
+// ═══════════════════════════════════════
+function startClear(action){
+  deleteAction=action; let title='',sub='';
+  if(action==='day'){   title='Clear Day?';         sub='Delete all trips for '+fmtDate(dashDate)+'? Cannot be undone.'; }
+  if(action==='week'){  title='Clear Week?';        sub='Delete all trips for this week? Cannot be undone.'; }
+  if(action==='pins'){  title='Reset Driver PINs?'; sub='All drivers will need to set a new PIN on next use.'; }
+  if(action==='cashier-pins'){ title='Reset Cashier PINs?'; sub='All cashiers will need to set a new PIN on next use.'; }
+  document.getElementById('mc-title').textContent=title;
+  document.getElementById('mc-sub').textContent=sub;
+  document.getElementById('modal-confirm').style.display='flex';
+}
+function closeConfirm(){ document.getElementById('modal-confirm').style.display='none'; }
+function proceedToDeletePin(){ closeConfirm(); delPinEntry=''; updateDelDots(); document.getElementById('del-pin-err').textContent=''; document.getElementById('modal-delete-pin').style.display='flex'; }
+function closeDeletePin(){ document.getElementById('modal-delete-pin').style.display='none'; delPinEntry=''; updateDelDots(); }
+function updateDelDots(){ for(let i=0;i<4;i++) document.getElementById('dpd'+i).className='pin-dot'+(i<delPinEntry.length?' filled':''); }
+function dpk(k){
+  if(k==='DEL'){ delPinEntry=delPinEntry.slice(0,-1); updateDelDots(); return; }
+  if(delPinEntry.length>=4) return;
+  delPinEntry+=k; updateDelDots();
+  if(delPinEntry.length<4) return;
+  const entered=delPinEntry; delPinEntry='';
+  setTimeout(()=>{
+    if(entered===MGR_PIN){ closeDeletePin(); execDelete(); }
+    else { document.getElementById('del-pin-err').textContent='Wrong PIN. Try again.'; updateDelDots(); }
+  },150);
+}
+function execDelete(){
+  if(deleteAction==='day'){ trips=trips.filter(t=>t.date!==dashDate); saveTrips(); dashDate=todayStr(); buildDashboard(); }
+  else if(deleteAction==='week'){ const {dates}=getWeekData(); trips=trips.filter(t=>!dates.includes(t.date)); saveTrips(); dashDate=todayStr(); buildDashboard(); }
+  else if(deleteAction==='pins'){ localStorage.removeItem('cp_pins'); buildDashboard(); }
+  else if(deleteAction==='cashier-pins'){ localStorage.removeItem('cp_cashier_pins'); buildDashboard(); }
+}
+
+// ═══════════════════════════════════════
 // SETTINGS
-// ━━━━━━━━━━━━━━━━━━━━━━━━
+// ═══════════════════════════════════════
 function openSettings(){
-  DRIVER_CONFIG = getDriverConfig();
-  CASHIER_CONFIG = getCashierConfig();
-  buildSettingsPinList();
-  buildSettingsDriverList();
-  buildSettingsCashierList();
+  DRIVER_CONFIG=getDriverConfig(); CASHIER_CONFIG=getCashierConfig();
+  buildSettingsPinList(); buildSettingsDriverList(); buildSettingsCashierList();
   document.getElementById('modal-settings').style.display='flex';
 }
-
-function closeSettings(){
-  document.getElementById('modal-settings').style.display='none';
-  DRIVER_CONFIG = getDriverConfig();
-  CASHIER_CONFIG = getCashierConfig();
-  buildHome();
-}
-
+function closeSettings(){ document.getElementById('modal-settings').style.display='none'; DRIVER_CONFIG=getDriverConfig(); CASHIER_CONFIG=getCashierConfig(); goHome(); }
 function buildSettingsPinList(){
-  const pins = getStoredPins();
-  const cpins = getStoredCashierPins();
-  const drivers = getDriverConfig();
-  const cashiers = getCashierConfig();
-
-  let h = '';
-
+  const pins=getStoredPins(); const cpins=getStoredCashierPins();
+  const drivers=getDriverConfig(); const cashiers=getCashierConfig();
+  let h='';
   drivers.forEach(d=>{
-    const hasP = d.fixedPin ? true : !!pins[d.name];
-    h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:28px;height:28px;border-radius:50%;background:${d.bg};color:${d.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${d.name.slice(0,2).toUpperCase()}</div>
-        <span style="font-size:13px;font-weight:600">${d.name} <span style="color:var(--muted);font-size:11px">(driver)</span></span>
-      </div>
-      ${d.fixedPin
-        ? `<span style="font-size:11px;color:var(--muted)">Fixed PIN</span>`
-        : hasP
-          ? `<button onclick="resetIndividualPin('driver','${d.name}')" style="padding:5px 10px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Reset PIN</button>`
-          : `<span style="font-size:11px;color:var(--muted)">No PIN set</span>`
-      }
+    const hasP=d.fixedPin?true:!!pins[d.name];
+    h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:${d.bg};color:${d.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${d.name.slice(0,2).toUpperCase()}</div>
+      <span style="font-size:13px;font-weight:600">${d.name} <span style="color:var(--muted);font-size:11px">(driver)</span></span></div>
+      ${d.fixedPin?`<span style="font-size:11px;color:var(--muted)">Fixed PIN</span>`:hasP?`<button onclick="resetIndividualPin('driver','${d.name}')" style="padding:5px 10px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Reset PIN</button>`:`<span style="font-size:11px;color:var(--muted)">No PIN set</span>`}
     </div>`;
   });
-
   cashiers.forEach(c=>{
-    const hasP = !!cpins[c.name];
-    h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:28px;height:28px;border-radius:50%;background:${c.bg};color:${c.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${c.name.slice(0,2).toUpperCase()}</div>
-        <span style="font-size:13px;font-weight:600">${c.name} <span style="color:var(--muted);font-size:11px">(cashier)</span></span>
-      </div>
-      ${hasP
-        ? `<button onclick="resetIndividualPin('cashier','${c.name}')" style="padding:5px 10px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Reset PIN</button>`
-        : `<span style="font-size:11px;color:var(--muted)">No PIN set</span>`
-      }
+    const hasP=!!cpins[c.name];
+    h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:${c.bg};color:${c.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${c.name.slice(0,2).toUpperCase()}</div>
+      <span style="font-size:13px;font-weight:600">${c.name} <span style="color:var(--muted);font-size:11px">(cashier)</span></span></div>
+      ${hasP?`<button onclick="resetIndividualPin('cashier','${c.name}')" style="padding:5px 10px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--red);cursor:pointer">Reset PIN</button>`:`<span style="font-size:11px;color:var(--muted)">No PIN set</span>`}
     </div>`;
   });
-
-  document.getElementById('settings-pin-list').innerHTML = h || '<div style="color:var(--muted);font-size:13px">No staff added yet.</div>';
+  document.getElementById('settings-pin-list').innerHTML=h||'<div style="color:var(--muted);font-size:13px">No staff added yet.</div>';
 }
-
-function resetIndividualPin(type, name){
-  if(type === 'driver'){
-    const p = getStoredPins(); delete p[name]; localStorage.setItem('cp_pins', JSON.stringify(p));
-  } else {
-    const p = getStoredCashierPins(); delete p[name]; localStorage.setItem('cp_cashier_pins', JSON.stringify(p));
-  }
+function resetIndividualPin(type,name){
+  if(type==='driver'){ const p=getStoredPins(); delete p[name]; localStorage.setItem('cp_pins',JSON.stringify(p)); }
+  else { const p=getStoredCashierPins(); delete p[name]; localStorage.setItem('cp_cashier_pins',JSON.stringify(p)); }
   buildSettingsPinList();
 }
-
 function buildSettingsDriverList(){
-  const drivers = getDriverConfig();
-  document.getElementById('settings-driver-list').innerHTML = drivers.map((d,i)=>`
+  const drivers=getDriverConfig();
+  document.getElementById('settings-driver-list').innerHTML=drivers.map((d,i)=>`
     <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
       <div style="width:28px;height:28px;border-radius:50%;background:${d.bg};color:${d.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${d.name.slice(0,2).toUpperCase()}</div>
       <input value="${d.name}" onchange="renameStaff('driver',${i},this.value)" style="flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:13px;color:var(--text);background:var(--bg);outline:none">
-      ${d.fixedPin ? `<span style="font-size:10px;color:var(--muted);padding:0 4px">Fixed</span>` : `<button onclick="removeStaff('driver',${i})" style="padding:5px 8px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;flex-shrink:0">✕</button>`}
+      ${d.fixedPin?`<span style="font-size:10px;color:var(--muted);padding:0 4px">Fixed</span>`:`<button onclick="removeStaff('driver',${i})" style="padding:5px 8px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;flex-shrink:0">✕</button>`}
     </div>`).join('');
 }
-
 function buildSettingsCashierList(){
-  const cashiers = getCashierConfig();
-  document.getElementById('settings-cashier-list').innerHTML = cashiers.map((c,i)=>`
+  const cashiers=getCashierConfig();
+  document.getElementById('settings-cashier-list').innerHTML=cashiers.map((c,i)=>`
     <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
       <div style="width:28px;height:28px;border-radius:50%;background:${c.bg};color:${c.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${c.name.slice(0,2).toUpperCase()}</div>
       <input value="${c.name}" onchange="renameStaff('cashier',${i},this.value)" style="flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:13px;color:var(--text);background:var(--bg);outline:none">
       <button onclick="removeStaff('cashier',${i})" style="padding:5px 8px;background:var(--red-light);border:1px solid var(--red);border-radius:6px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;flex-shrink:0">✕</button>
     </div>`).join('');
 }
-
-function renameStaff(type, idx, newName){
+function renameStaff(type,idx,newName){
   if(!newName.trim()) return;
-  if(type === 'driver'){
-    const cfg = getDriverConfig(); cfg[idx].name = newName.trim(); saveDriverConfig(cfg);
-  } else {
-    const cfg = getCashierConfig(); cfg[idx].name = newName.trim(); saveCashierConfig(cfg);
-  }
+  if(type==='driver'){ const cfg=getDriverConfig(); cfg[idx].name=newName.trim(); saveDriverConfig(cfg); }
+  else { const cfg=getCashierConfig(); cfg[idx].name=newName.trim(); saveCashierConfig(cfg); }
   buildSettingsPinList();
 }
-
-function removeStaff(type, idx){
-  if(type === 'driver'){
-    const cfg = getDriverConfig(); cfg.splice(idx,1); saveDriverConfig(cfg); buildSettingsDriverList();
-  } else {
-    const cfg = getCashierConfig(); cfg.splice(idx,1); saveCashierConfig(cfg); buildSettingsCashierList();
-  }
+function removeStaff(type,idx){
+  if(type==='driver'){ const cfg=getDriverConfig(); cfg.splice(idx,1); saveDriverConfig(cfg); buildSettingsDriverList(); }
+  else { const cfg=getCashierConfig(); cfg.splice(idx,1); saveCashierConfig(cfg); buildSettingsCashierList(); }
   buildSettingsPinList();
 }
-
 function addStaffMember(type){
-  const palette = COLOR_PALETTE;
-  if(type === 'driver'){
-    const cfg = getDriverConfig();
-    const c = palette[cfg.length % palette.length];
-    cfg.push({name:'New Driver', color:c.color, bg:c.bg});
-    saveDriverConfig(cfg); buildSettingsDriverList();
-  } else {
-    const cfg = getCashierConfig();
-    const c = palette[cfg.length % palette.length];
-    cfg.push({name:'New Cashier', color:c.color, bg:c.bg});
-    saveCashierConfig(cfg); buildSettingsCashierList();
-  }
+  if(type==='driver'){ const cfg=getDriverConfig(); const c=COLOR_PALETTE[cfg.length%COLOR_PALETTE.length]; cfg.push({name:'New Driver',color:c.color,bg:c.bg}); saveDriverConfig(cfg); buildSettingsDriverList(); }
+  else { const cfg=getCashierConfig(); const c=COLOR_PALETTE[cfg.length%COLOR_PALETTE.length]; cfg.push({name:'New Cashier',color:c.color,bg:c.bg}); saveCashierConfig(cfg); buildSettingsCashierList(); }
   buildSettingsPinList();
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// AUTO-DELETE SUNDAY 23:59
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-function checkAutoDelete(){
-  const now = new Date();
-  const key = 'cp_last_autodelete';
-  const lastDelete = localStorage.getItem(key);
-  const todayKey = now.toISOString().slice(0,10);
+// ═══════════════════════════════════════
+// PDF EXPORT
+// ═══════════════════════════════════════
+function pdfWrap(title,body){
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:12px;color:#1a1a1a;padding:28px;max-width:900px;margin:0 auto}h1{font-size:20px;font-weight:800;margin-bottom:2px}.sub{font-size:12px;color:#888;margin-bottom:20px}.no-print{margin-bottom:18px}.print-btn{padding:9px 22px;background:#c8392b;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}.kpi{background:#f5f4f0;border-radius:7px;padding:10px 12px}.kpi-l{font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:3px}.kpi-v{font-size:20px;font-weight:800}.sec{margin-bottom:18px}.sec-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#888;border-bottom:1px solid #e0ddd6;padding-bottom:4px;margin-bottom:8px}table{width:100%;border-collapse:collapse;font-size:11px}th{background:#f5f4f0;padding:6px 9px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:#888;border-bottom:2px solid #e0ddd6}td{padding:6px 9px;border-bottom:1px solid #e0ddd6;vertical-align:top}tr:last-child td{border-bottom:none}.late{color:#c8392b;font-weight:700}.ok{color:#1a7f4b;font-weight:700}.note{font-size:10px;color:#d97706;font-style:italic}.footer{margin-top:28px;padding-top:10px;border-top:1px solid #e0ddd6;font-size:10px;color:#888;display:flex;justify-content:space-between}@media print{.no-print{display:none}}</style></head><body>
+  <div class="no-print"><button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button><span style="margin-left:10px;font-size:12px;color:#888">Print → Save as PDF</span></div>
+  <h1>🍛 Chowpatty Restaurant</h1>
+  <div style="font-size:16px;font-weight:800;margin-bottom:2px">${title}</div>
+  <div class="sub">Generated: ${new Date().toLocaleString('en-GB')}</div>
+  ${body}
+  <div class="footer"><span>Chowpatty Restaurant · Delivery Log</span><span>Confidential</span></div>
+  </body></html>`;
+}
+function exportDayPDF(){
+  const dt=trips.filter(t=>t.date===dashDate&&t.returned);
+  const cash=dt.reduce((s,t)=>s+t.totalCash,0); const late=dt.filter(t=>t.late).length;
+  const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+  let body=`<div class="kpis"><div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${dt.length}</div></div><div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div><div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div><div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div></div>
+  <div class="sec"><div class="sec-title">All Trips</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th><th>Cashier</th></tr></thead><tbody>`;
+  dt.forEach(t=>{ t.orders.forEach((o,i)=>{ body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td><td>${t.cashierConfirmed||'—'}</td>`:'<td colspan="5"></td>'}</tr>`; }); if(t.notes) body+=`<tr><td colspan="10" class="note">📝 ${t.notes}</td></tr>`; });
+  body+=`</tbody></table></div><div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{ const ddt=dt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0; const dl=ddt.filter(t=>t.late).length; body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`; });
+  body+=`</tbody></table></div>`;
+  const w=window.open('','_blank'); w.document.write(pdfWrap(`Daily Report — ${fmtDate(dashDate)}`,body)); w.document.close();
+}
+function exportWeekPDF(){
+  const {dates,trips:wt}=getWeekData();
+  const cash=wt.reduce((s,t)=>s+t.totalCash,0); const late=wt.filter(t=>t.late).length; const avg=wt.length?Math.round(wt.reduce((s,t)=>s+t.duration,0)/wt.length):0;
+  let body=`<div class="kpis"><div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${wt.length}</div></div><div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div><div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div><div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div></div>`;
+  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{ const ddt=wt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0; const dl=ddt.filter(t=>t.late).length; body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`; });
+  body+=`</tbody></table></div>`;
+  dates.forEach(d=>{ const dt=trips.filter(t=>t.date===d&&t.returned); if(!dt.length) return; const dc=dt.reduce((s,t)=>s+t.totalCash,0); const dl=dt.filter(t=>t.late).length; body+=`<div class="sec"><div class="sec-title">${fmtDate(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dl?` · <span style="color:#c8392b">${dl} late</span>`:''}</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`; dt.forEach(t=>{ t.orders.forEach((o,i)=>{ body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}</tr>`; }); if(t.notes) body+=`<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`; }); body+=`</tbody></table></div>`; });
+  const w=window.open('','_blank'); w.document.write(pdfWrap(`Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`,body)); w.document.close();
+}
 
-  // Only run on Monday (day 1) at 2:00am
-  if(now.getDay()===1 && now.getHours()===2 && now.getMinutes()===0){
-    if(lastDelete !== todayKey){
-      // Delete all trip data
-      trips = [];
-      saveTrips();
-      localStorage.setItem(key, todayKey);
-      console.log('Auto-deleted all trip data at Sunday 23:59');
+// ═══════════════════════════════════════
+// AUTO-DELETE MONDAY 2AM
+// ═══════════════════════════════════════
+function checkAutoDelete(){
+  const now=new Date(); const key='cp_last_autodelete'; const todayKey=now.toISOString().slice(0,10);
+  const lastDelete=localStorage.getItem(key);
+  if(now.getDay()===1&&now.getHours()===2&&now.getMinutes()===0){
+    if(lastDelete!==todayKey){
+      trips=[]; tripsRef.set(null).catch(()=>{});
+      localStorage.setItem(key,todayKey);
     }
   }
 }
+setInterval(checkAutoDelete,60000);
 
-// Check every minute
-setInterval(checkAutoDelete, 60000);
-checkAutoDelete();
+// ═══════════════════════════════════════
+// FIREBASE REALTIME LISTENER + INIT
+// ═══════════════════════════════════════
+tripsRef.on('value', snapshot=>{
+  const data=snapshot.val();
+  trips=data?Object.values(data).map(t=>({...t,orders:Array.isArray(t.orders)?t.orders:[]})):[];
+  // Only rebuild home if already on home screen, otherwise leave current screen
+  const homeActive=document.getElementById('home').classList.contains('active');
+  if(homeActive) goHome();
+  else {
+    // Silently update the home grid data without switching screens
+    const grid=document.getElementById('driver-grid');
+    if(grid){
+      DRIVER_CONFIG=getDriverConfig();
+      grid.innerHTML=DRIVER_CONFIG.map(d=>{
+        const isOut=trips.some(t=>t.driver===d.name&&!t.returned);
+        const runs=trips.filter(t=>t.driver===d.name&&t.date===todayStr()&&t.returned).length;
+        return `<div class="driver-btn${isOut?' out':''}" onclick="driverTapped('${d.name}')">
+          ${isOut?'<div class="out-dot"></div>':''}
+          <div class="driver-av" style="background:${d.bg};color:${d.color}">${d.name.slice(0,2).toUpperCase()}</div>
+          <div class="driver-name">${d.name}</div>
+          <div class="driver-status">${isOut?'AMETOKA — bonyeza kurudi':`${runs} trip${runs!==1?'s':''} leo`}</div>
+        </div>`;
+      }).join('');
+    }
+  }
+});
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-// INIT
-// ━━━━━━━━━━━━━━━━━━━━━━━━
-goHome();
+// Show home on first load
+show('home');
 </script>
 </body>
 </html>
