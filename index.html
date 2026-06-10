@@ -1491,6 +1491,33 @@ tripsRef.on('value', snapshot=>{
   }
 });
 
+// ── ONE-TIME MIGRATION: push localStorage to Firebase ──
+function migrateLocalToFirebase(){
+  const migKey = 'cp_migrated_v1';
+  if(localStorage.getItem(migKey)) return;
+
+  // Migrate driver PINs
+  const storedPins = localStorage.getItem('cp_pins');
+  if(storedPins){ try{ const p=JSON.parse(storedPins); if(Object.keys(p).length) pinsRef.set(p); }catch(e){} }
+
+  // Migrate cashier PINs
+  const storedCPins = localStorage.getItem('cp_cashier_pins');
+  if(storedCPins){ try{ const p=JSON.parse(storedCPins); if(Object.keys(p).length) cpinsRef.set(p); }catch(e){} }
+
+  // Migrate driver config
+  const storedDrivers = localStorage.getItem('cp_drivers');
+  if(storedDrivers){ try{ const d=JSON.parse(storedDrivers); if(d.length){ const obj={}; d.forEach((x,i)=>obj[i]=x); driversRef.set(obj); } }catch(e){} }
+
+  // Migrate cashier config
+  const storedCashiers = localStorage.getItem('cp_cashiers');
+  if(storedCashiers){ try{ const c=JSON.parse(storedCashiers); if(c.length){ const obj={}; c.forEach((x,i)=>obj[i]=x); cashiersRef.set(obj); } }catch(e){} }
+
+  localStorage.setItem(migKey,'1');
+  console.log('Migration to Firebase complete');
+}
+
+migrateLocalToFirebase();
+
 // Show home on first load
 show('home');
 </script>
