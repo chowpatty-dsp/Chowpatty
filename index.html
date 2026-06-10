@@ -1393,18 +1393,19 @@ function sendReportEmail(subject, summary, htmlContent, filename){
   const btn=event.target;
   btn.textContent='📧 Sending...'; btn.disabled=true;
   const encoded=btoa(unescape(encodeURIComponent(htmlContent)));
+  // Use form-encoded POST so Apps Script receives it reliably
+  const formData=new URLSearchParams();
+  formData.append('action','email');
+  formData.append('subject',subject);
+  formData.append('summary',summary);
+  formData.append('htmlContent',encoded);
+  formData.append('filename',filename);
+  formData.append('recipients',JSON.stringify(['hrishi.chandarana.0303@gmail.com','jayenchandarana@gmail.com']));
   fetch(SHEETS_URL, {
     method:'POST',
     mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      action:'email',
-      subject,
-      summary,
-      htmlContent:encoded,
-      filename,
-      recipients:['hrishi.chandarana.0303@gmail.com','jayenchandarana@gmail.com']
-    })
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:formData.toString()
   }).then(()=>{
     btn.textContent='✅ Sent!'; btn.style.borderColor='#1a7f4b'; btn.style.color='#1a7f4b';
     setTimeout(()=>{ btn.textContent='📧 Email Report'; btn.style.borderColor='#2563eb'; btn.style.color='#2563eb'; btn.disabled=false; },3000);
