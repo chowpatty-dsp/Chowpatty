@@ -1097,6 +1097,7 @@ function buildDashboard(){
       }).join('')}</div></div>`;
     });
     h+=`</div><button class="btn-export" onclick="exportWeekPDF()">📄 Export Week Report (PDF)</button>`;
+    h+=`<button class="btn-export" style="border-color:#2563eb;color:#2563eb" onclick="emailWeekReport()">📧 Email Week Report</button>`;
     h+=`<button class="btn-clear" onclick="startClear('week')">🗑 Clear This Week's Data</button>`;
   } else {
     const totalCash=dayTrips.reduce((s,t)=>s+t.totalCash,0);
