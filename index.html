@@ -1156,6 +1156,7 @@ function buildDashboard(){
       h+=`</div>`;
     } else { h+=`<div class="empty">No completed trips for this date.</div>`; }
     h+=`<button class="btn-export" onclick="exportDayPDF()">📄 Export Day Report (PDF)</button>`;
+    h+=`<button class="btn-export" style="border-color:#2563eb;color:#2563eb" onclick="emailDayReport()">📧 Email Day Report</button>`;
     h+=`<button class="btn-clear" onclick="startClear('day')">🗑 Clear ${fmtDate(dashDate)}</button>`;
     h+=`<button class="btn-muted" onclick="startClear('pins')">🔑 Reset All Driver PINs</button>`;
     h+=`<button class="btn-muted" onclick="startClear('cashier-pins')">🔑 Reset All Cashier PINs</button>`;
@@ -1335,6 +1336,82 @@ function exportWeekPDF(){
   URL.revokeObjectURL(dlUrl);
   // Also open for viewing
   try{ const w=window.open('','_blank'); if(w){ w.document.write(html); w.document.close(); } }catch(e){}
+}
+
+// ═══════════════════════════════════════
+// EMAIL REPORT
+// ═══════════════════════════════════════
+function emailDayReport(){
+  const dt=trips.filter(t=>t.date===dashDate&&t.returned);
+  const cash=dt.reduce((s,t)=>s+t.totalCash,0);
+  const late=dt.filter(t=>t.late).length;
+  const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
+  const subject=`Chowpatty Daily Report — ${fmtDate(dashDate)}`;
+  const summary=`Date: ${fmtDate(dashDate)}\nTrips: ${dt.length}\nCash: ${cash.toLocaleString()} TZS\nLate: ${late}\nAvg Duration: ${avg}min\n\nDriver Summary:\n`+
+    DRIVER_CONFIG.map(d=>{ const ddt=dt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); return `${d.name}: ${ddt.length} trips · ${dc.toLocaleString()} TZS`; }).join('\n');
+
+  let body=`<div class="kpis"><div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${dt.length}</div></div><div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div><div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div><div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div></div>
+  <div class="sec"><div class="sec-title">All Trips</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th><th>Cashier</th><th>Flags</th></tr></thead><tbody>`;
+  dt.forEach(t=>{ t.orders.forEach((o,i)=>{ const flags=[]; if(t.suspicious) flags.push('⚡'); if(t.afterCutoff) flags.push('🕘'); body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime||'—'}</td><td>${t.duration!=null?t.duration+'min':'—'}</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td><td style="color:#1a7f4b;font-weight:600">${t.cashierConfirmed||'—'}</td><td style="color:#7c3aed">${flags.join(' ')||'—'}</td>`:'<td colspan="6"></td>'}</tr>`; }); });
+  body+=`</tbody></table></div>`;
+  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{ const ddt=dt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0; const dl=ddt.filter(t=>t.late).length; body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`; });
+  body+=`</tbody></table></div>`;
+  const html=pdfWrap(`Daily Report — ${fmtDate(dashDate)}`,body);
+  sendReportEmail(subject, summary, html, `Chowpatty_Daily_${dashDate}.html`);
+}
+
+function emailWeekReport(){
+  const {dates,trips:wt}=getWeekData();
+  const cash=wt.reduce((s,t)=>s+t.totalCash,0);
+  const late=wt.filter(t=>t.late).length;
+  const avg=wt.length?Math.round(wt.reduce((s,t)=>s+t.duration,0)/wt.length):0;
+  const subject=`Chowpatty Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`;
+  const summary=`Week: ${fmtDate(dates[0])} to ${fmtDate(dates[6])}\nTrips: ${wt.length}\nCash: ${cash.toLocaleString()} TZS\nLate: ${late}\nAvg Duration: ${avg}min\n\nDriver Summary:\n`+
+    DRIVER_CONFIG.map(d=>{ const ddt=wt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); return `${d.name}: ${ddt.length} trips · ${dc.toLocaleString()} TZS`; }).join('\n');
+
+  let body=`<div class="kpis"><div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${wt.length}</div></div><div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div><div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div><div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div></div>`;
+  body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
+  DRIVER_CONFIG.forEach(d=>{ const ddt=wt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0; const dl=ddt.filter(t=>t.late).length; body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`; });
+  body+=`</tbody></table></div>`;
+  const cashierCounts={};
+  wt.forEach(t=>{ if(t.cashierConfirmed){ cashierCounts[t.cashierConfirmed]=(cashierCounts[t.cashierConfirmed]||0)+1; }});
+  if(Object.keys(cashierCounts).length){
+    body+=`<div class="sec"><div class="sec-title">Cash Collected By</div><table><thead><tr><th>Cashier</th><th>Trips Confirmed</th></tr></thead><tbody>`;
+    Object.entries(cashierCounts).forEach(([name,count])=>{ body+=`<tr><td><strong>${name}</strong></td><td>${count}</td></tr>`; });
+    body+=`</tbody></table></div>`;
+  }
+  dates.forEach(d=>{ const dt=trips.filter(t=>t.date===d&&t.returned); if(!dt.length) return; const dc=dt.reduce((s,t)=>s+t.totalCash,0); const dl=dt.filter(t=>t.late).length;
+    body+=`<div class="sec"><div class="sec-title">${fmtDate(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dl?` · ${dl} late`:''}</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th><th>Cashier</th></tr></thead><tbody>`;
+    dt.forEach(t=>{ t.orders.forEach((o,i)=>{ body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime||'—'}</td><td>${t.duration!=null?t.duration+'min':'—'}</td><td>${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td><td style="color:#1a7f4b;font-weight:600">${t.cashierConfirmed||'—'}</td>`:'<td colspan="5"></td>'}</tr>`; }); });
+    body+=`</tbody></table></div>`; });
+  const html=pdfWrap(`Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`,body);
+  sendReportEmail(subject, summary, html, `Chowpatty_Weekly_${dates[0]}_to_${dates[6]}.html`);
+}
+
+function sendReportEmail(subject, summary, htmlContent, filename){
+  const btn=event.target;
+  btn.textContent='📧 Sending...'; btn.disabled=true;
+  const encoded=btoa(unescape(encodeURIComponent(htmlContent)));
+  fetch(SHEETS_URL, {
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      action:'email',
+      subject,
+      summary,
+      htmlContent:encoded,
+      filename,
+      recipients:['hrishi.chandarana.0303@gmail.com','jayenchandarana@gmail.com']
+    })
+  }).then(()=>{
+    btn.textContent='✅ Sent!'; btn.style.borderColor='#1a7f4b'; btn.style.color='#1a7f4b';
+    setTimeout(()=>{ btn.textContent='📧 Email Report'; btn.style.borderColor='#2563eb'; btn.style.color='#2563eb'; btn.disabled=false; },3000);
+  }).catch(()=>{
+    btn.textContent='❌ Failed'; btn.style.borderColor='#c8392b'; btn.style.color='#c8392b';
+    setTimeout(()=>{ btn.textContent='📧 Email Report'; btn.style.borderColor='#2563eb'; btn.style.color='#2563eb'; btn.disabled=false; },3000);
+  });
 }
 
 // ═══════════════════════════════════════
