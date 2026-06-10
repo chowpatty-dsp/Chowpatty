@@ -396,19 +396,25 @@ const tripsRef = db.ref('trips');
 // CONFIG
 // ═══════════════════════════════════════
 const MGR_PIN    = '2635';
-const LATE_MIN   = 60;
-const MAX_ORDERS = 3;
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz-7BUB2K-ggCnoM-mv7izIPcL4D3v16T8kCzXJ5Ivy4Il9P2AT9hI9Mgq9P1lGfIeA7Q/exec';
+const LATE_MIN      = 60;
+const MAX_ORDERS    = 3;
+const SUSPICIOUS_MIN = 10;   // trips under 10 min flagged
+const ORDER_CUTOFF   = '21:20'; // no orders after 9:20pm
+const SHEETS_URL    = 'https://script.google.com/macros/s/AKfycbz-7BUB2K-ggCnoM-mv7izIPcL4D3v16T8kCzXJ5Ivy4Il9P2AT9hI9Mgq9P1lGfIeA7Q/exec';
+const AT_USERNAME   = 'sandbox';
+const AT_API_KEY    = 'atsk_67f480e2727a64df988f565699203bbefa07a54146525c151734d9bd0fba65a940eb5f80';
+const AT_SENDER     = 'Chowpatty';
+const CHOWPATTY_TEL = '+255712469546';
 const ZONES      = ['Kariakoo','Fire','Town','Upanga','Sea View','Kamata'];
 
 const DEFAULT_DRIVERS = [
-  { name:'Omari',   color:'#b7791f', bg:'#fef9e7' },
-  { name:'Moses',   color:'#1a7f4b', bg:'#edf7f2' },
-  { name:'Nasoro',  color:'#2563eb', bg:'#eff6ff' },
-  { name:'Msafiri', color:'#7c3aed', bg:'#f5f3ff' },
-  { name:'Rama',    color:'#c8392b', bg:'#fdf0ef' },
-  { name:'Kassim',  color:'#0891b2', bg:'#ecfeff' },
-  { name:'Trainer', color:'#4b5563', bg:'#f3f4f6', fixedPin:'9999' },
+  { name:'Omari',   color:'#b7791f', bg:'#fef9e7', phone:'+255684189054' },
+  { name:'Moses',   color:'#1a7f4b', bg:'#edf7f2', phone:'+255743717189' },
+  { name:'Nasoro',  color:'#2563eb', bg:'#eff6ff', phone:'' },
+  { name:'Msafiri', color:'#7c3aed', bg:'#f5f3ff', phone:'' },
+  { name:'Rama',    color:'#c8392b', bg:'#fdf0ef', phone:'' },
+  { name:'Kassim',  color:'#0891b2', bg:'#ecfeff', phone:'' },
+  { name:'Trainer', color:'#4b5563', bg:'#f3f4f6', fixedPin:'9999', phone:'' },
 ];
 const DEFAULT_CASHIERS = [
   { name:'Mehdi',   color:'#b7791f', bg:'#fef9e7' },
@@ -480,6 +486,39 @@ function cancelHomeTimer(){ if(homeTimer){ clearTimeout(homeTimer); homeTimer=nu
 
 function sync(data){
   fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
+}
+
+function sendSMS(to, message){
+  if(!to || !to.trim()) return; // Skip if no number
+  const url = 'https://api.sandbox.africastalking.com/version1/messaging';
+  const body = new URLSearchParams({
+    username: AT_USERNAME,
+    to: to,
+    message: message,
+    from: AT_SENDER
+  });
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'apiKey': AT_API_KEY
+    },
+    body: body.toString()
+  })
+  .then(r=>r.json())
+  .then(d=>console.log('SMS sent:', JSON.stringify(d)))
+  .catch(e=>console.warn('SMS error:', e));
+}
+
+function sendDeparturesSMS(orders, driverName, driverPhone){
+  // Send one SMS per order to that customer
+  orders.forEach(o=>{
+    if(!o.phone || o.phone.replace(/\D/g,'').length < 9) return;
+    const customerPhone = o.phone.startsWith('+') ? o.phone : '+255' + o.phone.replace(/^0/,'');
+    const msg = `Hi! Your Chowpatty order is on its way. Your driver is ${driverName}${driverPhone?' — '+driverPhone:''}. Questions? Call us: ${CHOWPATTY_TEL}. Thank you!`;
+    sendSMS(customerPhone, msg);
+  });
 }
 
 // ═══════════════════════════════════════
@@ -713,6 +752,11 @@ function submitDepart(){
   };
   trips.push(trip);
   saveTrips();
+
+  // Send SMS to each customer
+  const driverPhone = DRIVER_CONFIG.find(d=>d.name===activeDriver.name)?.phone || '';
+  sendDeparturesSMS(orders.map(o=>({...o})), activeDriver.name, driverPhone);
+
   document.getElementById('suc-icon').textContent='🛵';
   document.getElementById('suc-title').textContent=`Safari njema, ${activeDriver.name}!`;
   document.getElementById('suc-sub').textContent=`${orders.length} agizo · ${totalCash.toLocaleString()} TZS`;
@@ -836,9 +880,19 @@ function handleCashierPin(entered){
 function confirmCashReceived(cashierName){
   if(!pendingTrip) return;
   const {trip,rt,dur,late,notes}=pendingTrip;
-  trip.returned=true; trip.returnTime=rt; trip.duration=dur; trip.late=late; trip.notes=notes; trip.cashierConfirmed=cashierName; trip.cancelled=false;
+  const suspicious = dur < SUSPICIOUS_MIN;
+  const [cutH,cutM] = ORDER_CUTOFF.split(':').map(Number);
+  const departH = parseInt(trip.left.split(':')[0]);
+  const departM = parseInt(trip.left.split(':')[1]);
+  const afterCutoff = (departH*60+departM) > (cutH*60+cutM);
+  trip.returned=true; trip.returnTime=rt; trip.duration=dur; trip.late=late; trip.notes=notes; trip.cashierConfirmed=cashierName; trip.cancelled=false; trip.suspicious=suspicious; trip.afterCutoff=afterCutoff;
   saveTrips();
-  trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:trip.left,returned:rt,duration:dur,late:late?'YES':'NO',status:'RETURNED',notes,cashier:cashierName,timestamp:new Date().toLocaleTimeString('en-GB')}));
+  const flags=[];
+  if(dur<SUSPICIOUS_MIN) flags.push('SUSPICIOUS');
+  const [cH,cM]=ORDER_CUTOFF.split(':').map(Number);
+  const [dH,dM]=trip.left.split(':').map(Number);
+  if(dH*60+dM>cH*60+cM) flags.push('AFTER_CUTOFF');
+  trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:o.cash,phone:o.phone,left:trip.left,returned:rt,duration:dur,late:late?'YES':'NO',status:'RETURNED',notes,cashier:cashierName,flags:flags.join('|')||'',timestamp:new Date().toLocaleTimeString('en-GB')}));
   pendingTrip=null;
   document.getElementById('suc-icon').textContent='✓';
   document.getElementById('suc-title').textContent=`Karibu tena, ${activeDriver.name}!`;
@@ -878,7 +932,7 @@ function ctpk(k){
 function execCancelTrip(){
   const trip=trips.find(t=>t.id===cancelTripId); if(!trip) return;
   const rt=fmtTime(new Date());
-  trip.returned=true; trip.cancelled=true; trip.returnTime=rt; trip.duration=0; trip.late=false; trip.totalCash=0; trip.notes='CANCELLED by manager';
+  trip.returned=true; trip.cancelled=true; trip.returnTime=rt; trip.duration=0; trip.late=false; trip.totalCash=0; trip.notes='CANCELLED by manager'; trip.suspicious=false; trip.afterCutoff=false;
   saveTrips();
   trip.orders.forEach(o=>sync({date:trip.date,driver:trip.driver,orderNum:o.num,zone:o.zone,cash:0,phone:o.phone||'',left:trip.left,returned:rt,duration:0,late:'NO',status:'CANCELLED',notes:'CANCELLED by manager',cashier:'',timestamp:new Date().toLocaleTimeString('en-GB')}));
   buildDashboard();
@@ -1010,6 +1064,10 @@ function buildDashboard(){
       <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">${wAvg||'—'}${wAvg?'m':''}</div><div class="kpi-sub">per trip</div></div>
     </div>`;
     if(repLate.length){ h+=`<div><div class="sec-title">🚨 Repeat Late This Week</div>`; repLate.forEach(r=>{ h+=`<div class="alert-card"><div class="alert-title">${r.name} — ${r.count} late trips this week</div><div class="alert-sub">Flagged for review</div></div>`; }); h+=`</div>`; }
+    const wSuspicious=wTrips.filter(t=>t.suspicious);
+    const wAfterCutoff=wTrips.filter(t=>t.afterCutoff);
+    if(wSuspicious.length){ h+=`<div><div class="sec-title">⚡ Suspicious This Week (under ${SUSPICIOUS_MIN}min)</div>`; wSuspicious.forEach(t=>{ h+=`<div class="alert-card" style="border-left-color:#7c3aed"><div class="alert-title" style="color:#7c3aed">${t.driver} — ${t.duration}min on ${fmtDate(t.date)}</div><div class="alert-sub">${t.left} → ${t.returnTime} · ${t.orders.map(o=>o.zone).join(', ')}</div></div>`; }); h+=`</div>`; }
+    if(wAfterCutoff.length){ h+=`<div><div class="sec-title">🕘 After Cutoff This Week (${ORDER_CUTOFF})</div>`; wAfterCutoff.forEach(t=>{ h+=`<div class="alert-card"><div class="alert-title">${t.driver} — departed ${t.left} on ${fmtDate(t.date)}</div><div class="alert-sub">${t.orders.map(o=>o.zone).join(', ')} · ${t.totalCash.toLocaleString()} TZS</div></div>`; }); h+=`</div>`; }
     h+=`<div><div class="sec-title">Driver Summary</div>`;
     DRIVER_CONFIG.forEach(d=>{
       const dt=wTrips.filter(t=>t.driver===d.name);
@@ -1030,6 +1088,9 @@ function buildDashboard(){
         return `<div class="day-trip"><div class="day-trip-head"><div style="display:flex;align-items:center;gap:7px"><div class="trip-av" style="background:${drv?.bg};color:${drv?.color}">${t.driver.slice(0,2).toUpperCase()}</div><span style="font-size:13px;font-weight:700">${t.driver}</span></div><span class="pill ${t.late?'pill-late':'pill-ok'}">${t.late?'Late':'On time'}</span></div>
         <div class="day-trip-meta"><div class="tm">Left<div class="tm-val">${t.left}</div></div><div class="tm">Back<div class="tm-val">${t.returnTime}</div></div><div class="tm">Duration<div class="tm-val">${t.duration}min</div></div></div>
         ${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}
+        ${t.cashierConfirmed?`<div style="font-size:11px;color:var(--green);margin-top:4px;font-weight:600">✓ Cash confirmed by ${t.cashierConfirmed}</div>`:''}
+        ${t.suspicious?`<div style="font-size:11px;color:#7c3aed;margin-top:4px;font-weight:700">⚡ Suspicious — under ${SUSPICIOUS_MIN}min</div>`:''}
+        ${t.afterCutoff?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">🕘 After cutoff (${ORDER_CUTOFF})</div>`:''}
         ${t.notes&&!t.cancelled?`<div class="trip-note" style="margin-top:6px">📝 ${t.notes}</div>`:''}
         ${t.cancelled?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">✕ CANCELLED</div>`:''}
         </div>`;
@@ -1060,6 +1121,10 @@ function buildDashboard(){
       h+=`</div>`;
     }
     if(late.length){ h+=`<div><div class="sec-title">⚠️ Late Flags</div>`; late.forEach(t=>{ h+=`<div class="alert-card"><div class="alert-title">${t.driver} — ${t.duration}min</div><div class="alert-sub">${t.left} → ${t.returnTime} · ${t.totalCash.toLocaleString()} TZS${t.notes?' · 📝 '+t.notes:''}</div></div>`; }); h+=`</div>`; }
+    const suspicious=dayTrips.filter(t=>t.suspicious);
+    const afterCutoff=dayTrips.filter(t=>t.afterCutoff);
+    if(suspicious.length){ h+=`<div><div class="sec-title">⚡ Suspicious Trips (under ${SUSPICIOUS_MIN}min)</div>`; suspicious.forEach(t=>{ h+=`<div class="alert-card" style="border-left-color:#7c3aed"><div class="alert-title" style="color:#7c3aed">${t.driver} — ${t.duration}min trip</div><div class="alert-sub">${t.left} → ${t.returnTime} · ${t.orders.map(o=>o.zone).join(', ')}</div></div>`; }); h+=`</div>`; }
+    if(afterCutoff.length){ h+=`<div><div class="sec-title">🕘 After Cutoff (${ORDER_CUTOFF})</div>`; afterCutoff.forEach(t=>{ h+=`<div class="alert-card"><div class="alert-title">${t.driver} — departed at ${t.left}</div><div class="alert-sub">${t.orders.map(o=>o.zone).join(', ')} · ${t.totalCash.toLocaleString()} TZS</div></div>`; }); h+=`</div>`; }
     const zc={}; ZONES.forEach(z=>{zc[z]={runs:0,cash:0};});
     dayTrips.forEach(t=>t.orders.forEach(o=>{if(zc[o.zone]){zc[o.zone].runs++;zc[o.zone].cash+=o.cash;}}));
     h+=`<div><div class="sec-title">By Zone</div><div class="zone-breakdown">`;
@@ -1083,6 +1148,8 @@ function buildDashboard(){
           <div class="trip-orders">${t.orders.map(o=>`<div class="trip-order-line"><span style="color:var(--muted)">#${o.num} · ${o.zone} · 📞 ${o.phone||'—'}</span><span style="font-weight:600">${t.cancelled?'CANCELLED':o.cash.toLocaleString()+' TZS'}</span></div>`).join('')}</div>
           ${t.cashierConfirmed?`<div style="font-size:11px;color:var(--green);margin-top:4px;font-weight:600">✓ Cash confirmed by ${t.cashierConfirmed}</div>`:''}
           ${t.cancelled?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">✕ CANCELLED</div>`:''}
+          ${t.suspicious?`<div style="font-size:11px;color:#7c3aed;margin-top:4px;font-weight:700">⚡ Suspicious — under ${SUSPICIOUS_MIN}min</div>`:''}
+          ${t.afterCutoff?`<div style="font-size:11px;color:var(--red);margin-top:4px;font-weight:700">🕘 After cutoff (${ORDER_CUTOFF})</div>`:''}
           ${t.notes&&!t.cancelled?`<div class="trip-note">📝 ${t.notes}</div>`:''}
         </div>`;
       });
@@ -1227,12 +1294,20 @@ function exportDayPDF(){
   const cash=dt.reduce((s,t)=>s+t.totalCash,0); const late=dt.filter(t=>t.late).length;
   const avg=dt.length?Math.round(dt.reduce((s,t)=>s+t.duration,0)/dt.length):0;
   let body=`<div class="kpis"><div class="kpi"><div class="kpi-l">Trips</div><div class="kpi-v">${dt.length}</div></div><div class="kpi"><div class="kpi-l">Cash</div><div class="kpi-v">${cash.toLocaleString()}<span style="font-size:12px"> TZS</span></div></div><div class="kpi"><div class="kpi-l">Late</div><div class="kpi-v" style="color:${late?'#c8392b':'#1a1a1a'}">${late}</div></div><div class="kpi"><div class="kpi-l">Avg Duration</div><div class="kpi-v">${avg}m</div></div></div>
-  <div class="sec"><div class="sec-title">All Trips</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th><th>Cashier</th></tr></thead><tbody>`;
-  dt.forEach(t=>{ t.orders.forEach((o,i)=>{ body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td><td>${t.cashierConfirmed||'—'}</td>`:'<td colspan="5"></td>'}</tr>`; }); if(t.notes) body+=`<tr><td colspan="10" class="note">📝 ${t.notes}</td></tr>`; });
+  <div class="sec"><div class="sec-title">All Trips</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th><th>Cashier</th><th>Flags</th></tr></thead><tbody>`;
+  dt.forEach(t=>{ t.orders.forEach((o,i)=>{ const flags=[]; if(t.suspicious) flags.push('⚡ Suspicious'); if(t.afterCutoff) flags.push('🕘 After cutoff'); body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime||'—'}</td><td>${t.duration!=null?t.duration+'min':'—'}</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td><td style="font-weight:600;color:#1a7f4b">${t.cashierConfirmed||'—'}</td><td style="color:#7c3aed;font-size:10px">${flags.join(' ')||'—'}</td>`:'<td colspan="6"></td>'}</tr>`; }); if(t.notes&&!t.cancelled) body+=`<tr><td colspan="11" class="note">📝 ${t.notes}</td></tr>`; });
   body+=`</tbody></table></div><div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
   DRIVER_CONFIG.forEach(d=>{ const ddt=dt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0; const dl=ddt.filter(t=>t.late).length; body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`; });
   body+=`</tbody></table></div>`;
-  const w=window.open('','_blank'); w.document.write(pdfWrap(`Daily Report — ${fmtDate(dashDate)}`,body)); w.document.close();
+  const html=pdfWrap(`Daily Report — ${fmtDate(dashDate)}`,body);
+  // Download
+  const dlBlob=new Blob([html],{type:'text/html'});
+  const dlUrl=URL.createObjectURL(dlBlob);
+  const dlA=document.createElement('a');
+  dlA.href=dlUrl; dlA.download=`Chowpatty_Daily_${dashDate}.html`; dlA.click();
+  URL.revokeObjectURL(dlUrl);
+  // Also open for viewing
+  try{ const w=window.open('','_blank'); if(w){ w.document.write(html); w.document.close(); } }catch(e){}
 }
 function exportWeekPDF(){
   const {dates,trips:wt}=getWeekData();
@@ -1241,8 +1316,25 @@ function exportWeekPDF(){
   body+=`<div class="sec"><div class="sec-title">Driver Summary</div><table><thead><tr><th>Driver</th><th>Trips</th><th>Cash (TZS)</th><th>Avg Duration</th><th>Late</th></tr></thead><tbody>`;
   DRIVER_CONFIG.forEach(d=>{ const ddt=wt.filter(t=>t.driver===d.name); const dc=ddt.reduce((s,t)=>s+t.totalCash,0); const da=ddt.length?Math.round(ddt.reduce((s,t)=>s+t.duration,0)/ddt.length):0; const dl=ddt.filter(t=>t.late).length; body+=`<tr><td><strong>${d.name}</strong></td><td>${ddt.length}</td><td>${dc.toLocaleString()}</td><td>${da||'—'}${da?'min':''}</td><td class="${dl?'late':''}">${dl||'—'}</td></tr>`; });
   body+=`</tbody></table></div>`;
-  dates.forEach(d=>{ const dt=trips.filter(t=>t.date===d&&t.returned); if(!dt.length) return; const dc=dt.reduce((s,t)=>s+t.totalCash,0); const dl=dt.filter(t=>t.late).length; body+=`<div class="sec"><div class="sec-title">${fmtDate(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dl?` · <span style="color:#c8392b">${dl} late</span>`:''}</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th></tr></thead><tbody>`; dt.forEach(t=>{ t.orders.forEach((o,i)=>{ body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime}</td><td>${t.duration}min</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td>`:'<td colspan="4"></td>'}</tr>`; }); if(t.notes) body+=`<tr><td colspan="9" class="note">📝 ${t.notes}</td></tr>`; }); body+=`</tbody></table></div>`; });
-  const w=window.open('','_blank'); w.document.write(pdfWrap(`Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`,body)); w.document.close();
+  // Cashier summary
+  const cashierCounts={};
+  wt.forEach(t=>{ if(t.cashierConfirmed){ cashierCounts[t.cashierConfirmed]=(cashierCounts[t.cashierConfirmed]||0)+1; }});
+  if(Object.keys(cashierCounts).length){
+    body+=`<div class="sec"><div class="sec-title">Cash Collected By</div><table><thead><tr><th>Cashier</th><th>Trips Confirmed</th></tr></thead><tbody>`;
+    Object.entries(cashierCounts).forEach(([name,count])=>{ body+=`<tr><td><strong>${name}</strong></td><td>${count}</td></tr>`; });
+    body+=`</tbody></table></div>`;
+  }
+  dates.forEach(d=>{ const dt=trips.filter(t=>t.date===d&&t.returned); if(!dt.length) return; const dc=dt.reduce((s,t)=>s+t.totalCash,0); const dl=dt.filter(t=>t.late).length; const ds=dt.filter(t=>t.suspicious).length; const dac=dt.filter(t=>t.afterCutoff).length;
+    body+=`<div class="sec"><div class="sec-title">${fmtDate(d)} — ${dt.length} trips · ${dc.toLocaleString()} TZS${dl?` · <span style="color:#c8392b">${dl} late</span>`:''}${ds?` · <span style="color:#7c3aed">${ds} suspicious</span>`:''}${dac?` · <span style="color:#c8392b">${dac} after cutoff</span>`:''}</div><table><thead><tr><th>Driver</th><th>Order #</th><th>Zone</th><th>Customer</th><th>Cash (TZS)</th><th>Left</th><th>Returned</th><th>Duration</th><th>Status</th><th>Cashier</th><th>Flags</th></tr></thead><tbody>`; dt.forEach(t=>{ t.orders.forEach((o,i)=>{ const flags=[]; if(t.suspicious) flags.push('⚡'); if(t.afterCutoff) flags.push('🕘'); body+=`<tr><td>${i===0?`<strong>${t.driver}</strong>`:'↳'}</td><td>#${o.num}</td><td>${o.zone}</td><td>📞 ${o.phone||'—'}</td><td>${o.cash.toLocaleString()}</td>${i===0?`<td>${t.left}</td><td>${t.returnTime||'—'}</td><td>${t.duration!=null?t.duration+'min':'—'}</td><td class="${t.late?'late':'ok'}">${t.cancelled?'CANCELLED':t.late?'LATE':'On time'}</td><td style="font-weight:600;color:#1a7f4b">${t.cashierConfirmed||'—'}</td><td style="color:#7c3aed;font-weight:700">${flags.join(' ')||'—'}</td>`:'<td colspan="6"></td>'}</tr>`; }); if(t.notes&&!t.cancelled) body+=`<tr><td colspan="11" class="note">📝 ${t.notes}</td></tr>`; }); body+=`</tbody></table></div>`; });
+  const html=pdfWrap(`Weekly Report — ${fmtDate(dates[0])} to ${fmtDate(dates[6])}`,body);
+  // Download
+  const dlBlob=new Blob([html],{type:'text/html'});
+  const dlUrl=URL.createObjectURL(dlBlob);
+  const dlA=document.createElement('a');
+  dlA.href=dlUrl; dlA.download=`Chowpatty_Weekly_${dates[0]}_to_${dates[6]}.html`; dlA.click();
+  URL.revokeObjectURL(dlUrl);
+  // Also open for viewing
+  try{ const w=window.open('','_blank'); if(w){ w.document.write(html); w.document.close(); } }catch(e){}
 }
 
 // ═══════════════════════════════════════
